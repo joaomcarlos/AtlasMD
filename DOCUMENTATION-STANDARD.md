@@ -479,9 +479,11 @@ Rules:
 
 Use diagrams for:
 
-- **Architecture overviews** — components and their relationships
-- **Sequence diagrams** — request/response flows between systems
-- **Dependency graphs** — service startup or data flow dependencies
+- **Architecture overviews** — the internal structure of a service: routers, models, background tasks, sub-components. Group related parts with subgraphs.
+- **System bridge diagrams** — how multiple external systems connect through one service. Show the entry points (protocols, ports) on one side and the downstream APIs on the other.
+- **Sequence diagrams** — request/response flows between systems: who calls whom, in what order, with what data.
+- **Dependency graphs** — service startup or deployment dependencies: which service depends on which database, which container starts before which.
+- **State machine diagrams** — lifecycle states of an entity and the conditions that move it between states. Use decision branches (`{condition}`) and terminal nodes (`([label])`).
 
 Rules:
 - Place the diagram after a paragraph that introduces what it shows. A diagram without context forces the reader to interpret it blind.
@@ -512,6 +514,47 @@ sequenceDiagram
     Client->>Service: POST /api/requests
     Service->>Database: INSERT request
     Service-->>Client: 201 Created (job_id)
+```
+````
+
+Example (Mermaid architecture graph with subgraphs):
+
+````
+```mermaid
+graph TD
+    subgraph Routers
+        HTTP["HTTP routers"]
+        KAFKA["Kafka consumer"]
+    end
+
+    subgraph Legacy
+        TCP["TCP compat server<br/>port 9877"]
+        XMLRPC["XML-RPC compat server<br/>port 9878"]
+    end
+
+    subgraph External
+        API["Payment API"]
+    end
+
+    HTTP --> API
+    KAFKA --> TCP
+    TCP --> API
+    XMLRPC --> API
+```
+````
+
+Example (Mermaid state machine with decision branches):
+
+````
+```mermaid
+flowchart TD
+    A([Start]) --> B{Has errors?}
+    B -->|No| C{processed_at set?}
+    C -->|Yes| SUCCESS([success])
+    C -->|No| PENDING([pending])
+    B -->|Yes| D{Last error = 'Gave up'?}
+    D -->|Yes| FAILED([failed])
+    D -->|No| RETRYING([retrying])
 ```
 ````
 
