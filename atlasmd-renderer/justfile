@@ -1,0 +1,51 @@
+set shell := ["bash", "-c"]
+set quiet
+
+_default:
+    just --list
+
+[doc('Install dependencies')]
+[group('install')]
+install:
+    yarn --version || npm install -g yarn
+    yarn install --pure-lockfile
+
+[doc('Remove generated files')]
+[group('dev')]
+clean:
+    rm -rf dist .output .nuxt
+
+[doc('Remove generated files and node_modules')]
+[group('dev')]
+deep-clean: clean
+    rm -rf node_modules
+
+[doc('Generate static files')]
+[group('dev')]
+generate:
+    yarn generate
+
+[doc('Build Docker image')]
+[group('docker')]
+build:
+    docker compose build
+
+[doc('Run docker container with watch (default)')]
+[group('docker')]
+watch:
+    docker compose watch
+
+[doc('Start docker container in detached mode')]
+[group('docker')]
+up:
+    docker compose up -d --build
+
+[doc('Stop docker container and remove orphans')]
+[group('docker')]
+down:
+    docker compose down --remove-orphans
+
+[doc('Follow docker container logs')]
+[group('docker')]
+logs:
+    docker compose logs -f --no-color

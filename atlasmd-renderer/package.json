@@ -1,0 +1,22 @@
+{
+  "name": "atlasmd",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "generate": "nuxi generate",
+    "preview": "nuxi preview",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@nuxt-themes/docus": "^1.15.1",
+    "@pinceau/vue": "latest",
+    "mermaid": "^11.13.0",
+    "nuxt": "3.15.4"
+  },
+  "devDependencies": {
+    "sass": "^1.89.2"
+  }
+}

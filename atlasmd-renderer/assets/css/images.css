@@ -1,0 +1,10 @@
+.full-width-image {
+    width: 70vmax;
+    max-width: 80vmax;
+    height: auto;
+}
+
+.sf-customer-sync-image {
+    width: 25%;
+    height: auto;
+}

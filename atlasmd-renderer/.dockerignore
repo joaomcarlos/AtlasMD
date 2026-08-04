@@ -1,0 +1,48 @@
+# Docker files
+compose.yaml
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Node.js dependencies and build artifacts
+node_modules/
+node_modules/*
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnpm-debug.log
+
+# Nuxt.js build output
+.nuxt/
+.output/
+.nitro/
+.cache/
+dist/
+
+# Development files
+.git/
+.github/
+.vscode/
+.idea/
+*.log
+*.swp
+*.bak
+
+# Non necessary files
+.*
+makefile
+justfile
+README.md
+AGENTS.md
+support/
+
+# Necessary files
+!assets/
+!components/
+!plugins/
+!.npmrc
+!.nvmrc
+!app.config.ts
+!nuxt.config.ts
+!tokens.config.ts
+!tsconfig.json
