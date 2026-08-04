@@ -1,0 +1,32 @@
+services:
+  atlasmd-docs:
+    image: atlasmd:latest
+    build:
+      context: ../atlasmd-renderer
+      dockerfile: Dockerfile
+      args:
+        APP_VERSION: dev
+    restart: on-failure
+    ports:
+      - 8770:3003
+      - 8771:4000
+    environment:
+      - APP_VERSION=dev
+      - PORT=3003
+      - ATLAS_TITLE=AtlasMD
+      - ATLAS_GITLAB_URL=https://git.example.com/eu-system-integrations/atlasmd
+      - ATLAS_GITLAB_LABEL=View the AtlasMD Gitlab repository
+      # ATLAS_LOGO_LIGHT=/logo-light.png
+      # ATLAS_LOGO_DARK=/logo-dark.png
+      # ATLAS_LOGO_DARK_BG=/logo-dark-bg.png
+    volumes:
+      - ./content:/app/content
+      - ./public:/app/public
+    develop:
+      watch:
+        - action: sync
+          path: ./content
+          target: /app/content
+        - action: sync
+          path: ./public
+          target: /app/public
