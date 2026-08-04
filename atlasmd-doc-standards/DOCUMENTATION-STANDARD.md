@@ -4,34 +4,49 @@ This standard defines how to structure, write, and present documentation for sof
 
 ## 1. Scope
 
-### 1.1. Two Tracks
+### 1.1. Guide Types
 
-A documentation set built to this standard has two tracks:
+A documentation set built to this standard is one of three configurations:
 
-- **User Guide** — for end users and operators who interact with the system but do not read code. Focuses on how-to guides, workflows, and visual instructions.
-- **Tech Guide** — for developers and integrators who need to understand internals, APIs, data models, and configuration.
+- **User Guide only** — for end users and operators who interact with the system but do not read code. Focuses on how-to guides, workflows, and visual instructions.
+- **Tech Guide only** — for developers and integrators who need to understand internals, APIs, data models, and configuration.
+- **Both User Guide and Tech Guide** — the User Guide is the main documentation set. The Tech Guide lives under a "Developers" section within the User Guide's navigation. This is the pattern used by projects like CBS, where end-user documentation is primary and developer documentation is nested inside it.
 
-If a project serves only technical people, omit the User Guide. The Tech Guide is always present.
+When a project has both guides, the User Guide is the entry point. A reader browsing the documentation lands on user-facing content first. The Tech Guide is reachable from a "Developers" section in the navigation, not as a peer top-level track.
 
-### 1.2. Track Relationship
+### 1.2. Guide Relationship
 
-The two tracks are separate documentation sets. They live in separate directory trees, have separate navigation, and do not share pages. They cross-reference each other with links when a topic spans both audiences.
+When both guides exist, they are separate content trees but share a single navigation. The User Guide is the root; the Tech Guide is a section within it.
 
 ```
 docs/
-  user-guide/
-    content/
-  tech-guide/
+  content/                # User Guide content (main)
+  developers/             # Tech Guide content (nested section)
     content/
 ```
 
-A user guide page that needs technical depth links to the relevant tech guide page with a note: "For technical details, see the [Tech Guide](/tech-guide/...)". A tech guide page that has user-facing instructions links to the user guide equivalent.
+When only one guide exists, it is the root:
 
-Do not duplicate content across tracks. If the same information belongs in both, write it once in the tech guide and link to it from the user guide, or vice versa — whichever audience it primarily serves.
+```
+docs/
+  content/                # User Guide only — or Tech Guide only
+```
 
-### 1.3. Shared Rules
+A user guide page that needs technical depth links to the relevant tech guide page with a note: "For technical details, see the [Tech Guide](/developers/...)". A tech guide page that has user-facing instructions links to the user guide equivalent.
 
-Both tracks follow the same structural rules, writing style, and information elements defined below. They differ in audience and content depth, not in format.
+Do not duplicate content across guides. If the same information belongs in both, write it once in the guide it primarily serves and link to it from the other.
+
+### 1.3. Reviewer Responsibility
+
+When reviewing documentation against this standard, the reviewer must first identify which configuration the project uses (User Guide only, Tech Guide only, or both). The review criteria adapt to the configuration:
+
+- A User Guide only project is not penalized for lacking API reference pages, data model pages, or other Tech Guide page types.
+- A Tech Guide only project is not penalized for lacking how-to guides, screenshots, or other User Guide page types.
+- A project with both guides is reviewed against the full standard, with each guide checked for its respective page types and audience focus.
+
+### 1.4. Shared Rules
+
+Both guides follow the same structural rules, writing style, and information elements defined below. They differ in audience and content depth, not in format.
 
 ## 2. Directory Structure
 
@@ -47,10 +62,11 @@ content/
   3.api-reference/        # contract reference
   4.integrations/         # per-system integration pages
   5.development/          # config, testing, deployment
+  6.additional-resources/ # learn-more section (optional)
   8.release-notes.md      # changelog (high number = end of file ordering)
 ```
 
-Leave a numbering gap between the last regular section and release notes (e.g. 5 then 8). This lets you insert new sections without renumbering existing ones.
+Section numbers are not capped at 5. Use as many numbered sections as the project needs. Leave a numbering gap between the last regular section and release notes (e.g. 6 then 8, or 5 then 8). This lets you insert new sections without renumbering existing ones.
 
 ### 2.2. Numbered Files
 
@@ -117,7 +133,7 @@ Rules:
 
 ### 2.7. Standard Section Set — Tech Guide
 
-A complete Tech Guide has these sections, in this order:
+A complete Tech Guide has these sections, in this order. The numbering is not capped — projects may use as many numbered sections as needed. The numbers shown here are the conventional starting point:
 
 | Number | Section         | Purpose                                                                   |
 | ------ | --------------- | ------------------------------------------------------------------------- |
@@ -128,13 +144,13 @@ A complete Tech Guide has these sections, in this order:
 | 5      | Development     | Configuration, environment setup, testing, deployment, tooling            |
 | 8      | Release Notes   | Versioned changelog                                                       |
 
-Release Notes is a single file (`8.release-notes.md`), not a directory. It has no sub-pages. The high numbering gap (5 then 8) leaves room to insert new sections above it without renumbering.
+Release Notes is a single file (`8.release-notes.md`), not a directory. It has no sub-pages. The high numbering gap (5 then 8) leaves room to insert new sections above it without renumbering. If a project needs more than 5 regular sections, continue numbering (6, 7, ...) and adjust the release notes gap accordingly.
 
-Projects may add or remove sections. The numbering and ordering principles stay the same.
+Projects may add or remove sections. The numbering and ordering principles stay the same. There is no upper limit on the number of sections.
 
 ### 2.8. Standard Section Set — User Guide
 
-A User Guide has these sections, in this order:
+A User Guide has these sections, in this order. The numbering is not capped — projects may use as many numbered sections as needed:
 
 | Number | Section         | Purpose                                     |
 | ------ | --------------- | ------------------------------------------- |
@@ -142,7 +158,7 @@ A User Guide has these sections, in this order:
 | 2      | How-To Guides   | Task-oriented walkthroughs with screenshots |
 | 3      | Integrations    | Per-system usage from the user perspective  |
 
-Projects may add or remove sections. The numbering and ordering principles stay the same.
+Projects may add or remove sections. The numbering and ordering principles stay the same. There is no upper limit on the number of sections.
 
 The User Guide has no Release Notes section. Release notes are a developer concern — they describe internal changes, fixes, and infrastructure work that end users do not act on. If a change affects user-facing behavior, document it in the relevant How-To Guide page and link to the Tech Guide release notes for the technical detail.
 
@@ -161,13 +177,13 @@ description: One-line description of what this page covers
 ---
 ```
 
-| Field         | Required | Purpose                                                                                                              |
-| ------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
-| `title`       | yes      | Page heading and navigation label. Title Case.                                                                       |
-| `description` | yes      | One sentence. Used for SEO, nav tooltips, and landing page cards.                                                    |
-| `navigation`  | no       | Set to `false` to hide the page from the navigation sidebar.                                                         |
-| `noindex`     | no       | Set to `true` to exclude the page from the sitemap and add a `<meta name="robots" content="noindex">` tag. See 10.3. |
-| `layout`      | no       | Override the default page layout.                                                                                    |
+| Field         | Required | Purpose                                                                                                             |
+| ------------- | -------- | ------------------------------------------------------------------------------------------------------------------- |
+| `title`       | yes      | Page heading and navigation label. Title Case.                                                                      |
+| `description` | yes      | One sentence. Used for SEO, nav tooltips, and landing page cards.                                                   |
+| `navigation`  | no       | Set to `false` to hide the page from the navigation sidebar.                                                        |
+| `noindex`     | no       | Set to `true` to exclude the page from the sitemap and add a `<meta name="robots" content="noindex">` tag. See 9.3. |
+| `layout`      | no       | Override the default page layout.                                                                                   |
 
 The exact field names depend on your framework. The concepts are: a title, a description, a way to hide from navigation, and a way to override layout.
 
@@ -236,7 +252,7 @@ Rules:
 
 ### 3.6. Closing Sections
 
-Conceptual pages end with two standard sections:
+Conceptual pages end with up to three standard closing sections, in this order:
 
 **Next Steps** — links to related pages the reader should visit next:
 
@@ -247,21 +263,31 @@ Conceptual pages end with two standard sections:
 - [Import Service](/understanding/building-blocks/import-service) — Streaming ingestion from external sources
 ```
 
-**References** — footnote definitions for all source references used in the page body:
+**Additional Resources** — a "learn more" section with links to external resources, further reading, blog posts, whitepapers, or other material that is not source code references:
 
 ```markdown
-## 7. References
+## 7. Additional Resources
+
+- [Bulk Export Patterns](https://example.com/blog/bulk-export) — Blog post on designing export pipelines
+- [Idempotency in Distributed Systems](https://example.com/whitepaper/idempotency) — Whitepaper on retry-safe operations
+```
+
+**References** — footnote definitions for all source references (superscript links) used in the page body:
+
+```markdown
+## 8. References
 
 [^1]: [Export Gateway](https://repo/path/to/gateway.py) — Creates and inspects export jobs.
 [^2]: [Client System](https://repo/client-system) — External system that connects to this service.
 ```
 
 Rules:
-- Conceptual pages (overview, building block, integration) have both Next Steps and References.
-- Reference pages (API endpoints, data models, configuration) have References only. They do not need Next Steps because the reader navigates them by lookup, not by reading sequentially.
-- The landing page (`0.index.md`) has neither Next Steps nor a numbered References section. It uses cards instead (see 5.8). If a card description uses a footnote, define it in an unnumbered References section at the bottom of the page (see 4.1).
-- Release notes pages have neither Next Steps nor References. They are a flat list of version entries (see 4.8).
-- The References section is numbered like any other section. It is the last numbered section on the page. The landing page is the single exception: its References section is unnumbered.
+- Conceptual pages (overview, building block, integration) have Next Steps. Additional Resources and References are optional — include them only when the page has content for them.
+- Reference pages (API endpoints, data models, configuration) have References only (if the page uses footnotes). They do not need Next Steps or Additional Resources because the reader navigates them by lookup, not by reading sequentially.
+- The landing page (`0.index.md`) has neither Next Steps, Additional Resources, nor a numbered References section. It uses cards instead (see 5.8). If a card description uses a footnote, define it in an unnumbered References section at the bottom of the page (see 4.1).
+- Release notes pages have none of these closing sections. They are a flat list of version entries (see 4.8).
+- When both Additional Resources and References exist on the same page, Additional Resources comes first, References comes last. References is the final numbered section because it is the least important to the reader's next action — it is the appendix of source citations.
+- The References section is numbered like any other section. It is the last numbered section on the page when present. The landing page is the single exception: its References section is unnumbered.
 
 ## 4. Page Types
 
@@ -290,7 +316,8 @@ frontmatter (title, description)
 ## 2. [second aspect]
 ...
 ## N. Next Steps
-## N+1. References
+## N+1. Additional Resources (optional)
+## N+2. References (if footnotes are used)
 ```
 
 ### 4.3. Building Block Page (Conceptual Deep-Dive)
@@ -311,7 +338,8 @@ frontmatter (title, description)
 [numbered list of steps]
 ## 3. [edge cases or sub-behaviors]
 ## N. Next Steps
-## N+1. References
+## N+1. Additional Resources (optional)
+## N+2. References (if footnotes are used)
 ```
 
 ### 4.4. API Endpoint Page
@@ -385,7 +413,8 @@ frontmatter (title, description)
 ## 5. Next Steps
 - [related integration](/integrations/...) — One-line description
 - [related building block](/understanding/...) — One-line description
-## 6. References
+## 6. Additional Resources (optional)
+## 7. References (if footnotes are used)
 ```
 
 ### 4.7. Configuration Page
@@ -428,7 +457,7 @@ Rules:
 - Newest version at the top.
 - Group entries under `### Features`, `### Fixes`, `### Integrations`, `### Infrastructure`. Omit empty groups.
 - Each entry is one bullet, one line.
-- Release notes are cumulative within a version line. A version's release notes page shows every release in that line up to and including that version. See 11.3 for how this interacts with documentation versioning.
+- Release notes are cumulative within a version line. A version's release notes page shows every release in that line up to and including that version. See 10.3 for how this interacts with documentation versioning.
 
 ## 5. Information Elements
 
@@ -659,7 +688,7 @@ The `ExportGateway`[^1] class wraps the SDK client.
 Definition in the References section at the bottom of the page:
 
 ```markdown
-## 7. References
+## 8. References
 
 [^1]: [Export Gateway](https://repo/path/to/gateway.py) — Creates and inspects export jobs.
 ```
@@ -669,7 +698,7 @@ Rules:
 - Every footnote has a link and a short description after the em-dash.
 - Group all footnote definitions under the numbered `## N. References` heading at the bottom of the page.
 - Use footnotes for source code files, external system repos, configuration references, and investigation documents.
-- Keep external links in footnotes, not in body text. This keeps the body readable and concentrates all external references in one place.
+- Keep external links in footnotes, not in body text. This keeps the body readable and concentrates all external references in one place. The only exception is when the body text explains a concept about the URL itself (e.g. discussing how a URL routing scheme works) — in that case the URL is part of the explanation, not a reference.
 
 ### 5.8. Landing Page Cards
 
@@ -781,7 +810,7 @@ Write for what the reader needs to accomplish, not for what the writer wants to 
 - A building block page answers: "How does this component work and why does it exist?"
 - A configuration page answers: "What variables do I set and what do they do?"
 
-Do not mix audiences. A user guide page does not explain database internals. A tech guide page does not explain what the product does at a business level. If a topic spans both audiences, write separate pages in each track and cross-reference.
+Do not mix audiences. A user guide page does not explain database internals. A tech guide page does not explain what the product does at a business level. If a topic spans both audiences, write separate pages in each guide and cross-reference.
 
 ## 7. Accessibility
 
@@ -851,77 +880,11 @@ Rules:
 
 Run an accessibility check as part of documentation maintenance. Use a tool that checks the rendered output (e.g. `axe-core`, `pa11y`, `lighthouse`), not just the markdown source. Markdown-level checks catch missing alt text; rendered checks catch contrast, focus, and keyboard issues.
 
-## 8. Internationalization and Localization
+## 8. Cross-References and Links
 
-If the documentation serves readers in more than one language, structure it for translation from the start. Retrofitting translation onto a single-language documentation set is expensive and error-prone.
+### 8.1. Internal Links
 
-### 8.1. Source Language
-
-Pick one source language. All content is written and reviewed in the source language first. Translations are derived from the source. The source language is the source of truth — when a translation conflicts with the source, the source wins.
-
-Rules:
-- The source language is declared in the documentation configuration, not inferred from file contents.
-- The source language uses the directory structure defined in section 2. Translated copies mirror that structure.
-- Do not edit a translation to fix a factual error. Fix the source, then regenerate or update the translation.
-
-### 8.2. Locale Structure
-
-Store each locale in its own directory tree. Do not mix languages in the same tree.
-
-```
-docs/
-  en/
-    user-guide/
-    tech-guide/
-  pt/
-    user-guide/
-    tech-guide/
-  es/
-    user-guide/
-    tech-guide/
-```
-
-Rules:
-- Use BCP 47 language tags for locale directory names: `en`, `en-GB`, `pt`, `pt-BR`, `es`, `es-MX`. Use the shortest tag that distinguishes the variant. Use `pt-BR`, not `pt-BR-x-default`.
-- If a project has regional variants of the same language, the base locale (`en`) is the fallback. A request for `en-GB` that has no `en-GB` page falls back to `en`.
-- Each locale has its own navigation, search index, and landing page. Do not share navigation across locales.
-
-### 8.3. Translatable Content
-
-Some content translates cleanly; some does not. Structure the source so the translatable parts are separate from the parts that are locale-specific.
-
-Rules:
-- Keep translatable text in the markdown body and frontmatter. Do not embed user-facing strings in code, image text, or diagram labels unless you also maintain translated variants of those assets.
-- Diagrams with text labels are expensive to translate. Prefer text-based diagram formats (Mermaid, PlantUML) where the labels are text in the source file, not pixels in an image.
-- Screenshots with UI text are locale-specific. Capture a separate set per locale. Do not ship an English screenshot in a Portuguese page.
-- Dates, times, numbers, and currencies are locale-specific. Use the framework's locale-aware formatting. Do not hardcode a format.
-- Avoid idioms, metaphors, and culture-specific references. The writing style already prohibits metaphors (see 6.1). This applies doubly to content that will be translated.
-
-### 8.4. Links and Cross-References
-
-Links in a multi-locale documentation set must keep the reader in their locale. A link that jumps to another language breaks the reading flow.
-
-Rules:
-- Internal links stay within the same locale. A link on the `pt` page points to the `pt` version of the target, not the `en` version.
-- Cross-track links (see 9.2) stay within the same locale.
-- External links do not change across locales, unless the external resource itself has a localized version. Link to the localized version when it exists.
-- When a translated page does not exist yet, do not link to the source-language page from within a translated page without a note. A link to a page the reader cannot read erodes trust. Mark the link with the source language: `[Architecture (en)](...)`.
-
-### 8.5. Translation Workflow
-
-Translation is a recurring process, not a one-time task. Track the status of every page so stale translations are visible.
-
-Rules:
-- Translate from the source language only. Do not translate from another translation.
-- Track translation status per page. A page is either: source-only, in translation, translated, or stale (the source changed after the translation was completed).
-- When the source page changes, mark every translation of that page as stale. A stale translation is still published — it is better than no translation — but it is flagged for review.
-- Run the same quality checks on translated pages as on source pages: link checking, accessibility, formatting. A translation that breaks a link or a table is not ready to publish.
-
-## 9. Cross-References and Links
-
-### 9.1. Internal Links
-
-Link to other pages within the same documentation track using the page's route path.
+Link to other pages within the same documentation guide using the page's route path.
 
 Rules:
 - Link to the route path, not the file path. The route path strips numeric ordering prefixes (`/getting-started/architecture`, not `/1.getting-started/2.architecture.md`).
@@ -929,33 +892,35 @@ Rules:
 - Section overview pages link to all sub-pages in the section.
 - Use an em-dash after the link to add a short description: `[Architecture](/getting-started/architecture) — How the system is structured`
 
-### 9.2. Cross-Track Links
+### 8.2. Cross-Guide Links
 
-When a user guide page needs to reference technical depth, link to the tech guide:
+When a user guide page needs to reference technical depth, link to the tech guide. When the tech guide is nested under a "Developers" section, link to it there:
 
 ```markdown
-For technical details, see the [Tech Guide](/tech-guide/api-reference/endpoints).
+For technical details, see the [Tech Guide](/developers/api-reference/endpoints).
 ```
 
 When a tech guide page references user-facing instructions, link to the user guide:
 
 ```markdown
-For end-user instructions, see the [User Guide](/user-guide/how-to/export-records).
+For end-user instructions, see the [User Guide](/how-to/export-records).
 ```
 
-### 9.3. External Links
+### 8.3. External Links
 
-External links to source code, repos, and external documentation go in footnotes (see 5.7). Keep external links out of body text.
+External links to source code, repos, and external documentation go in footnotes (see 5.7) or in the Additional Resources section (see 3.6). Keep external links out of body text.
 
-### 9.4. Link Verification
+The only exception is when the body text explains a concept about the URL itself — for example, discussing how a URL routing scheme works, or demonstrating URL structure as part of the explanation. In that case the URL is part of the explanation, not a reference, and it belongs in the body.
+
+### 8.4. Link Verification
 
 All internal and external links must be functional. Run a link checker as part of documentation maintenance. Broken links erode reader trust.
 
-## 10. Search and Discoverability
+## 9. Search and Discoverability
 
 Readers find pages by search before they find them by navigation. Structure every page so that search — both the documentation site's built-in search and external search engines — can index it correctly.
 
-### 10.1. Page Metadata
+### 9.1. Page Metadata
 
 The frontmatter fields are the primary input to search. Get them right and the page is discoverable; get them wrong and the page is invisible.
 
@@ -965,7 +930,7 @@ Rules:
 - The H1 matches the frontmatter title (see 3.2). This is the on-page heading and the search engine's second signal for the page title.
 - Do not duplicate the description in the opening paragraph. The description is for search; the opening paragraph is for the reader who already arrived.
 
-### 10.2. URL Structure
+### 9.2. URL Structure
 
 The URL is the page's permanent address. Search engines and readers bookmark it. Keep it stable and readable.
 
@@ -975,7 +940,7 @@ Rules:
 - Do not use file extensions in URLs (`/getting-started/architecture`, not `/getting-started/architecture.md`).
 - Do not use query parameters for page identity. A page's identity is its path.
 
-### 10.3. Sitemap and Indexing
+### 9.3. Sitemap and Indexing
 
 A sitemap tells search engines which pages to crawl. Control it explicitly so the right pages are indexed and the wrong ones are not.
 
@@ -985,7 +950,7 @@ Rules:
 - Hiding a page from the navigation sidebar (`navigation: false`, see 3.1) does not exclude it from the sitemap or add a noindex tag. A page can be absent from navigation and still indexed by search engines — for example, a standalone landing page linked from external sources.
 - The landing page (`0.index.md`) is always indexed. It is the documentation home page.
 
-### 10.4. Built-in Search
+### 9.4. Built-in Search
 
 The documentation site's built-in search is the reader's primary navigation tool. It must be fast, scoped, and present on every page.
 
@@ -993,9 +958,8 @@ Rules:
 - The documentation site has a search box accessible from every page. It is the first interactive element in the header.
 - The search index covers page titles, headings, and body text. It does not index code blocks or table cell content unless the search provider supports it.
 - Search results show the page title and the description. If the search hit is inside a section, show the section heading as a breadcrumb.
-- If the documentation is multi-locale (see 8.2), the search is scoped to the current locale. A reader on the `pt` site searches the `pt` index, not the `en` index.
 
-### 10.5. Headings and Search
+### 9.5. Headings and Search
 
 Search engines and built-in search use headings to understand page structure. The heading rules in section 3 serve search as well as the reader.
 
@@ -1004,11 +968,11 @@ Rules:
 - Do not use vague headings ("Overview", "Details"). Use descriptive headings ("How the System Creates Jobs") that contain the terms a reader searches for.
 - The opening paragraph after the H1 is indexed heavily. Put the most important terms there.
 
-## 11. Documentation Versioning
+## 10. Documentation Versioning
 
 When the product has multiple supported versions, the documentation must support them too. A reader on product version 2.4 needs the 2.4 documentation, not the latest.
 
-### 11.1. Version the Documentation Set
+### 10.1. Version the Documentation Set
 
 Version the documentation the same way the product is versioned.
 
@@ -1018,7 +982,7 @@ Rules:
 - The version prefix is the product version, not a documentation version. They are the same.
 - Keep one version un-prefixed: the latest. All others are prefixed. This avoids breaking existing links when a new version is released — the old latest moves to its prefixed URL, and the new latest takes the default URL with a redirect from the old content.
 
-### 11.2. Version Selector
+### 10.2. Version Selector
 
 The version selector lets a reader switch between documentation versions without leaving the topic. It must be present on every page and must handle missing pages gracefully.
 
@@ -1027,16 +991,16 @@ Rules:
 - If the page does not exist in the selected version, redirect to the closest equivalent. If no equivalent exists, show a page that says the topic was introduced in a later version, with a link to the latest version.
 - The version selector lists every supported version, newest first. Mark the latest version explicitly.
 
-### 11.3. What to Version
+### 10.3. What to Version
 
 Version the whole documentation set, not pieces of it. A reader on 2.3 sees a consistent 2.3 experience across every section.
 
 Rules:
 - Version the entire documentation set, not individual pages. A reader on 2.3 sees the 2.3 tech guide and the 2.3 user guide.
 - Release notes (see 4.8) are cumulative within a version line. The 2.3 release notes page shows every release in the 2.x line up to and including 2.3.
-- The glossary (see 12) is versioned. Terms are added and removed across versions. A reader on 2.3 sees the 2.3 glossary.
+- The glossary (see 11) is versioned. Terms are added and removed across versions. A reader on 2.3 sees the 2.3 glossary.
 
-### 11.4. Backporting Documentation Changes
+### 10.4. Backporting Documentation Changes
 
 When a fix applies to a supported older version, backport the documentation alongside the code. A code backport without a documentation backport leaves the older docs wrong.
 
@@ -1045,7 +1009,7 @@ Rules:
 - A backport is a separate commit against the older version's content tree. Do not assume a change to the latest documentation propagates to older versions.
 - Record the backport in the older version's release notes.
 
-### 11.5. End of Life
+### 10.5. End of Life
 
 When a product version reaches end of life, its documentation stays available but is marked as archived. Readers on legacy systems still need it.
 
@@ -1054,7 +1018,7 @@ Rules:
 - Do not delete end-of-life documentation. Readers on legacy systems still need it.
 - Remove archived versions from the version selector after a grace period (e.g. one year). Keep the pages accessible by direct URL.
 
-## 12. Glossary
+## 11. Glossary
 
 Every documentation set has a glossary page in the Getting Started section. It defines:
 
@@ -1075,11 +1039,11 @@ Rules:
 - List terms alphabetically within each category.
 - Cross-reference the glossary from other pages when introducing a term for the first time. Link the term to the glossary entry.
 
-## 13. Maintenance
+## 12. Maintenance
 
 Documentation decays. Code changes, pages do not, and the two drift apart. Maintenance is the process of keeping them aligned. It is not a one-time cleanup — it is a recurring practice.
 
-### 13.1. Keep Documentation in Sync
+### 12.1. Keep Documentation in Sync
 
 Review documentation after any logic or behavior change. If a field changes, update every table that references it. If a flow changes, update every diagram that shows it. If an endpoint changes, update every page that documents it.
 
@@ -1088,7 +1052,7 @@ Rules:
 - If the documentation update is large, open a tracking issue in the same pull request and link to it. Do not leave the documentation untracked.
 - When a feature is removed, remove the page that documents it. Do not leave a page describing a feature that no longer exists. Add a redirect from the old URL to the nearest relevant page.
 
-### 13.2. Preserve Existing Content
+### 12.2. Preserve Existing Content
 
 When updating documentation:
 
@@ -1096,7 +1060,7 @@ When updating documentation:
 - Overwrite previously written content only when it is inaccurate, outdated, or conflicts with a change in the same pull request. When you overwrite, replace the content; do not leave the old version alongside the new.
 - Maintain consistency with the rest of the documentation set.
 
-### 13.3. Ownership
+### 12.3. Ownership
 
 Every documentation section has an owner. The owner is the team or individual responsible for keeping the section accurate.
 
@@ -1106,7 +1070,7 @@ Rules:
 - When ownership changes, update the ownership record in the same change that transfers responsibility. Do not leave stale ownership.
 - A section without an owner is unmaintained. Flag unmaintained sections in the documentation build output so they are visible.
 
-### 13.4. Review Cycles
+### 12.4. Review Cycles
 
 Documentation drifts from the system over time. Regular reviews catch the drift before the reader does.
 
@@ -1116,7 +1080,7 @@ Rules:
 - Record the last review date in the page frontmatter or in a central review log. A page older than two release cycles without a review is flagged as stale.
 - Schedule full documentation reviews after major releases. A major release changes enough that a page-by-page review is the only reliable way to catch every drift.
 
-### 13.5. Stale Content Detection
+### 12.5. Stale Content Detection
 
 A page is stale when the code it documents has changed since the page was last reviewed. Detect stale pages automatically so they are reviewed before they mislead.
 
@@ -1126,7 +1090,7 @@ Rules:
 - Display a stale banner on the page: "This page may be out of date. Last reviewed [date]." The banner links to the tracking issue or the owner.
 - Remove the stale flag after a review confirms the page is current.
 
-### 13.6. Automated Checks
+### 12.6. Automated Checks
 
 Run automated checks on every documentation change and on a schedule. Automated checks catch what a reviewer misses.
 
@@ -1145,7 +1109,7 @@ Rules:
 - A failing check blocks the merge. Do not merge with known failures and track them as issues.
 - Configure the spelling and prose linters with a project dictionary. Add domain terms and product names so they are not flagged.
 
-### 13.7. Quality Criteria
+### 12.7. Quality Criteria
 
 Every page must meet:
 
@@ -1154,9 +1118,9 @@ Every page must meet:
 - **Formatting** — align tables, tag code blocks with a language, number headings.
 - **Links** — all internal and external links are relevant and functional.
 - **Accessibility** — the page meets the criteria in section 7.
-- **Discoverability** — the page has a title and description that search can index (see 10).
+- **Discoverability** — the page has a title and description that search can index (see 9).
 
-## 14. Quick Reference Checklist
+## 13. Quick Reference Checklist
 
 Before publishing a page, verify:
 
@@ -1174,8 +1138,10 @@ Before publishing a page, verify:
 - [ ] Images use the correct format (SVG for diagrams, PNG/WebP for screenshots) and are under 500 KB
 - [ ] Source references use footnotes, defined in the References section
 - [ ] Conceptual pages have a Next Steps section
-- [ ] Conceptual and reference pages have a References section
-- [ ] Cross-track links point to the correct track (User Guide to Tech Guide and vice versa)
+- [ ] Additional Resources section present if the page has further reading to offer
+- [ ] Conceptual and reference pages have a References section (if footnotes are used)
+- [ ] When both exist, Additional Resources comes before References
+- [ ] Cross-guide links point to the correct guide (User Guide to Tech Guide and vice versa)
 - [ ] Glossary terms are cross-referenced when introduced for the first time
 - [ ] Page content matches its audience (User Guide vs Tech Guide)
 - [ ] No emojis
@@ -1184,6 +1150,7 @@ Before publishing a page, verify:
 - [ ] Same word for same thing
 - [ ] Concrete examples before abstract explanations
 - [ ] All links are functional
+- [ ] No URLs in body text unless the text explains a concept about the URL itself
 - [ ] Heading hierarchy has no skipped levels
 - [ ] Every table has a header row; no tables used for layout
 - [ ] Every image has alt text (empty alt for decorative images)
@@ -1194,7 +1161,5 @@ Before publishing a page, verify:
 - [ ] Description is under 150 characters for search snippets
 - [ ] URL is stable, lowercase, hyphen-separated, no file extension
 - [ ] Headings are descriptive (not vague) and contain searchable terms
-- [ ] If multi-locale, the page exists in the source language and is tracked for translation
-- [ ] If multi-locale, links stay within the same locale
 - [ ] If multi-version, the page is in the correct version set and the version selector works
 - [ ] Page owner is recorded and the last review date is current
