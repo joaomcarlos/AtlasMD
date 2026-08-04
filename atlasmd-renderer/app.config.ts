@@ -1,19 +1,41 @@
 // https://github.com/nuxt-themes/docus/blob/main/nuxt.schema.ts
-const socials: Record<string, { label: string; icon: string; href: string }> = {
-  // Slack channel is shared across all AtlasMD projects
-  slack: {
-    label: 'Message us on Slack',
+const socials: Record<string, { label: string; icon: string; href: string }> = {}
+// Slack social link — only include when ATLAS_SLACK_URL is provided
+if (process.env.ATLAS_SLACK_URL) {
+  socials.slack = {
+    label: process.env.ATLAS_SLACK_LABEL || 'Message us on Slack',
     icon: 'simple-icons:slack',
-    href: 'https://example.slack.com/archives/C05FJE4BKC0',
-  },
+    href: process.env.ATLAS_SLACK_URL,
+  }
 }
-// Gitlab repo URL is project-specific — only include when provided
+// Git repo URL is project-specific — only include when provided
 if (process.env.ATLAS_GITLAB_URL) {
   socials.gitlab = {
     label: process.env.ATLAS_GITLAB_LABEL || 'View the Gitlab repository',
     icon: 'simple-icons:gitlab',
     href: process.env.ATLAS_GITLAB_URL,
   }
+}
+
+const footer: Record<string, unknown> = {}
+// Footer credits — only include when ATLAS_FOOTER_CREDITS_TEXT is provided
+if (process.env.ATLAS_FOOTER_CREDITS_TEXT) {
+  footer.credits = {
+    icon: process.env.ATLAS_FOOTER_CREDITS_ICON || 'heroicons-outline:cloud',
+    text: process.env.ATLAS_FOOTER_CREDITS_TEXT,
+    href: process.env.ATLAS_FOOTER_CREDITS_URL,
+  }
+}
+// Footer text link — only include when ATLAS_FOOTER_TEXT is provided
+if (process.env.ATLAS_FOOTER_TEXT) {
+  footer.textLinks = [
+    {
+      text: process.env.ATLAS_FOOTER_TEXT,
+      href: process.env.ATLAS_FOOTER_TEXT_URL,
+      target: '_blank',
+      rel: 'noopener'
+    }
+  ]
 }
 
 export default defineAppConfig({
@@ -36,20 +58,6 @@ export default defineAppConfig({
       exclude: [],
       fluid: true
     },
-    footer: {
-      credits: {
-        icon: 'heroicons-outline:cloud',
-        text: 'AtlasMD',
-        href: 'https://example.com/',
-      },
-      textLinks: [
-        {
-          text: 'Built with passion by the AtlasMD team',
-          href: 'https://git.example.com/groups/eu-system-integrations/-/group_members',
-          target: '_blank',
-          rel: 'noopener'
-        }
-      ]
-    }
+    footer
   }
 })

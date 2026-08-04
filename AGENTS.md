@@ -6,7 +6,7 @@ Docus/Nuxt documentation rendering engine. Consumer projects mount their markdow
 
 ## Ownership
 
-Standalone project at `AtlasMD`. Two subprojects:
+Standalone project. Two subprojects:
 
 - `atlasmd-renderer/` — builds the `atlasmd:latest` Docker image
 - `atlasmd-scaffold/` — template for consumer projects (content + public + docker-compose)
@@ -26,24 +26,31 @@ Consumer projects copy `atlasmd-scaffold/` and reference its `docker-compose.yml
 
 ### Environment Variables
 
-| Variable             | Default                      | Purpose                                    |
-| -------------------- | ---------------------------- | ------------------------------------------ |
-| `ATLAS_TITLE`        | `Atlas`                      | Project name in header and browser title   |
-| `ATLAS_GITLAB_URL`   | —                            | GitLab repository URL; omit to hide        |
-| `ATLAS_GITLAB_LABEL` | `View the Gitlab repository` | Label for GitLab social link               |
-| `ATLAS_LOGO_LIGHT`   | `/logo-light.png`            | Light mode logo path (from public/)        |
-| `ATLAS_LOGO_DARK`    | `/logo-dark.png`             | Dark mode logo path                        |
-| `ATLAS_LOGO_DARK_BG` | `/logo-dark-bg.png`          | Dark mode logo with background             |
-| `ATLAS_BASE_URL`     | `/`                          | Base URL path                              |
-| `APP_VERSION`        | —                            | Version chip next to title                 |
-| `CI_PAGES_URL`       | —                            | GitLab Pages URL; overrides ATLAS_BASE_URL |
+| Variable                    | Default                      | Purpose                                    |
+| --------------------------- | ---------------------------- | ------------------------------------------ |
+| `ATLAS_TITLE`               | `Atlas`                      | Project name in header and browser title   |
+| `ATLAS_GITLAB_URL`          | —                            | GitLab repository URL; omit to hide        |
+| `ATLAS_GITLAB_LABEL`        | `View the Gitlab repository` | Label for GitLab social link               |
+| `ATLAS_SLACK_URL`           | —                            | Slack channel URL; omit to hide slack link |
+| `ATLAS_SLACK_LABEL`         | `Message us on Slack`        | Label for Slack social link                |
+| `ATLAS_FOOTER_CREDITS_TEXT` | —                            | Footer credits text; omit to hide          |
+| `ATLAS_FOOTER_CREDITS_URL`  | —                            | Footer credits link URL                    |
+| `ATLAS_FOOTER_CREDITS_ICON` | `heroicons-outline:cloud`    | Footer credits icon                        |
+| `ATLAS_FOOTER_TEXT`         | —                            | Footer text link label; omit to hide       |
+| `ATLAS_FOOTER_TEXT_URL`     | —                            | Footer text link URL                       |
+| `ATLAS_LOGO_LIGHT`          | `/logo-light.png`            | Light mode logo path (from public/)        |
+| `ATLAS_LOGO_DARK`           | `/logo-dark.png`             | Dark mode logo path                        |
+| `ATLAS_LOGO_DARK_BG`        | `/logo-dark-bg.png`          | Dark mode logo with background             |
+| `ATLAS_BASE_URL`            | `/`                          | Base URL path                              |
+| `APP_VERSION`               | —                            | Version chip next to title                 |
+| `CI_PAGES_URL`              | —                            | GitLab Pages URL; overrides ATLAS_BASE_URL |
 
 ## Work Guidance
 
 - Renderer changes require image rebuild (`cd atlasmd-renderer && docker compose build`)
 - Scaffold changes do not require image rebuild — content is mounted at runtime
 - Theme tokens, components, plugins, and CSS live in the renderer — not in consumer repos
-- Slack social link and footer are shared across all AtlasMD projects; do not make them project-specific
+- Social links and footer are env-var driven; each consumer passes its own URLs
 - GitLab social link is env-var driven; each consumer passes its own repo URL
 - Logo paths are env-var driven; Logo.vue reads from `runtimeConfig.public`
 

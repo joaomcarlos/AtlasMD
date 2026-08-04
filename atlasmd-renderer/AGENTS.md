@@ -7,7 +7,7 @@ markdown content from mounted `content/` and `public/` directories.
 
 ## Ownership
 
-Rendering engine subproject of `AtlasMD`. Consumed by other projects
+Rendering engine subproject of AtlasMD. Consumed by other projects
 via Docker image with volume-mounted content.
 
 ## Local Contracts
@@ -21,17 +21,24 @@ via Docker image with volume-mounted content.
 
 ### Environment variables
 
-| Variable             | Default                      | Purpose                                                                |
-| -------------------- | ---------------------------- | ---------------------------------------------------------------------- |
-| `ATLAS_TITLE`        | `Atlas`                      | Project name in header and browser title                               |
-| `ATLAS_GITLAB_URL`   | —                            | Gitlab repository URL for header social link; omit to hide gitlab link |
-| `ATLAS_GITLAB_LABEL` | `View the Gitlab repository` | Label for the gitlab social link                                       |
-| `ATLAS_LOGO_LIGHT`   | `/logo-light.png`            | Light mode logo path (from public/)                                    |
-| `ATLAS_LOGO_DARK`    | `/logo-dark.png`             | Dark mode logo path                                                    |
-| `ATLAS_LOGO_DARK_BG` | `/logo-dark-bg.png`          | Dark mode logo with background                                         |
-| `ATLAS_BASE_URL`     | `/`                          | Base URL path                                                          |
-| `APP_VERSION`        | —                            | Version chip next to title                                             |
-| `CI_PAGES_URL`       | —                            | GitLab Pages URL; overrides ATLAS_BASE_URL                             |
+| Variable                    | Default                      | Purpose                                                                |
+| --------------------------- | ---------------------------- | ---------------------------------------------------------------------- |
+| `ATLAS_TITLE`               | `Atlas`                      | Project name in header and browser title                               |
+| `ATLAS_GITLAB_URL`          | —                            | Gitlab repository URL for header social link; omit to hide gitlab link |
+| `ATLAS_GITLAB_LABEL`        | `View the Gitlab repository` | Label for the gitlab social link                                       |
+| `ATLAS_SLACK_URL`           | —                            | Slack channel URL for header social link; omit to hide slack link      |
+| `ATLAS_SLACK_LABEL`         | `Message us on Slack`        | Label for the slack social link                                        |
+| `ATLAS_FOOTER_CREDITS_TEXT` | —                            | Footer credits text; omit to hide credits                              |
+| `ATLAS_FOOTER_CREDITS_URL`  | —                            | Footer credits link URL                                                |
+| `ATLAS_FOOTER_CREDITS_ICON` | `heroicons-outline:cloud`    | Footer credits icon                                                    |
+| `ATLAS_FOOTER_TEXT`         | —                            | Footer text link label; omit to hide text link                         |
+| `ATLAS_FOOTER_TEXT_URL`     | —                            | Footer text link URL                                                   |
+| `ATLAS_LOGO_LIGHT`          | `/logo-light.png`            | Light mode logo path (from public/)                                    |
+| `ATLAS_LOGO_DARK`           | `/logo-dark.png`             | Dark mode logo path                                                    |
+| `ATLAS_LOGO_DARK_BG`        | `/logo-dark-bg.png`          | Dark mode logo with background                                         |
+| `ATLAS_BASE_URL`            | `/`                          | Base URL path                                                          |
+| `APP_VERSION`               | —                            | Version chip next to title                                             |
+| `CI_PAGES_URL`              | —                            | GitLab Pages URL; overrides ATLAS_BASE_URL                             |
 
 ### Content conventions
 
@@ -44,7 +51,7 @@ via Docker image with volume-mounted content.
 ## Work Guidance
 
 - Theme tokens, components, plugins, and CSS live here — not in consumer repos
-- Slack social link and footer are shared across all AtlasMD projects; do not make them project-specific
+- Social links and footer are env-var driven; each consumer passes its own URLs
 - Gitlab social link is env-var driven (`ATLAS_GITLAB_URL`); each consumer passes its own repo URL
 - Logo paths are env-var driven; Logo.vue reads from `runtimeConfig.public`
 - `nuxt.config.ts` has `buildContentRoutes()` that reads `./content` at startup; safe if content is missing (try/catch)

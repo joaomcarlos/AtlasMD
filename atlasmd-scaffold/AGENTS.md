@@ -6,7 +6,7 @@ Template for consumer projects. Contains content structure, public assets, and a
 
 ## Ownership
 
-Content-only subproject of `AtlasMD`. No JavaScript project — rendering is handled by the AtlasMD Docker image built from `atlasmd-renderer/`.
+Content-only subproject of AtlasMD. No JavaScript project — rendering is handled by the AtlasMD Docker image built from `atlasmd-renderer/`.
 
 ## Local Contracts
 
