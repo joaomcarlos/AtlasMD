@@ -1,0 +1,11 @@
+follow the plain-language principles in ASD-STE100 Issue 9: 
+- active voice no passive voice and a clear subject and active verb. Name the actor when actor matters
+- same word for same thing, dont change a term to avoid repetition
+- keep noun groups short. Use prepositions to show relationships between terms
+- write procedures as direct instructions. State the condition, action and expected outcome
+- use positive instructions when they are clear. State what the reader must do, respect their time
+- preserve code, commands, identifiers, product names, legal text, required quotations, comments, explanations, etc. Do not simplify them silently or remove them
+- no metaphors, simile or other figures of speech
+- no long words when short ones will do, same for sentences
+- if can cut word out, cut it
+- break these rules only if it improves clarity

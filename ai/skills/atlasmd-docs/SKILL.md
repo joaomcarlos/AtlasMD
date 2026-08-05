@@ -132,9 +132,9 @@ Look up the task you are performing. Read the listed sections from the standard 
 
 | Read | What it covers |
 | ---- | -------------- |
-| 1.3. Reviewer Responsibility | Identify guide type before reviewing |
+| 1.1. Guide Types | Identify guide type (User Guide only, Tech Guide only, or both) before reviewing |
 | 13. Quick Reference Checklist | Full pre-publish checklist |
-| 12. Maintenance (all) | Sync, ownership, review cycles, stale detection, automated checks, quality criteria |
+| 12. Maintenance (all) | Sync, ownership, review cycles, stale content, automated checks, quality criteria |
 | 6. Writing Style (all) | Voice, tone, human voice, no AI-sounding phrases |
 | 7. Accessibility (all) | Semantic structure, tables, images, contrast, keyboard, code blocks |
 
@@ -142,7 +142,7 @@ Look up the task you are performing. Read the listed sections from the standard 
 
 | Read | What it covers |
 | ---- | -------------- |
-| 1.3. Reviewer Responsibility | Identify guide type before scoring — do not penalize for absent sections |
+| 1.1. Guide Types | Identify guide type before scoring — do not penalize for absent sections |
 | 12.7. Quality Criteria | Accuracy, completeness, formatting, links, accessibility, discoverability |
 | 13. Quick Reference Checklist | Full checklist used as conformance criteria |
 | 3. Page Anatomy (all) | Structural conformance criteria |

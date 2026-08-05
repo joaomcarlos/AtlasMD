@@ -206,7 +206,7 @@ Accessibility is a requirement, not an enhancement. Every page must be usable wi
 - **Color and contrast** — WCAG 2.1 AA in both light and dark themes. 4.5:1 for normal text, 3:1 for large text. Code syntax highlighting must pass too. A color combination that passes in light mode may fail in dark mode — verify both.
 - **Keyboard navigation** — every interactive element reachable with Tab. Visible focus indicator — never remove the default focus outline without a replacement. Tab order follows reading order. Skip-to-content links on pages with long navigation.
 - **Code blocks** — focusable for horizontal scroll (`tabindex="0"` on `<pre>`). Text selection never disabled — readers copy code. Copy buttons have `aria-label`, not just an icon.
-- **Automated verification** — `axe-core` or `pa11y` on a schedule and before releases. Accessibility regressions are bugs.
+- **Automated verification** — accessibility regressions are bugs. Verify with a tool that checks the rendered output, not just the markdown source.
 
 **Impact:** The site works for readers with different abilities, devices, and network conditions. Automated checks catch regressions before they ship. The dark theme is verified, not assumed. A reader using a keyboard only, or a screen reader, or a monochrome display, or a high-contrast theme gets the same information as everyone else.
 
@@ -217,7 +217,7 @@ Accessibility is a requirement, not an enhancement. Every page must be usable wi
 - **Internal links are relative** (`/understanding/...`), not absolute (`https://site.com/understanding/...`). Relative links survive domain changes and version prefixes. Absolute links break.
 - **Cross-guide links** point to the correct guide. User Guide links to Tech Guide and vice versa, with a note explaining the jump.
 - **Source references use footnotes**, not inline links. Footnotes keep body prose clean and collect all source citations in the References section, where they can be checked, mapped to code files, and used for stale detection.
-- **Link checking is automated.** `lychee` or `markdown-link-check` runs on every pull request. A broken link blocks the merge.
+- **Link checking is automated.** Broken links never reach production.
 
 **Impact:** Links survive domain and version changes. Screen readers announce meaningful destinations. Broken links never reach production — they are caught in the PR.
 
@@ -261,20 +261,20 @@ Documentation decays. Code changes, pages do not, and the two drift apart. Maint
 - **Keep docs in sync.** A pull request that changes behavior includes the documentation update in the same pull request. Do not defer documentation to a follow-up. If the update is large, open a tracking issue in the same PR and link to it. Do not leave it untracked.
 - **Preserve existing content.** Overwrite only when inaccurate, outdated, or conflicting. When you overwrite, replace — do not leave the old version alongside the new. Maintain consistency with the rest of the documentation set.
 - **Ownership per section.** Recorded in `_dir.yml` or `CODEOWNERS` — one or the other, not both. The owner reviews accuracy first, then style. When ownership changes, update the record in the same change that transfers responsibility. A section without an owner is unmaintained — flag it in the build output.
-- **Review cycles.** Every page reviewed at least once per release cycle. A review checks accuracy, completeness, links, screenshots, and formatting. A page older than two release cycles without a review is flagged as stale.
-- **Stale content detection.** Source references (footnotes) map pages to code files. When the code changes since the page was last reviewed, the page is flagged. Stale pages stay published — hiding them leaves the reader with nothing. They carry a banner: "This page may be out of date. Last reviewed [date]." The banner links to the tracking issue or the owner. Remove the flag after a review confirms the page is current.
-- **Automated checks on every PR and on a schedule.**
+- **Review cycles.** Each page records its last review date. A page older than two release cycles without a review is stale. A review checks accuracy, completeness, links, screenshots, and formatting.
+- **Stale content.** A stale page stays published — hiding it leaves the reader with nothing. It carries a notice: "This page may be out of date. Last reviewed [date]." The notice links to the owner or tracking issue. The notice is removed once a review confirms the page is current.
+- **Automated checks.** Documentation is verified by automated checks:
 
-| Check           | Tool examples                   | What it catches                                      |
-| --------------- | ------------------------------- | ---------------------------------------------------- |
-| Link checking   | `lychee`, `markdown-link-check` | Broken internal and external links                   |
-| Accessibility   | `axe-core`, `pa11y`             | Missing alt text, contrast failures, keyboard issues |
-| Markdown lint   | `markdownlint`                  | Heading order, trailing whitespace, list style       |
-| Spelling        | `cspell`, `aspell`              | Typos and inconsistent terms                         |
-| Prose lint      | `vale`                          | AI-sounding phrases, passive voice, banned words     |
-| Screenshot diff | `playwright`, `puppeteer`       | UI changes that make screenshots stale               |
+| Check           | What it verifies                                     |
+| --------------- | ---------------------------------------------------- |
+| Link checking   | Broken internal and external links                   |
+| Accessibility   | Missing alt text, contrast failures, keyboard issues |
+| Markdown lint   | Heading order, trailing whitespace, list style       |
+| Spelling        | Typos and inconsistent terms                         |
+| Prose lint      | AI-sounding phrases, passive voice, banned words     |
+| Screenshot diff | UI changes that make screenshots stale               |
 
-Fast checks (link, markdown, spelling, prose) run on every PR — they finish in seconds and catch the most common errors. Slow checks (accessibility, screenshot diff) run on a schedule or before a release — they require a built site and take longer. A failing check blocks the merge. Do not merge with known failures and track them as issues.
+Configure spelling and prose linters with a project dictionary so domain terms and product names are not flagged.
 
 **Impact:** Drift is caught before the reader sees it. Ownership is explicit — no "who wrote this?" mysteries. Stale pages are visible, not hidden. Automated checks enforce the standard consistently across every contributor, every PR, every time.
 

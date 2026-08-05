@@ -10,7 +10,7 @@ A documentation set built to this standard is one of three configurations:
 
 - **User Guide only** — for end users and operators who interact with the system but do not read code. Focuses on how-to guides, workflows, and visual instructions.
 - **Tech Guide only** — for developers and integrators who need to understand internals, APIs, data models, and configuration.
-- **Both User Guide and Tech Guide** — the User Guide is the main documentation set. The Tech Guide lives under a "Developers" section within the User Guide's navigation. This is the pattern used by projects like CBS, where end-user documentation is primary and developer documentation is nested inside it.
+- **Both User Guide and Tech Guide** — the User Guide is the main documentation set. The Tech Guide lives under a "Developers" section within the User Guide's navigation. End-user documentation is primary; developer documentation is nested inside it.
 
 When a project has both guides, the User Guide is the entry point. A reader browsing the documentation lands on user-facing content first. The Tech Guide is reachable from a "Developers" section in the navigation, not as a peer top-level track.
 
@@ -36,15 +36,7 @@ A user guide page that needs technical depth links to the relevant tech guide pa
 
 Do not duplicate content across guides. If the same information belongs in both, write it once in the guide it primarily serves and link to it from the other.
 
-### 1.3. Reviewer Responsibility
-
-When reviewing documentation against this standard, the reviewer must first identify which configuration the project uses (User Guide only, Tech Guide only, or both). The review criteria adapt to the configuration:
-
-- A User Guide only project is not penalized for lacking API reference pages, data model pages, or other Tech Guide page types.
-- A Tech Guide only project is not penalized for lacking how-to guides, screenshots, or other User Guide page types.
-- A project with both guides is reviewed against the full standard, with each guide checked for its respective page types and audience focus.
-
-### 1.4. Shared Rules
+### 1.3. Shared Rules
 
 Both guides follow the same structural rules, writing style, and information elements defined below. They differ in audience and content depth, not in format.
 
@@ -1072,42 +1064,33 @@ Rules:
 
 ### 12.4. Review Cycles
 
-Documentation drifts from the system over time. Regular reviews catch the drift before the reader does.
+Documentation drifts from the system over time. Each page records its last review date in frontmatter or a central review log. A page older than two release cycles without a review is stale (see 12.5).
+
+A review checks: accuracy (does the page match the system), completeness (are new features documented), links (do they still resolve), screenshots (are they current), and formatting (does the page meet the standard).
+
+### 12.5. Stale Content
+
+A page is stale when the code it documents has changed since the page was last reviewed. Stale pages are still published — hiding them leaves the reader with nothing.
 
 Rules:
-- Review every page at least once per release cycle. A review is not a rewrite — it is a check that the page still matches the system.
-- A review checks: accuracy (does the page match the system), completeness (are new features documented), links (do they still resolve), screenshots (are they current), and formatting (does the page meet the standard).
-- Record the last review date in the page frontmatter or in a central review log. A page older than two release cycles without a review is flagged as stale.
-- Schedule full documentation reviews after major releases. A major release changes enough that a page-by-page review is the only reliable way to catch every drift.
-
-### 12.5. Stale Content Detection
-
-A page is stale when the code it documents has changed since the page was last reviewed. Detect stale pages automatically so they are reviewed before they mislead.
-
-Rules:
-- Flag a page as stale when the source code it references has changed since the page was last reviewed. Use the source references (see 5.7) to map pages to code files, then compare commit dates.
-- A stale page is still published. It is flagged for review, not hidden. Hiding it leaves the reader with nothing.
-- Display a stale banner on the page: "This page may be out of date. Last reviewed [date]." The banner links to the tracking issue or the owner.
-- Remove the stale flag after a review confirms the page is current.
+- A stale page carries a visible notice: "This page may be out of date. Last reviewed [date]."
+- The notice links to the owner or tracking issue so the reader can report or follow up.
+- Once a review confirms the page is current, the notice is removed.
 
 ### 12.6. Automated Checks
 
-Run automated checks on every documentation change and on a schedule. Automated checks catch what a reviewer misses.
+Documentation is verified by automated checks. The standard requires checks for:
 
-| Check           | Tool examples                   | What it catches                                      |
-| --------------- | ------------------------------- | ---------------------------------------------------- |
-| Link checking   | `lychee`, `markdown-link-check` | Broken internal and external links                   |
-| Accessibility   | `axe-core`, `pa11y`             | Missing alt text, contrast failures, keyboard issues |
-| Markdown lint   | `markdownlint`                  | Heading order, trailing whitespace, list style       |
-| Spelling        | `cspell`, `aspell`              | Typos and inconsistent terms                         |
-| Prose lint      | `vale`                          | AI-sounding phrases, passive voice, banned words     |
-| Screenshot diff | `playwright`, `puppeteer`       | UI changes that make screenshots stale               |
+| Check           | What it verifies                                     |
+| --------------- | ---------------------------------------------------- |
+| Link checking   | Broken internal and external links                   |
+| Accessibility   | Missing alt text, contrast failures, keyboard issues |
+| Markdown lint   | Heading order, trailing whitespace, list style       |
+| Spelling        | Typos and inconsistent terms                         |
+| Prose lint      | AI-sounding phrases, passive voice, banned words     |
+| Screenshot diff | UI changes that make screenshots stale               |
 
-Rules:
-- Run the fast checks (link, markdown, spelling, prose) on every pull request. They finish in seconds and catch the most common errors.
-- Run the slow checks (accessibility, screenshot diff) on a schedule or before a release. They require a built site and take longer.
-- A failing check blocks the merge. Do not merge with known failures and track them as issues.
-- Configure the spelling and prose linters with a project dictionary. Add domain terms and product names so they are not flagged.
+Configure spelling and prose linters with a project dictionary so domain terms and product names are not flagged.
 
 ### 12.7. Quality Criteria
 

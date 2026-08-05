@@ -323,6 +323,26 @@ If the framework does not support MDC, use the portable fallback formats describ
 - [ ] **Glossary**: Terms cross-referenced when introduced for the first time.
 - [ ] **Directory metadata**: `_dir.yml` has `title` and `description` in every directory.
 
+## Automated Checks
+
+Run automated checks as part of the review workflow. The standard requires these checks; the tools below are examples that satisfy each check.
+
+| Check           | Tool examples                   | What it catches                                      |
+| --------------- | ------------------------------- | ---------------------------------------------------- |
+| Link checking   | `lychee`, `markdown-link-check` | Broken internal and external links                   |
+| Accessibility   | `axe-core`, `pa11y`             | Missing alt text, contrast failures, keyboard issues |
+| Markdown lint   | `markdownlint`                  | Heading order, trailing whitespace, list style       |
+| Spelling        | `cspell`, `aspell`              | Typos and inconsistent terms                         |
+| Prose lint      | `vale`                          | AI-sounding phrases, passive voice, banned words     |
+| Screenshot diff | `playwright`, `puppeteer`       | UI changes that make screenshots stale               |
+
+Guidelines:
+- Run fast checks (link, markdown, spelling, prose) on every pull request. They finish in seconds and catch the most common errors.
+- Run slow checks (accessibility, screenshot diff) on a schedule or before a release. They require a built site and take longer.
+- A failing check blocks the merge. Do not merge with known failures — track them as issues.
+- Configure spelling and prose linters with a project dictionary. Add domain terms and product names so they are not flagged.
+- For link checking in AtlasMD projects, prefer the bundled scripts in the `atlasmd-docs-link-checker` skill (`fix-common-links.py` then `check-broken-links.py`).
+
 ## Improvement Workflow
 1. **Analyze**: Identify issues or gaps by cross-referencing docs with actual code implementation and the AtlasMD Documentation Standard.
 2. **ReStructure**: Improve hierarchy and organization without changing core content.
