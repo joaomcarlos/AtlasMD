@@ -33,8 +33,26 @@ export interface AtlasConfig {
 }
 
 const DEFAULTS: AtlasConfig = {
-  title: 'Atlas',
+  title: 'AtlasMD',
   baseUrl: '/',
+  footer: {
+    credits: {
+      text: 'AtlasMD',
+      url: 'https://github.com/joaomcarlos/AtlasMD',
+      icon: 'heroicons-outline:cloud',
+    },
+    text: {
+      label: 'Built with passion by the AtlasMD team 🚀',
+      url: 'https://github.com/joaomcarlos/AtlasMD',
+    },
+  },
+  socials: [
+    {
+      url: 'https://github.com/joaomcarlos/AtlasMD',
+      label: 'View the AtlasMD repository',
+      icon: 'simple-icons:github',
+    },
+  ],
 }
 
 /**

@@ -17,10 +17,20 @@ if (atlasConfig.footer?.credits?.text) {
     text: atlasConfig.footer.credits.text,
     href: atlasConfig.footer.credits.url,
   }
+} else {
+  footer.credits = {
+    icon: 'heroicons-outline:cloud',
+    text: 'AtlasMD',
+    href: 'https://github.com/joaomcarlos/AtlasMD',
+  }
 }
 if (atlasConfig.footer?.text?.label) {
   footer.textLinks = [
     { text: atlasConfig.footer.text.label, href: atlasConfig.footer.text.url, target: '_blank', rel: 'noopener' }
+  ]
+} else {
+  footer.textLinks = [
+    { text: 'Built with passion by the AtlasMD team 🚀', href: 'https://github.com/joaomcarlos/AtlasMD', target: '_blank', rel: 'noopener' }
   ]
 }
 
