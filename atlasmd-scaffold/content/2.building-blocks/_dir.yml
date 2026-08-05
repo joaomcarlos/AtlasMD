@@ -1,3 +1,4 @@
 title: Building Blocks
+description: Components and rendering elements — notes, figures, fields, cards, mermaid diagrams, and more.
 icon: heroicons:cube-transparent
-navigation.redirect: /building-blocks/components/note
+navigation.redirect: /building-blocks/note

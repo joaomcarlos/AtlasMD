@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Template for consumer projects. Contains content structure, public assets, and a docker-compose.yml that mounts into the `atlasmd:latest` image. Also serves as AtlasMD's own self-documentation.
+Template for consumer projects. Contains content structure, public assets, and a compose.yml that mounts into the `ghcr.io/joaomcarlos/atlasmd:latest` image. Also serves as AtlasMD's own self-documentation.
 
 ## Ownership
 
@@ -16,16 +16,15 @@ Content-only subproject of AtlasMD. No JavaScript project — rendering is handl
 content/             Markdown files and _dir.yml navigation configs
 public/              Favicons, logos, static images (served at root URL)
 config.toml          Consumer configuration (title, social links, footer)
-docker-compose.yml   Service definition for the atlasmd:latest image
+compose.yml          Service definition for the ghcr.io/joaomcarlos/atlasmd:latest image
 ```
 
 ### Docker Service
 
-- Image: `ghcr.io/joaomcarlos/atlasmd:latest` (pull from GHCR; `docker compose up --build` builds locally from `../atlasmd-renderer` for development)
+- Image: `ghcr.io/joaomcarlos/atlasmd:latest` (pull from GHCR)
 - Port 47145 → container 47145 (web)
 - Port 47146 → container 4000 (HMR websocket)
 - Mounts `content/` → `/app/content`, `public/` → `/app/public`, `config.toml` → `/app/config.toml`
-- Build context: `../atlasmd-renderer`
 
 ### Content Conventions
 
@@ -50,10 +49,11 @@ docker compose up
 
 ## Child DOX Index
 
-- `content/` — AtlasMD self-documentation (4 sections: getting-started, building-blocks, configuration, development)
+- `content/` — AtlasMD self-documentation (5 sections: getting-started, building-blocks, configuration, development, release-notes)
   - `1.getting-started/` — Overview and integration guide
   - `2.building-blocks/` — Live-rendered component reference (note, side-note, fig, field, simple-card, example-component, mermaid, docus-builtins, footnotes)
   - `3.configuration/` — Configuration file, content conventions, customization
   - `4.development/` — Building the image, running locally, project structure
+  - `5.release-notes/` — Published image versions (hidden from navigation)
 - `public/` — Favicons, logos, static images
 - `config.toml` — Consumer configuration (title, social links, footer)

@@ -356,12 +356,12 @@ AtlasMD/
 ├── atlasmd-doc-standards/   # The documentation standard (framework-agnostic)
 │   └── DOCUMENTATION-STANDARD.md   1,165 lines, 13 sections
 │
-├── atlasmd-renderer/        # The rendering engine — builds the `atlasmd:latest` image
+├── atlasmd-renderer/        # The rendering engine — builds the `ghcr.io/joaomcarlos/atlasmd:latest` image
 │   ├── components/          #   Vue components (Logo + MDC content components)
 │   ├── plugins/             #   Client plugins (scroll-behavior, sidebar-follow)
 │   ├── assets/css/          #   Base styles and image CSS
 │   ├── Dockerfile           #   Image definition
-│   └── docker-compose.yml
+│   └── compose.yml
 │
 ├── atlasmd-scaffold/        # Template for consumer projects — copy this to start
 │   ├── content/             #   Markdown files + _dir.yml navigation
@@ -370,7 +370,7 @@ AtlasMD/
 │   │   ├── 3.configuration/
 │   │   └── 4.development/
 │   ├── public/              #   Favicons, logos, static images
-│   └── docker-compose.yml
+│   └── compose.yml
 │
 └── ai/                      # AI skills for working with the standard
     ├── agents.md
@@ -383,16 +383,16 @@ AtlasMD/
 
 ## atlasmd-renderer
 
-The rendering engine. Builds the `atlasmd:latest` Docker image. Contains every theme token, every Vue component, every plugin, every line of CSS, and the Nuxt config. Consumer repos never touch this. They consume it through the image. You use the engine, you do not modify it.
+The rendering engine. Builds the `ghcr.io/joaomcarlos/atlasmd:latest` Docker image. Contains every theme token, every Vue component, every plugin, every line of CSS, and the Nuxt config. Consumer repos never touch this. They consume it through the image. You use the engine, you do not modify it.
 
 ### Build the Image
 
 ```bash
 cd atlasmd-renderer
-docker compose build
+docker build -t ghcr.io/joaomcarlos/atlasmd:latest .
 ```
 
-This produces `atlasmd:latest`. You do this once. You do it again only when you upgrade the renderer.
+This produces `ghcr.io/joaomcarlos/atlasmd:latest`. You do this once. You do it again only when you upgrade the renderer.
 
 The Dockerfile is deliberately simple — no multi-stage builds, no build-time secrets, no surprises:
 
@@ -442,10 +442,10 @@ icon = "simple-icons:gitlab"
 
 #### Branding
 
-| Field               | Default | Purpose                                  |
-| ------------------- | ------- | ---------------------------------------- |
-| `title`             | `Atlas` | Project name in header and browser title |
-| `APP_VERSION` (env) | —       | Version chip next to title (build arg)   |
+| Field               | Default   | Purpose                                  |
+| ------------------- | --------- | ---------------------------------------- |
+| `title`             | `AtlasMD` | Project name in header and browser title |
+| `APP_VERSION` (env) | —         | Version chip next to title (build arg)   |
 
 Logos are convention-based fixed filenames in `public/` — no config needed:
 
@@ -504,15 +504,15 @@ To rebuild the image after renderer changes (components, CSS, plugins, Nuxt conf
 
 ```bash
 cd atlasmd-renderer
-docker compose build
+docker build -t ghcr.io/joaomcarlos/atlasmd:latest .
 ```
 
 #### Ports
 
 | Host port | Container port | Purpose                    |
 | --------- | -------------- | -------------------------- |
-| `47145`    | `3003`         | Web server (HTTP)          |
-| `47146`    | `4000`         | HMR websocket (hot reload) |
+| `47145`   | `3003`         | Web server (HTTP)          |
+| `47146`   | `4000`         | HMR websocket (hot reload) |
 
 #### Renderer vs. Scaffold
 
@@ -522,7 +522,7 @@ docker compose build
 
 ## atlasmd-scaffold
 
-The template for consumer projects. Contains the content structure, public assets, and a `docker-compose.yml` that mounts into the `atlasmd:latest` image. Also serves as AtlasMD's own self-documentation — the scaffold's `content/` folder is AtlasMD documenting itself, and it is a live, end-to-end reference for every convention the standard defines.
+The template for consumer projects. Contains the content structure, public assets, and a `compose.yml` that mounts into the `ghcr.io/joaomcarlos/atlasmd:latest` image. Also serves as AtlasMD's own self-documentation — the scaffold's `content/` folder is AtlasMD documenting itself, and it is a live, end-to-end reference for every convention the standard defines.
 
 ### Quick Start
 
@@ -542,10 +542,10 @@ Open **http://localhost:47145**. That is AtlasMD rendering its own docs, by its 
 
 ```bash
 cd atlasmd-renderer
-docker compose build
+docker build -t ghcr.io/joaomcarlos/atlasmd:latest .
 ```
 
-Produces `atlasmd:latest`. Once per renderer version.
+Produces `ghcr.io/joaomcarlos/atlasmd:latest`. Once per renderer version.
 
 #### 2. Copy the Scaffold
 
@@ -557,14 +557,14 @@ cp -r /path/to/AtlasMD/atlasmd-scaffold /path/to/your-project/docs
 
 #### 3. Reference the Compose File
 
-In your project's main `docker-compose.yml`, include the scaffold's compose file:
+In your project's main `compose.yml`, include the scaffold's compose file:
 
 ```yaml
 include:
-  - docs/docker-compose.yml
+  - docs/compose.yml
 ```
 
-Or copy the service definition from `atlasmd-scaffold/docker-compose.yml` directly into your compose file and adjust the paths.
+Or copy the service definition from `atlasmd-scaffold/compose.yml` directly into your compose file and adjust the paths.
 
 #### 4. Configure for Your Project
 
@@ -626,7 +626,7 @@ Logos are convention-based — drop `logo-light-mode.png`, `logo-dark-mode.png`,
 
 ### Consumer Checklist
 
-- [ ] `atlasmd:latest` image built and available
+- [ ] `ghcr.io/joaomcarlos/atlasmd:latest` image built and available
 - [ ] Scaffold copied into your project (e.g. `docs/`)
 - [ ] Compose file referenced via `include:` or service definition copied
 - [ ] `config.toml` set for your project

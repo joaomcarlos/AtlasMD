@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Docus/Nuxt documentation rendering engine. Builds the `atlasmd:latest` Docker image that serves
+Docus/Nuxt documentation rendering engine. Builds the `ghcr.io/joaomcarlos/atlasmd:latest` Docker image that serves
 markdown content from mounted `content/` and `public/` directories.
 
 ## Ownership
@@ -28,7 +28,7 @@ Consumer configuration is read from a TOML file at `/app/config.toml`, loaded by
 
 | Field                 | Default                   | Purpose                                                              |
 | --------------------- | ------------------------- | -------------------------------------------------------------------- |
-| `title`               | `Atlas`                   | Project name in header and browser title                             |
+| `title`               | `AtlasMD`                 | Project name in header and browser title                             |
 | `baseUrl`             | `/`                       | Base URL path; `CI_PAGES_URL` overrides at deploy time               |
 | `socials[].url`       | —                         | Social link URL; one `[[socials]]` block per link                    |
 | `socials[].label`     | —                         | Label for the social link                                            |

@@ -1,3 +1,4 @@
 title: Development
+description: How to develop AtlasMD itself, build the image, and run locally.
 icon: mdi:code-tags
 navigation.redirect: /development/building-the-image

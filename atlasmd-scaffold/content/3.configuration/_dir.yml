@@ -1,3 +1,4 @@
 title: Configuration
+description: TOML config file, content conventions, logos, and customization.
 icon: heroicons:cog-6-tooth
 navigation.redirect: /configuration/overview

@@ -1,19 +1,11 @@
 services:
   atlasmd-docs:
     image: ghcr.io/joaomcarlos/atlasmd:latest
-    # Local development: docker compose up --build uses the renderer source.
-    # Consumer projects: remove the build block and just pull the image.
-    build:
-      context: ../atlasmd-renderer
-      dockerfile: Dockerfile
-      args:
-        APP_VERSION: dev
     restart: on-failure
     ports:
       - 47145:47145
       - 47146:4000
     environment:
-      - APP_VERSION=dev
       - PORT=47145
     volumes:
       - ./content:/app/content
