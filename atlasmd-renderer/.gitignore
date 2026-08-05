@@ -11,3 +11,4 @@ sw.*
 .env
 .output
 _tmp
+config.value.json

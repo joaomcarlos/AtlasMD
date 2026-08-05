@@ -1,19 +1,16 @@
-import { atlasConfig } from './config'
+// This file is shipped to the client. It must not import config.ts (which uses
+// node:fs). Instead it imports config.value.json, a plain JSON file generated
+// by config.ts at build startup.
+import atlasConfig from './config.value.json'
 
 // https://github.com/nuxt-themes/docus/blob/main/nuxt.schema.ts
 const socials: Record<string, { label: string; icon: string; href: string }> = {}
 for (const social of atlasConfig.socials ?? []) {
-  // Key by icon name (e.g. "simple-icons:gitlab" → "gitlab"); falls back to index
   const key = social.icon.split(':').pop() || String(Object.keys(socials).length)
-  socials[key] = {
-    label: social.label,
-    icon: social.icon,
-    href: social.url,
-  }
+  socials[key] = { label: social.label, icon: social.icon, href: social.url }
 }
 
 const footer: Record<string, unknown> = {}
-// Footer credits — only include when configured
 if (atlasConfig.footer?.credits?.text) {
   footer.credits = {
     icon: atlasConfig.footer.credits.icon || 'heroicons-outline:cloud',
@@ -21,15 +18,9 @@ if (atlasConfig.footer?.credits?.text) {
     href: atlasConfig.footer.credits.url,
   }
 }
-// Footer text link — only include when configured
 if (atlasConfig.footer?.text?.label) {
   footer.textLinks = [
-    {
-      text: atlasConfig.footer.text.label,
-      href: atlasConfig.footer.text.url,
-      target: '_blank',
-      rel: 'noopener'
-    }
+    { text: atlasConfig.footer.text.label, href: atlasConfig.footer.text.url, target: '_blank', rel: 'noopener' }
   ]
 }
 
@@ -38,21 +29,9 @@ export default defineAppConfig({
     title: atlasConfig.title,
     description: 'Technical documentation.',
     socials,
-    aside: {
-      level: 0,
-      collapsed: false,
-      exclude: []
-    },
-    main: {
-      padded: true,
-      fluid: true
-    },
-    header: {
-      logo: true,
-      showLinkIcon: true,
-      exclude: [],
-      fluid: true
-    },
-    footer
+    aside: { level: 0, collapsed: false, exclude: [] },
+    main: { padded: true, fluid: true },
+    header: { logo: true, showLinkIcon: true, exclude: [], fluid: true },
+    footer,
   }
 })

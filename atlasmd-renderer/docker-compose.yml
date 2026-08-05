@@ -29,9 +29,6 @@ services:
           path: ./nuxt.config.ts
           target: /app/nuxt.config.ts
         - action: sync+restart
-          path: ./app.config.ts
-          target: /app/app.config.ts
-        - action: sync+restart
           path: ./config.ts
           target: /app/config.ts
         - action: sync+restart

@@ -3,6 +3,12 @@ import type { Lang } from 'shiki-es'
 import type { PropType } from 'vue'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
+// Fragment component (multiple root nodes: v-if/v-else div + <Teleport>).
+// Disable attribute inheritance — Vue can't auto-attach fallthrough attrs
+// to a fragment root, which causes "Extraneous non-props attributes" warnings
+// when MDC passes meta from fenced code block metadata.
+defineOptions({ inheritAttrs: false })
+
 const props = defineProps({
   code: { type: String, default: '' },
   language: { type: String as PropType<Lang>, default: null },

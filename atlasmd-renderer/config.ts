@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { parse as parseTOML } from 'smol-toml'
+import { writeFileSync } from 'node:fs'
 
 export interface AtlasFooterCredits {
   text: string
@@ -62,3 +63,7 @@ function loadConfig(): AtlasConfig {
 }
 
 export const atlasConfig = loadConfig()
+
+// Write the loaded config as a plain JSON file so app.config.ts can import it
+// without pulling node:fs into the client bundle.
+writeFileSync(resolve('./config.value.json'), JSON.stringify(atlasConfig))
