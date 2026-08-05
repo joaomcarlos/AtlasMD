@@ -32,7 +32,7 @@ Consumer configuration is read from a TOML file at `/app/config.toml` (loaded by
 | Field / Variable      | Default                   | Purpose                                        |
 | --------------------- | ------------------------- | ---------------------------------------------- |
 | `title`               | `Atlas`                   | Project name in header and browser title       |
-| `base-url`            | `/`                       | Base URL path                                  |
+| `baseUrl`             | `/`                       | Base URL path                                  |
 | `socials[].url`       | —                         | Social link URL; one `[[socials]]` per link    |
 | `socials[].label`     | —                         | Label for the social link                      |
 | `socials[].icon`      | —                         | Iconify icon name (e.g. `simple-icons:gitlab`) |
@@ -42,7 +42,7 @@ Consumer configuration is read from a TOML file at `/app/config.toml` (loaded by
 | `footer.text.label`   | —                         | Footer text link label; omit to hide           |
 | `footer.text.url`     | —                         | Footer text link URL                           |
 | `APP_VERSION` (env)   | —                         | Version chip next to title (build arg)         |
-| `CI_PAGES_URL` (env)  | —                         | GitLab Pages URL; overrides `base-url`         |
+| `CI_PAGES_URL` (env)  | —                         | GitLab Pages URL; overrides `baseUrl`          |
 | `PORT` (env)          | `3003`                    | Port the dev server listens on                 |
 
 Logos are convention-based fixed filenames in `public/` — no config needed: `logo-light-mode.png`, `logo-dark-mode.png`, `logo-dark-mode-bg.png`.

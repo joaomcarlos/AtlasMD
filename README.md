@@ -437,7 +437,7 @@ icon = "simple-icons:gitlab"
 # label = "Built by MyCompany"
 # url = "https://example.com"
 
-# base-url = "/"
+# baseUrl = "/"
 ```
 
 #### Branding
@@ -475,11 +475,11 @@ Logos are convention-based fixed filenames in `public/` — no config needed:
 
 #### Deployment
 
-| Field / Variable     | Default | Purpose                                                                |
-| -------------------- | ------- | ---------------------------------------------------------------------- |
-| `base-url`           | `/`     | Base URL path (for GitLab Pages subpaths)                              |
-| `CI_PAGES_URL` (env) | —       | GitLab Pages URL; set automatically by GitLab CI; overrides `base-url` |
-| `PORT` (env)         | `3003`  | Port the dev server listens on                                         |
+| Field / Variable     | Default | Purpose                                                               |
+| -------------------- | ------- | --------------------------------------------------------------------- |
+| `baseUrl`            | `/`     | Base URL path (for GitLab Pages subpaths)                             |
+| `CI_PAGES_URL` (env) | —       | GitLab Pages URL; set automatically by GitLab CI; overrides `baseUrl` |
+| `PORT` (env)         | `3003`  | Port the dev server listens on                                        |
 
 ### Runtime Mounts
 
@@ -614,7 +614,7 @@ icon = "simple-icons:gitlab"
 | `socials[].icon`      | Iconify icon name                         | No                   |
 | `footer.credits.text` | Footer credits text                       | No — omit to hide    |
 | `footer.text.label`   | Footer text link label                    | No — omit to hide    |
-| `base-url`            | Base URL path (for GitLab Pages subpaths) | No — defaults to `/` |
+| `baseUrl`             | Base URL path (for GitLab Pages subpaths) | No — defaults to `/` |
 
 Logos are convention-based — drop `logo-light-mode.png`, `logo-dark-mode.png`, and `logo-dark-mode-bg.png` into `public/` (no config needed). `APP_VERSION` stays an env var / build arg.
 

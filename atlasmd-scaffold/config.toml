@@ -26,4 +26,4 @@ icon = "simple-icons:github"
 # url = "https://example.com"
 
 # Base URL path (for GitLab Pages subpaths). CI_PAGES_URL overrides this at deploy time.
-# base-url = "/"
+# baseUrl = "/"

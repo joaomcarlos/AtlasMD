@@ -29,7 +29,7 @@ Consumer configuration is read from a TOML file at `/app/config.toml`, loaded by
 | Field                 | Default                   | Purpose                                                              |
 | --------------------- | ------------------------- | -------------------------------------------------------------------- |
 | `title`               | `Atlas`                   | Project name in header and browser title                             |
-| `base-url`            | `/`                       | Base URL path; `CI_PAGES_URL` overrides at deploy time               |
+| `baseUrl`             | `/`                       | Base URL path; `CI_PAGES_URL` overrides at deploy time               |
 | `socials[].url`       | —                         | Social link URL; one `[[socials]]` block per link                    |
 | `socials[].label`     | —                         | Label for the social link                                            |
 | `socials[].icon`      | —                         | Iconify icon name (e.g. `simple-icons:gitlab`, `simple-icons:slack`) |
@@ -43,11 +43,11 @@ Logos are convention-based fixed filenames in `public/` — no config needed: `l
 
 #### Environment variables (CI/build-driven only)
 
-| Variable       | Default | Purpose                                                |
-| -------------- | ------- | ------------------------------------------------------ |
-| `APP_VERSION`  | —       | Version chip next to title (build arg)                 |
-| `CI_PAGES_URL` | —       | GitLab Pages URL; set by GitLab CI; overrides base-url |
-| `PORT`         | `3003`  | Port the dev server listens on                         |
+| Variable       | Default | Purpose                                               |
+| -------------- | ------- | ----------------------------------------------------- |
+| `APP_VERSION`  | —       | Version chip next to title (build arg)                |
+| `CI_PAGES_URL` | —       | GitLab Pages URL; set by GitLab CI; overrides baseUrl |
+| `PORT`         | `3003`  | Port the dev server listens on                        |
 
 ### Content conventions
 
