@@ -1,6 +1,8 @@
 services:
   atlasmd-docs:
-    image: atlasmd:latest
+    image: ghcr.io/joaomcarlos/atlasmd:latest
+    # Local development: docker compose up --build uses the renderer source.
+    # Consumer projects: remove the build block and just pull the image.
     build:
       context: ../atlasmd-renderer
       dockerfile: Dockerfile

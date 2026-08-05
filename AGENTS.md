@@ -10,12 +10,13 @@ Standalone project. Two subprojects:
 
 - `atlasmd-renderer/` — builds the `atlasmd:latest` Docker image
 - `atlasmd-scaffold/` — template for consumer projects (content + public + docker-compose)
+- `.github/workflows/docker-publish.yml` — publishes the image to `ghcr.io/joaomcarlos/atlasmd` on push to main
 
 ## Local Contracts
 
 ### Consumer Integration
 
-Consumer projects copy `atlasmd-scaffold/` and reference its `docker-compose.yml` from their main compose file. They mount `content/`, `public/`, and `config.toml` into the `atlasmd:latest` image.
+Consumer projects copy `atlasmd-scaffold/` and reference its `docker-compose.yml` from their main compose file. They mount `content/`, `public/`, and `config.toml` into the `ghcr.io/joaomcarlos/atlasmd:latest` image (published automatically on push to main; pull with `docker pull ghcr.io/joaomcarlos/atlasmd:latest`).
 
 ### Runtime Mounts
 
@@ -49,8 +50,10 @@ Logos are convention-based fixed filenames in `public/` — no config needed: `l
 
 ## Work Guidance
 
-- Renderer changes require image rebuild (`cd atlasmd-renderer && docker compose build`)
+- Renderer changes require image rebuild (`cd atlasmd-renderer && docker compose build`) and a push to main to publish to ghcr.io
 - Scaffold changes do not require image rebuild — content is mounted at runtime
+- The published image lives at `ghcr.io/joaomcarlos/atlasmd`; tags are `:latest` and `:sha-<short>`
+- First publish: flip the package to public manually at https://github.com/users/joaomcarlos/packages/container/atlasmd/settings (the workflow attempts this via API but may 404 on first run)
 - Theme tokens, components, plugins, and CSS live in the renderer — not in consumer repos
 - Social links and footer are config-driven; each consumer sets its own `[[socials]]` and `[footer]` in `config.toml`
 - Social links are generic — consumer picks url, label, and Iconify icon per link

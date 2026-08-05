@@ -21,6 +21,7 @@ docker-compose.yml   Service definition for the atlasmd:latest image
 
 ### Docker Service
 
+- Image: `ghcr.io/joaomcarlos/atlasmd:latest` (pull from GHCR; `docker compose up --build` builds locally from `../atlasmd-renderer` for development)
 - Port 47145 → container 47145 (web)
 - Port 47146 → container 4000 (HMR websocket)
 - Mounts `content/` → `/app/content`, `public/` → `/app/public`, `config.toml` → `/app/config.toml`
