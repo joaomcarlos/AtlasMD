@@ -44,8 +44,8 @@ Record the project type and present/absent sections at the top of the report.
 
 Launch a background sub-agent to run the link-checking scripts from the `atlasmd-docs-link-checker` skill. The sub-agent should:
 
-1. Run `fix-common-links.py` first (to normalize links and reduce false positives)
-2. Run `check-broken-links.py` second (to find actually broken links)
+1. Run `uv run ai/skills/atlasmd-docs-link-checker/fix-common-links.py --docs-root <content-dir>` first (to normalize links and reduce false positives)
+2. Run `uv run ai/skills/atlasmd-docs-link-checker/check-broken-links.py --docs-root <content-dir>` second (to find actually broken links)
 3. Return: total links checked, number of OK links, number of broken links, and the full list of broken links with file, line, section, resolved URL, and failure type
 
 While the link checker runs in the background, proceed with the content and structure analysis (Steps 3-5). Collect the link checker results when the sub-agent completes.

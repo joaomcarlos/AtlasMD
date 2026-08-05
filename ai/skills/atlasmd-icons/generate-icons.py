@@ -24,7 +24,7 @@ in a consumer project's public/ directory:
 
 Usage:
   uv run generate-icons.py --source <path-to-icon> --public <path-to-public-dir>
-  python3 generate-icons.py --source icon.png --public ../atlasmd-scaffold/public
+  uv run generate-icons.py --source icon.png --public ../atlasmd-scaffold/public --no-bg-removal
 
 Options:
   --source PATH        Path to the source app icon (any size, PNG/JPG/WebP/SVG*)
@@ -41,9 +41,9 @@ Options:
 * SVG requires ImageMagick or rsvg-convert; Pillow alone cannot read SVG.
 
 Requirements:
+  - uv (the script declares its own dependencies via inline metadata;
+    `uv run` installs Pillow and rembg automatically into an ephemeral environment)
   - Python 3.10+
-  - Pillow (pip install Pillow)
-  - rembg (pip install rembg) — only needed if background removal is not skipped
 """
 
 from __future__ import annotations
@@ -55,7 +55,10 @@ from pathlib import Path
 try:
     from PIL import Image
 except ImportError:
-    print("Pillow is required: pip install Pillow", file=sys.stderr)
+    print(
+        "Pillow is required. Run with `uv run` to install dependencies automatically.",
+        file=sys.stderr,
+    )
     sys.exit(1)
 
 
@@ -96,7 +99,8 @@ def remove_background(img: Image.Image, model: str) -> Image.Image:
         from rembg import remove
     except ImportError:
         print(
-            "rembg is required for background removal: pip install rembg\n"
+            "rembg is required for background removal. Run with `uv run` to install "
+            "dependencies automatically.\n"
             "Or re-run with --no-bg-removal if the source already has a "
             "transparent background.",
             file=sys.stderr,
