@@ -10,7 +10,7 @@ A documentation set built to this standard is one of three configurations:
 
 - **User Guide only** — for end users and operators who interact with the system but do not read code. Focuses on how-to guides, workflows, and visual instructions.
 - **Tech Guide only** — for developers and integrators who need to understand internals, APIs, data models, and configuration.
-- **Both User Guide and Tech Guide** — the User Guide is the main documentation set. The Tech Guide lives under a "Developers" section within the User Guide's navigation. End-user documentation is primary; developer documentation is nested inside it.
+- **Both User Guide and Tech Guide** — the User Guide is the main documentation set. The Tech Guide lives under a "Developers" section within the User Guide's navigation. End-user documentation is primary; the Tech Guide nests inside it.
 
 When a project has both guides, the User Guide is the entry point. A reader browsing the documentation lands on user-facing content first. The Tech Guide is reachable from a "Developers" section in the navigation, not as a peer top-level track.
 
@@ -109,7 +109,7 @@ Subdirectories follow the same numbering rules as top-level sections.
 
 ### 2.6. Section Metadata
 
-Each directory has a metadata file that defines how the section appears in navigation. The metadata file is named according to your framework's convention (e.g. `_dir.yml`, `_index.md`, `index.json`). It contains:
+Each directory has a metadata file that defines how the section appears in navigation. Name the metadata file according to your framework's convention (e.g. `_dir.yml`, `_index.md`, `index.json`). It contains:
 
 | Field         | Required | Scope                   | Purpose                                                       |
 | ------------- | -------- | ----------------------- | ------------------------------------------------------------- |
@@ -278,7 +278,7 @@ Rules:
 - Reference pages (API endpoints, data models, configuration) have References only (if the page uses footnotes). They do not need Next Steps or Additional Resources because the reader navigates them by lookup, not by reading sequentially.
 - The landing page (`0.index.md`) has neither Next Steps, Additional Resources, nor a numbered References section. It uses cards instead (see 5.8). If a card description uses a footnote, define it in an unnumbered References section at the bottom of the page (see 4.1).
 - Release notes pages have none of these closing sections. They are a flat list of version entries (see 4.8).
-- When both Additional Resources and References exist on the same page, Additional Resources comes first, References comes last. References is the final numbered section because it is the least important to the reader's next action — it is the appendix of source citations.
+- When both Additional Resources and References exist on the same page, Additional Resources comes first, References comes last. References is the final numbered section because it is the least important to the reader's next action — it is the list of source citations at the end.
 - The References section is numbered like any other section. It is the last numbered section on the page when present. The landing page is the single exception: its References section is unnumbered.
 
 ## 4. Page Types
@@ -416,7 +416,7 @@ Reference for configuration variables.
 ```
 frontmatter (title, description)
 # Title
-[opening paragraph: how config is loaded, where it lives]
+[opening paragraph: how the system loads config, where it lives]
 ## 1. Section Name (`PREFIX_`)
 [paragraph: what this section controls]
 [configuration variable table]
@@ -646,7 +646,7 @@ If the framework supports admonition directives with custom titles, use the nati
 Figures are screenshots, diagrams rendered as images, or any visual that needs a caption. Every figure has:
 
 - A source image (required)
-- A dark-mode variant (optional — if absent, the light image is used for both)
+- A dark-mode variant (optional — if absent, use the light image for both)
 - A caption prefixed with "Figure N: " (required)
 
 Rules:
@@ -655,7 +655,7 @@ Rules:
 - Name the light and dark variants with a `-light` and `-dark` suffix: `export-flow-light.png`, `export-flow-dark.png`. The base name (without the suffix) is the figure identifier used in captions and cross-references.
 - Reference both variants in markup so the framework can switch on the reader's theme. Use the framework's native mechanism if it has one (e.g. a `<picture>` element with `prefers-color-scheme`, or a theme-aware image component). If the framework has no native mechanism, embed both and let CSS show the one matching the active theme.
 - Provide alt text for every figure. Alt text describes what the figure shows, for readers using screen readers and for cases where the image fails to load. Use the framework's native alt text mechanism (e.g. the `alt` attribute on `<img>`, or the alt prop on an image component). Do not duplicate the caption verbatim — alt text and caption have different jobs.
-- The caption explains why the figure matters. It is prefixed with "Figure N: " (see above) and gives the reader the reason to look at the figure.
+- The caption explains why the figure matters. Prefix it with "Figure N: " (see above) and give the reader the reason to look at the figure.
 - If a figure is a screenshot of a UI, capture both light and dark mode.
 - Stale screenshots mislead the reader. Verify screenshots are current before publishing.
 
@@ -665,7 +665,7 @@ Image format and quality:
 - Do not use JPEG for screenshots or diagrams. JPEG compression introduces artifacts around text and sharp edges.
 - Capture screenshots at 2x pixel density (retina) so they stay sharp on high-resolution displays. Downscale the 2x source to 1x for the displayed size if the framework does not handle resolution switching.
 - Keep the displayed width of a screenshot at or below the content column width. Do not rely on the browser to shrink an oversized image — export at the target size.
-- Keep individual image file size under 500 KB. Optimize with a lossless compressor (e.g. `oxipng`, `svgo`) before committing. Large images slow the page and bloat the repository.
+- Keep individual image file size under 500 KB. Optimize with a lossless compressor (e.g. `oxipng`, `svgo`) before committing. Large images slow the page and increase the repository size.
 
 ### 5.7. Source References (Footnotes)
 
@@ -750,7 +750,7 @@ Rules:
 ### 6.2. Positive vs. Negative Instructions
 
 - For procedures and how-to content, use positive instructions. Say what to do, not what not to do. "Use tables for field definitions" is clearer than "Don't use paragraphs for field definitions."
-- For standards and rules, prohibitions are acceptable and often clearer. "Do not use emojis" is a rule, not a procedure. This is not a contradiction — the audience reads a rule once and internalizes it, while a procedure is followed step by step where positive guidance reduces errors.
+- For standards and rules, prohibitions are acceptable and often clearer. "Do not use emojis" is a rule, not a procedure. This is not a contradiction — the audience reads a rule once and internalizes it, while the reader follows a procedure step by step, where positive guidance reduces errors.
 
 ### 6.3. Human Voice
 
@@ -806,7 +806,7 @@ Do not mix audiences. A user guide page does not explain database internals. A t
 
 ## 7. Accessibility
 
-Documentation is consumed by people with different abilities, devices, and network conditions. Accessibility is a requirement, not an enhancement. Every page must be usable with a keyboard, readable by a screen reader, and legible at high contrast.
+People with different abilities, devices, and network conditions read the documentation. Accessibility is a requirement, not an enhancement. Every page must be usable with a keyboard, readable by a screen reader, and legible at high contrast.
 
 ### 7.1. Semantic Structure
 
@@ -837,7 +837,7 @@ Rules:
 - Every figure has alt text (see 5.6). Decorative images that convey no information use empty alt text (`alt=""`) so the screen reader skips them. Never omit the `alt` attribute.
 - Diagrams rendered as images must have alt text that describes the relationships, not the visual layout. "The client sends a request to the service, which queries the database and returns a job ID" — not "a flowchart with three boxes and arrows."
 - Do not rely on color alone to convey meaning in diagrams. Add text labels or patterns. Readers with color vision deficiency and readers on monochrome displays cannot distinguish color-coded states.
-- Ensure text inside diagrams meets the same contrast ratio as body text (see 7.4). Text that is too small or too low contrast is unreadable when the diagram is scaled down.
+- Ensure text inside diagrams meets the same contrast ratio as body text (see 7.4). Text that is too small or too low contrast is unreadable when you scale the diagram down.
 
 ### 7.4. Color and Contrast
 
@@ -886,7 +886,7 @@ Rules:
 
 ### 8.2. Cross-Guide Links
 
-When a user guide page needs to reference technical depth, link to the tech guide. When the tech guide is nested under a "Developers" section, link to it there:
+When a user guide page needs to reference technical depth, link to the tech guide. When the tech guide nests under a "Developers" section, link to it there:
 
 ```markdown
 For technical details, see the [Tech Guide](/developers/api-reference/endpoints).
@@ -906,7 +906,7 @@ The only exception is when the body text explains a concept about the URL itself
 
 ### 8.4. Link Verification
 
-All internal and external links must be functional. Run a link checker as part of documentation maintenance. Broken links erode reader trust.
+All internal and external links must be functional. Run a link checker as part of documentation maintenance. Broken links reduce reader trust.
 
 ## 9. Search and Discoverability
 
@@ -934,11 +934,11 @@ Rules:
 
 ### 9.3. Sitemap and Indexing
 
-A sitemap tells search engines which pages to crawl. Control it explicitly so the right pages are indexed and the wrong ones are not.
+A sitemap tells search engines which pages to crawl. Control it explicitly so search engines index the right pages and not the wrong ones.
 
 Rules:
 - Generate a sitemap.xml that lists every published page. Submit it to search engines.
-- Hide non-public pages from indexing. Pages with `noindex: true` (see 3.1) in frontmatter are excluded from the sitemap and carry a `<meta name="robots" content="noindex">` tag.
+- Hide non-public pages from indexing. The sitemap excludes pages with `noindex: true` (see 3.1) in frontmatter, and they carry a `<meta name="robots" content="noindex">` tag.
 - Hiding a page from the navigation sidebar (`navigation: false`, see 3.1) does not exclude it from the sitemap or add a noindex tag. A page can be absent from navigation and still indexed by search engines — for example, a standalone landing page linked from external sources.
 - The landing page (`0.index.md`) is always indexed. It is the documentation home page.
 
@@ -958,7 +958,7 @@ Search engines and built-in search use headings to understand page structure. Th
 Rules:
 - Every H2 and H3 is a potential search result anchor. The heading text is the anchor label.
 - Do not use vague headings ("Overview", "Details"). Use descriptive headings ("How the System Creates Jobs") that contain the terms a reader searches for.
-- The opening paragraph after the H1 is indexed heavily. Put the most important terms there.
+- Search engines index the opening paragraph after the H1 heavily. Put the most important terms there.
 
 ## 10. Documentation Versioning
 
@@ -966,13 +966,13 @@ When the product has multiple supported versions, the documentation must support
 
 ### 10.1. Version the Documentation Set
 
-Version the documentation the same way the product is versioned.
+Version the documentation the same way you version the product.
 
 Rules:
 - Version the documentation set alongside the product. When the product releases version 2.4, the documentation set has a 2.4 snapshot.
 - The latest version lives at the default URL (`/tech-guide/...`). Older versions live under a version prefix (`/2.3/tech-guide/...`).
 - The version prefix is the product version, not a documentation version. They are the same.
-- Keep one version un-prefixed: the latest. All others are prefixed. This avoids breaking existing links when a new version is released — the old latest moves to its prefixed URL, and the new latest takes the default URL with a redirect from the old content.
+- Keep one version un-prefixed: the latest. All others are prefixed. This avoids breaking existing links when you release a new version. The old latest moves to its prefixed URL, and the new latest takes the default URL with a redirect from the old content.
 
 ### 10.2. Version Selector
 
@@ -990,7 +990,7 @@ Version the whole documentation set, not pieces of it. A reader on 2.3 sees a co
 Rules:
 - Version the entire documentation set, not individual pages. A reader on 2.3 sees the 2.3 tech guide and the 2.3 user guide.
 - Release notes (see 4.8) are cumulative within a version line. The 2.3 release notes page shows every release in the 2.x line up to and including 2.3.
-- The glossary (see 11) is versioned. Terms are added and removed across versions. A reader on 2.3 sees the 2.3 glossary.
+- The glossary (see 11) is versioned. Terms change across versions. A reader on 2.3 sees the 2.3 glossary.
 
 ### 10.4. Backporting Documentation Changes
 
@@ -1003,10 +1003,10 @@ Rules:
 
 ### 10.5. End of Life
 
-When a product version reaches end of life, its documentation stays available but is marked as archived. Readers on legacy systems still need it.
+When a product version reaches end of life, keep its documentation available but mark it as archived. Readers on legacy systems still need it.
 
 Rules:
-- When a product version reaches end of life, mark its documentation as archived. The pages stay available but carry a banner: `This version is no longer supported. See the [latest version](/...).`
+- When a product version reaches end of life, mark its documentation as archived. The pages stay available but show a banner: `This version is no longer supported. See the [latest version](/...).`
 - Do not delete end-of-life documentation. Readers on legacy systems still need it.
 - Remove archived versions from the version selector after a grace period (e.g. one year). Keep the pages accessible by direct URL.
 
@@ -1033,7 +1033,7 @@ Rules:
 
 ## 12. Maintenance
 
-Documentation decays. Code changes, pages do not, and the two drift apart. Maintenance is the process of keeping them aligned. It is not a one-time cleanup — it is a recurring practice.
+Documentation goes out of date. Code changes, pages do not, and the two go out of sync. Maintenance is the process of keeping them aligned. It is not a one-time cleanup. It is a recurring practice.
 
 ### 12.1. Keep Documentation in Sync
 
@@ -1042,7 +1042,7 @@ Review documentation after any logic or behavior change. If a field changes, upd
 Rules:
 - A pull request that changes behavior includes the documentation update in the same pull request. Do not defer documentation to a follow-up.
 - If the documentation update is large, open a tracking issue in the same pull request and link to it. Do not leave the documentation untracked.
-- When a feature is removed, remove the page that documents it. Do not leave a page describing a feature that no longer exists. Add a redirect from the old URL to the nearest relevant page.
+- When you remove a feature, remove the page that documents it. Do not leave a page describing a feature that no longer exists. Add a redirect from the old URL to the nearest relevant page.
 
 ### 12.2. Preserve Existing Content
 
@@ -1060,26 +1060,26 @@ Rules:
 - Record ownership in the section metadata file (see 2.6) or in a central ownership file (e.g. `CODEOWNERS`). One or the other, not both.
 - The owner reviews documentation changes to their section. The review checks accuracy first, then style.
 - When ownership changes, update the ownership record in the same change that transfers responsibility. Do not leave stale ownership.
-- A section without an owner is unmaintained. Flag unmaintained sections in the documentation build output so they are visible.
+- A section without an owner is unmaintained. Flag unmaintained sections in the documentation build output so that readers see them.
 
 ### 12.4. Review Cycles
 
-Documentation drifts from the system over time. Each page records its last review date in frontmatter or a central review log. A page older than two release cycles without a review is stale (see 12.5).
+Documentation goes out of sync with the system over time. Each page records its last review date in frontmatter or a central review log. A page older than two release cycles without a review is stale (see 12.5).
 
 A review checks: accuracy (does the page match the system), completeness (are new features documented), links (do they still resolve), screenshots (are they current), and formatting (does the page meet the standard).
 
 ### 12.5. Stale Content
 
-A page is stale when the code it documents has changed since the page was last reviewed. Stale pages are still published — hiding them leaves the reader with nothing.
+A page is stale when the code it documents has changed since the page was last reviewed. Publish stale pages anyway. Hiding them leaves the reader with nothing.
 
 Rules:
-- A stale page carries a visible notice: "This page may be out of date. Last reviewed [date]."
+- A stale page shows a visible notice: "This page may be out of date. Last reviewed [date]."
 - The notice links to the owner or tracking issue so the reader can report or follow up.
-- Once a review confirms the page is current, the notice is removed.
+- Once a review confirms the page is current, remove the notice.
 
 ### 12.6. Automated Checks
 
-Documentation is verified by automated checks. The standard requires checks for:
+Automated checks verify the documentation. The standard requires checks for:
 
 | Check           | What it verifies                                     |
 | --------------- | ---------------------------------------------------- |
@@ -1090,7 +1090,7 @@ Documentation is verified by automated checks. The standard requires checks for:
 | Prose lint      | AI-sounding phrases, passive voice, banned words     |
 | Screenshot diff | UI changes that make screenshots stale               |
 
-Configure spelling and prose linters with a project dictionary so domain terms and product names are not flagged.
+Configure spelling and prose linters with a project dictionary so the linters do not flag domain terms and product names.
 
 ### 12.7. Quality Criteria
 
