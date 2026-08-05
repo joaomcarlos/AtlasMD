@@ -53,7 +53,7 @@ Logos are convention-based fixed filenames in `public/` — no config needed: `l
 - Renderer changes require image rebuild (`cd atlasmd-renderer && docker compose build`) and a push to main to publish to ghcr.io
 - Scaffold changes do not require image rebuild — content is mounted at runtime
 - The published image lives at `ghcr.io/joaomcarlos/atlasmd`; tags are `:latest` and `:sha-<short>`
-- First publish: flip the package to public manually at https://github.com/users/joaomcarlos/packages/container/atlasmd/settings (the workflow attempts this via API but may 404 on first run)
+- The workflow sets the package to public automatically via the GitHub API
 - Theme tokens, components, plugins, and CSS live in the renderer — not in consumer repos
 - Social links and footer are config-driven; each consumer sets its own `[[socials]]` and `[footer]` in `config.toml`
 - Social links are generic — consumer picks url, label, and Iconify icon per link
