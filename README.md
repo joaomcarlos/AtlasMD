@@ -93,7 +93,7 @@ A documentation set is one of three configurations:
 - **Tech Guide only** — for developers and integrators. APIs, data models, configuration, internals. The reader reads code and writes integrations.
 - **Both** — the User Guide is the root. The Tech Guide lives under a "Developers" section within the User Guide's navigation. The reader browsing the docs lands on user-facing content first. The Tech Guide is reachable, not peer.
 
-When both guides exist, they are separate content trees sharing a single navigation. A user guide page that needs technical depth links to the tech guide: "For technical details, see the [Tech Guide](/developers/...)". Content is never duplicated. Write it once in the guide it serves, link from the other.
+When both guides exist, they are separate content trees sharing a single navigation. A user guide page that needs technical depth links to the tech guide: `For technical details, see the [Tech Guide](/developers/...)`. Content is never duplicated. Write it once in the guide it serves, link from the other.
 
 **Impact:** Reviewers identify the configuration first, then apply only the criteria that apply. A User Guide only project is not penalized for lacking API reference pages. A Tech Guide only project is not penalized for lacking screenshots. The standard adapts to the project, not the other way around.
 
@@ -212,7 +212,7 @@ Accessibility is a requirement, not an enhancement. Every page must be usable wi
 
 ### Cross-References and Links
 
-- **Link text is descriptive.** "See the [Export Service](/understanding/building-blocks/export-service)" not "See [here](/...)". Screen readers read link text out of context. "Here" means nothing.
+- **Link text is descriptive.** `See the [Export Service](/understanding/building-blocks/export-service)` not `See [here](/...)`. Screen readers read link text out of context. "Here" means nothing.
 - **No URLs in body text** unless the text explains a concept about the URL itself. Use link text.
 - **Internal links are relative** (`/understanding/...`), not absolute (`https://site.com/understanding/...`). Relative links survive domain changes and version prefixes. Absolute links break.
 - **Cross-guide links** point to the correct guide. User Guide links to Tech Guide and vice versa, with a note explaining the jump.
@@ -242,7 +242,7 @@ When the product has multiple supported versions, the documentation supports the
 - **Version selector on every page.** Lets the reader switch versions while staying on the same logical page. If the page does not exist in the selected version, redirect to the closest equivalent. If no equivalent exists, show a page that says the topic was introduced in a later version, with a link to the latest.
 - **Version the whole set, not pieces.** A reader on 2.3 sees the 2.3 tech guide and the 2.3 user guide. Not 2.3 tech guide with 2.4 user guide.
 - **Backport documentation alongside code.** A code backport without a docs backport leaves the older docs wrong. The backport is a separate commit against the older version's content tree. Record it in the older version's release notes.
-- **End-of-life versions stay available but archived.** Pages carry a banner: "This version is no longer supported. See the [latest version](/...)." Do not delete end-of-life docs — readers on legacy systems still need them. Remove archived versions from the version selector after a grace period (e.g. one year), but keep the pages accessible by direct URL.
+- **End-of-life versions stay available but archived.** Pages carry a banner: `This version is no longer supported. See the [latest version](/...).` Do not delete end-of-life docs — readers on legacy systems still need them. Remove archived versions from the version selector after a grace period (e.g. one year), but keep the pages accessible by direct URL.
 
 **Impact:** Readers on legacy systems find the docs that match their version. Links do not break when a new version ships. End-of-life docs do not disappear — they are marked, not deleted.
 
@@ -332,7 +332,7 @@ This separation is the whole point:
 - **Content authors work in Markdown.** No Vue, no Nuxt, no JavaScript. The MDC components (`::note`, `::side-note`, `::fig`, `::field`, `::simple-card`, Mermaid) are the only non-Markdown syntax, and they map directly to the standard's information elements.
 - **Hot reload via Docker Compose `develop.watch`.** Content and `public/` changes sync into the running container. No rebuild, no restart.
 
-The engine ships MDC components that map one-to-one to the standard's information elements. See the **[Building Blocks](/building-blocks)** section of the self-documentation for live-rendered examples of every component.
+The engine ships MDC components that map one-to-one to the standard's information elements. See the **[Building Blocks](atlasmd-scaffold/content/2.building-blocks/)** section of the self-documentation for live-rendered examples of every component.
 
 ## Repository Structure
 

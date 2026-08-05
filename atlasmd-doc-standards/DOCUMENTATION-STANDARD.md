@@ -32,7 +32,7 @@ docs/
   content/                # User Guide only — or Tech Guide only
 ```
 
-A user guide page that needs technical depth links to the relevant tech guide page with a note: "For technical details, see the [Tech Guide](/developers/...)". A tech guide page that has user-facing instructions links to the user guide equivalent.
+A user guide page that needs technical depth links to the relevant tech guide page with a note: `For technical details, see the [Tech Guide](/developers/...)`. A tech guide page that has user-facing instructions links to the user guide equivalent.
 
 Do not duplicate content across guides. If the same information belongs in both, write it once in the guide it primarily serves and link to it from the other.
 
@@ -1014,7 +1014,7 @@ Rules:
 When a product version reaches end of life, its documentation stays available but is marked as archived. Readers on legacy systems still need it.
 
 Rules:
-- When a product version reaches end of life, mark its documentation as archived. The pages stay available but carry a banner: "This version is no longer supported. See the [latest version](/...)."
+- When a product version reaches end of life, mark its documentation as archived. The pages stay available but carry a banner: `This version is no longer supported. See the [latest version](/...).`
 - Do not delete end-of-life documentation. Readers on legacy systems still need it.
 - Remove archived versions from the version selector after a grace period (e.g. one year). Keep the pages accessible by direct URL.
 
