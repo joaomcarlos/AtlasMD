@@ -21,8 +21,8 @@ docker-compose.yml   Service definition for the atlasmd:latest image
 
 ### Docker Service
 
-- Port 8770 → container 3003 (web)
-- Port 8771 → container 4000 (HMR websocket)
+- Port 47145 → container 47145 (web)
+- Port 47146 → container 4000 (HMR websocket)
 - Mounts `content/` → `/app/content`, `public/` → `/app/public`, `config.toml` → `/app/config.toml`
 - Build context: `../atlasmd-renderer`
 
@@ -44,7 +44,7 @@ docker-compose.yml   Service definition for the atlasmd:latest image
 
 ```bash
 docker compose up
-# Open http://localhost:8770
+# Open http://localhost:47145
 ```
 
 ## Child DOX Index

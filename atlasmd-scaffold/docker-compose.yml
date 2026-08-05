@@ -8,11 +8,11 @@ services:
         APP_VERSION: dev
     restart: on-failure
     ports:
-      - 8770:3003
-      - 8771:4000
+      - 47145:47145
+      - 47146:4000
     environment:
       - APP_VERSION=dev
-      - PORT=3003
+      - PORT=47145
     volumes:
       - ./content:/app/content
       - ./public:/app/public

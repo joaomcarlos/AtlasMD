@@ -498,7 +498,7 @@ cd atlasmd-scaffold
 docker compose up
 ```
 
-Open **http://localhost:8770**. Content and `public/` changes sync automatically via Docker Compose `develop.watch` — no rebuild, no restart, no extra steps.
+Open **http://localhost:47145**. Content and `public/` changes sync automatically via Docker Compose `develop.watch` — no rebuild, no restart, no extra steps.
 
 To rebuild the image after renderer changes (components, CSS, plugins, Nuxt config):
 
@@ -511,8 +511,8 @@ docker compose build
 
 | Host port | Container port | Purpose                    |
 | --------- | -------------- | -------------------------- |
-| `8770`    | `3003`         | Web server (HTTP)          |
-| `8771`    | `4000`         | HMR websocket (hot reload) |
+| `47145`    | `3003`         | Web server (HTTP)          |
+| `47146`    | `4000`         | HMR websocket (hot reload) |
 
 #### Renderer vs. Scaffold
 
@@ -534,7 +534,7 @@ cd AtlasMD/atlasmd-scaffold
 docker compose up
 ```
 
-Open **http://localhost:8770**. That is AtlasMD rendering its own docs, by its own engine, to its own standard. AtlasMD documents itself.
+Open **http://localhost:47145**. That is AtlasMD rendering its own docs, by its own engine, to its own standard. AtlasMD documents itself.
 
 ### Add AtlasMD to Your Project
 
@@ -591,7 +591,7 @@ See the scaffold's own `content/` folder for a live, end-to-end example. It is t
 docker compose up
 ```
 
-Open **http://localhost:8770**.
+Open **http://localhost:47145**.
 
 ### Configuration (Consumer Setup)
 
@@ -634,7 +634,7 @@ Logos are convention-based — drop `logo-light-mode.png`, `logo-dark-mode.png`,
 - [ ] Content written in `content/` using `1.Title.md` convention
 - [ ] `_dir.yml` navigation configs added per section
 - [ ] Logos and favicons placed in `public/` (logos use fixed filenames)
-- [ ] Port `8770` does not conflict with other services
+- [ ] Port `47145` does not conflict with other services
 
 ## AI Tooling
 

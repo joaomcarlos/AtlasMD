@@ -64,7 +64,7 @@ cd atlasmd-renderer && docker compose build
 
 # Run AtlasMD documenting itself
 cd ../atlasmd-scaffold && docker compose up
-# Open http://localhost:8770
+# Open http://localhost:47145
 ```
 
 ## Child DOX Index
