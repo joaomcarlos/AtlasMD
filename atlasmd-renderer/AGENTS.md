@@ -65,6 +65,7 @@ Logos are convention-based fixed filenames in `public/` — no config needed: `l
 - Logos are convention-based fixed filenames in `public/`; Logo.vue reads from `runtimeConfig.public`
 - `config.ts` loads `/app/config.toml` (or `./config.toml` locally) at startup and exports `atlasConfig`
 - `nuxt.config.ts` has `buildContentRoutes()` that reads `./content` at startup; safe if content is missing (try/catch)
+- `support/patch-pinceau.mjs` patches pinceau 0.18.10 at Docker build time: replaces `nanoid(6)` variant class names with a deterministic hash of `cacheId`, fixing SSR hydration class mismatches; idempotent and auto-skips if already patched
 
 ## Verification
 
