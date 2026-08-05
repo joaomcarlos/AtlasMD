@@ -15,44 +15,46 @@ Standalone project. Two subprojects:
 
 ### Consumer Integration
 
-Consumer projects copy `atlasmd-scaffold/` and reference its `docker-compose.yml` from their main compose file. They mount `content/` and `public/` into the `atlasmd:latest` image.
+Consumer projects copy `atlasmd-scaffold/` and reference its `docker-compose.yml` from their main compose file. They mount `content/`, `public/`, and `config.toml` into the `atlasmd:latest` image.
 
 ### Runtime Mounts
 
-| Mount      | Container path | Required                             |
-| ---------- | -------------- | ------------------------------------ |
-| `content/` | `/app/content` | Yes — markdown files and `_dir.yml`  |
-| `public/`  | `/app/public`  | Yes — favicons, logos, static images |
+| Mount         | Container path     | Required                             |
+| ------------- | ------------------ | ------------------------------------ |
+| `content/`    | `/app/content`     | Yes — markdown files and `_dir.yml`  |
+| `public/`     | `/app/public`      | Yes — favicons, logos, static images |
+| `config.toml` | `/app/config.toml` | Yes — consumer configuration         |
 
-### Environment Variables
+### Configuration
 
-| Variable                    | Default                      | Purpose                                    |
-| --------------------------- | ---------------------------- | ------------------------------------------ |
-| `ATLAS_TITLE`               | `Atlas`                      | Project name in header and browser title   |
-| `ATLAS_GITLAB_URL`          | —                            | GitLab repository URL; omit to hide        |
-| `ATLAS_GITLAB_LABEL`        | `View the Gitlab repository` | Label for GitLab social link               |
-| `ATLAS_SLACK_URL`           | —                            | Slack channel URL; omit to hide slack link |
-| `ATLAS_SLACK_LABEL`         | `Message us on Slack`        | Label for Slack social link                |
-| `ATLAS_FOOTER_CREDITS_TEXT` | —                            | Footer credits text; omit to hide          |
-| `ATLAS_FOOTER_CREDITS_URL`  | —                            | Footer credits link URL                    |
-| `ATLAS_FOOTER_CREDITS_ICON` | `heroicons-outline:cloud`    | Footer credits icon                        |
-| `ATLAS_FOOTER_TEXT`         | —                            | Footer text link label; omit to hide       |
-| `ATLAS_FOOTER_TEXT_URL`     | —                            | Footer text link URL                       |
-| `ATLAS_LOGO_LIGHT`          | `/logo-light.png`            | Light mode logo path (from public/)        |
-| `ATLAS_LOGO_DARK`           | `/logo-dark.png`             | Dark mode logo path                        |
-| `ATLAS_LOGO_DARK_BG`        | `/logo-dark-bg.png`          | Dark mode logo with background             |
-| `ATLAS_BASE_URL`            | `/`                          | Base URL path                              |
-| `APP_VERSION`               | —                            | Version chip next to title                 |
-| `CI_PAGES_URL`              | —                            | GitLab Pages URL; overrides ATLAS_BASE_URL |
+Consumer configuration is read from a TOML file at `/app/config.toml` (loaded by `atlasmd-renderer/config.ts`). Only CI/build-driven values stay as environment variables.
+
+| Field / Variable      | Default                   | Purpose                                        |
+| --------------------- | ------------------------- | ---------------------------------------------- |
+| `title`               | `Atlas`                   | Project name in header and browser title       |
+| `base-url`            | `/`                       | Base URL path                                  |
+| `socials[].url`       | —                         | Social link URL; one `[[socials]]` per link    |
+| `socials[].label`     | —                         | Label for the social link                      |
+| `socials[].icon`      | —                         | Iconify icon name (e.g. `simple-icons:gitlab`) |
+| `footer.credits.text` | —                         | Footer credits text; omit to hide              |
+| `footer.credits.url`  | —                         | Footer credits link URL                        |
+| `footer.credits.icon` | `heroicons-outline:cloud` | Footer credits icon                            |
+| `footer.text.label`   | —                         | Footer text link label; omit to hide           |
+| `footer.text.url`     | —                         | Footer text link URL                           |
+| `APP_VERSION` (env)   | —                         | Version chip next to title (build arg)         |
+| `CI_PAGES_URL` (env)  | —                         | GitLab Pages URL; overrides `base-url`         |
+| `PORT` (env)          | `3003`                    | Port the dev server listens on                 |
+
+Logos are convention-based fixed filenames in `public/` — no config needed: `logo-light-mode.png`, `logo-dark-mode.png`, `logo-dark-mode-bg.png`.
 
 ## Work Guidance
 
 - Renderer changes require image rebuild (`cd atlasmd-renderer && docker compose build`)
 - Scaffold changes do not require image rebuild — content is mounted at runtime
 - Theme tokens, components, plugins, and CSS live in the renderer — not in consumer repos
-- Social links and footer are env-var driven; each consumer passes its own URLs
-- GitLab social link is env-var driven; each consumer passes its own repo URL
-- Logo paths are env-var driven; Logo.vue reads from `runtimeConfig.public`
+- Social links and footer are config-driven; each consumer sets its own `[[socials]]` and `[footer]` in `config.toml`
+- Social links are generic — consumer picks url, label, and Iconify icon per link
+- Logos are convention-based fixed filenames in `public/`; Logo.vue reads from `runtimeConfig.public`
 
 ## Verification
 
@@ -68,11 +70,12 @@ cd ../atlasmd-scaffold && docker compose up
 ## Child DOX Index
 
 - `atlasmd-renderer/` — Rendering engine (Nuxt + Docus); builds `atlasmd:latest` image
+  - `config.ts` — TOML config loader; reads `/app/config.toml` at startup, exports `atlasConfig`
   - `components/` — Vue components (Logo, content components for MDC)
   - `plugins/` — Client plugins (scroll-behavior, sidebar-follow)
   - `assets/css/` — Base styles and image CSS
-  - `support/` — Link checker and fixer Python scripts
-- `atlasmd-scaffold/` — Template for consumer projects (content + public + docker-compose)
+- `atlasmd-scaffold/` — Template for consumer projects (content + public + config.toml + docker-compose)
   - `content/` — AtlasMD self-documentation (4 sections: getting-started, building-blocks, configuration, development)
     - `2.building-blocks/` — Live-rendered component reference (note, side-note, fig, field, simple-card, example-component, mermaid, docus-builtins, footnotes)
   - `public/` — Favicons, logos, static images
+  - `config.toml` — Consumer configuration (title, social links, footer)

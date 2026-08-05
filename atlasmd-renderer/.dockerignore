@@ -34,7 +34,6 @@ makefile
 justfile
 README.md
 AGENTS.md
-support/
 
 # Necessary files
 !assets/
