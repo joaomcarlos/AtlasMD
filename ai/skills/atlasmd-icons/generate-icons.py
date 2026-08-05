@@ -4,6 +4,7 @@
 # dependencies = [
 #     "pillow",
 #     "rembg",
+#     "numpy",
 # ]
 # ///
 
@@ -12,10 +13,10 @@
 Takes an app icon of any size and produces all the image assets AtlasMD expects
 in a consumer project's public/ directory:
 
-  Logos (512x512 PNG):
+  Logos (512x512 PNG, all transparent — identical copies of the subject):
     logo-light-mode.png      Used on light backgrounds (header, light mode)
     logo-dark-mode.png       Used on dark backgrounds (header, dark mode)
-    logo-dark-mode-bg.png    Used when a solid background is needed behind the logo
+    logo-dark-mode-bg.png    Fallback when color mode is undetermined (SSR)
 
   Favicons:
     favicon.ico              Multi-size ICO (16, 32, 48, 64, 128, 256)
@@ -35,8 +36,6 @@ Options:
                        transparent background)
   --bg-model MODEL     rembg model to use for background removal
                        (default: isnet-general-use). Ignored if --no-bg-removal.
-  --dark-bg COLOR      Background color (hex or name) for logo-dark-mode-bg.png
-                       (default: #1a1a1a). Ignored if --no-bg-removal.
 
 * SVG requires ImageMagick or rsvg-convert; Pillow alone cannot read SVG.
 
@@ -76,7 +75,6 @@ FAVICON_PNG_SIZES = {
 FAVICON_ICO_SIZES = [16, 32, 48, 64, 128, 256]
 
 DEFAULT_LOGO_SIZE = 512
-DEFAULT_DARK_BG = "#1a1a1a"
 DEFAULT_REMBG_MODEL = "isnet-general-use"
 
 
@@ -96,7 +94,7 @@ def load_source(path: Path) -> Image.Image:
 def remove_background(img: Image.Image, model: str) -> Image.Image:
     """Remove the background using rembg. Returns RGBA image."""
     try:
-        from rembg import remove
+        from rembg import new_session, remove
     except ImportError:
         print(
             "rembg is required for background removal. Run with `uv run` to install "
@@ -107,26 +105,30 @@ def remove_background(img: Image.Image, model: str) -> Image.Image:
         )
         sys.exit(1)
     print(f"Removing background with rembg model '{model}'...")
-    return remove(img, model_name=model).convert("RGBA")
+    session = new_session(model)
+    return remove(img, session=session).convert("RGBA")
 
 
 def tight_crop(img: Image.Image) -> Image.Image:
-    """Crop transparent borders so the subject fills the frame."""
-    bbox = img.getbbox()
-    if bbox:
-        img = img.crop(bbox)
-    return img
+    """Crop transparent borders so the subject fills the frame.
+
+    Uses numpy to find the bounding box of pixels with alpha > 10 —
+    PIL's getbbox() uses a stricter threshold and can over-crop."""
+    import numpy as np
+
+    alpha = np.array(img)[:, :, 3]
+    rows = np.any(alpha > 10, axis=1)
+    cols = np.any(alpha > 10, axis=0)
+    if not rows.any() or not cols.any():
+        return img
+    rmin, rmax = np.where(rows)[0][[0, -1]]
+    cmin, cmax = np.where(cols)[0][[0, -1]]
+    return img.crop((cmin, rmin, cmax + 1, rmax + 1))
 
 
 def resize_square(img: Image.Image, size: int) -> Image.Image:
     """Resize an image to a square of the given size using Lanczos."""
     return img.resize((size, size), Image.LANCZOS)
-
-
-def composite_on_bg(img: Image.Image, bg_color: str) -> Image.Image:
-    """Composite an RGBA image onto a solid background color."""
-    bg = Image.new("RGBA", img.size, bg_color)
-    return Image.alpha_composite(bg, img)
 
 
 def generate_logos(
@@ -135,9 +137,9 @@ def generate_logos(
     logo_size: int,
     remove_bg: bool,
     bg_model: str,
-    dark_bg: str,
 ) -> None:
-    """Generate the three logo PNGs."""
+    """Generate the three logo PNGs. All three are identical transparent copies
+    of the subject — AtlasMD's Logo.vue picks the right one based on color mode."""
     if remove_bg:
         subject = remove_background(source, bg_model)
         subject = tight_crop(subject)
@@ -146,18 +148,9 @@ def generate_logos(
 
     square = resize_square(subject, logo_size)
 
-    # logo-light-mode.png — transparent subject for light backgrounds
-    square.save(public_dir / "logo-light-mode.png")
-    print(f"  wrote logo-light-mode.png ({logo_size}x{logo_size}, transparent)")
-
-    # logo-dark-mode.png — same transparent subject, used on dark backgrounds
-    square.save(public_dir / "logo-dark-mode.png")
-    print(f"  wrote logo-dark-mode.png ({logo_size}x{logo_size}, transparent)")
-
-    # logo-dark-mode-bg.png — subject composited on a solid dark background
-    with_bg = composite_on_bg(square, dark_bg)
-    with_bg.save(public_dir / "logo-dark-mode-bg.png")
-    print(f"  wrote logo-dark-mode-bg.png ({logo_size}x{logo_size}, bg={dark_bg})")
+    for filename in LOGO_FILES:
+        square.save(public_dir / filename)
+        print(f"  wrote {filename} ({logo_size}x{logo_size}, transparent)")
 
 
 def generate_favicons(
@@ -222,11 +215,6 @@ def main() -> None:
         default=DEFAULT_REMBG_MODEL,
         help=f"rembg model for background removal (default: {DEFAULT_REMBG_MODEL})",
     )
-    parser.add_argument(
-        "--dark-bg",
-        default=DEFAULT_DARK_BG,
-        help=f"Background color for logo-dark-mode-bg.png (default: {DEFAULT_DARK_BG})",
-    )
     args = parser.parse_args()
 
     if not args.public.is_dir():
@@ -248,7 +236,6 @@ def main() -> None:
         logo_size=args.logo_size,
         remove_bg=not args.no_bg_removal,
         bg_model=args.bg_model,
-        dark_bg=args.dark_bg,
     )
 
     print()

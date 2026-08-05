@@ -11,17 +11,17 @@ Generate all AtlasMD logos and favicons from a single source app icon of any siz
 
 This skill includes a Python script (`generate-icons.py`) that takes any source image and produces every image asset AtlasMD expects in a consumer project's `public/` directory:
 
-**Logos (512x512 PNG by default):**
-- `logo-light-mode.png` — transparent subject, used on light backgrounds
-- `logo-dark-mode.png` — transparent subject, used on dark backgrounds
-- `logo-dark-mode-bg.png` — subject composited on a solid dark background
+**Logos (512x512 PNG by default, all transparent — identical copies):**
+- `logo-light-mode.png` — used on light backgrounds (header, light mode)
+- `logo-dark-mode.png` — used on dark backgrounds (header, dark mode)
+- `logo-dark-mode-bg.png` — fallback when color mode is undetermined (SSR)
 
 **Favicons:**
 - `favicon.ico` — multi-size ICO (16, 32, 48, 64, 128, 256)
 - `favicon-16.png` — 16x16 PNG
 - `favicon-32.png` — 32x32 PNG
 
-The script optionally removes the background from the source image using `rembg` (ISNet model), tight-crops the subject, and resizes it to each target size.
+The script optionally removes the background from the source image using `rembg` (ISNet model), tight-crops to the subject's bounding box (alpha > 10 threshold via numpy), and resizes to each target size using Lanczos resampling.
 
 ## Script Location
 
@@ -33,7 +33,7 @@ ai/skills/atlasmd-icons/
 
 ## Prerequisites
 
-- **`uv`** — the Python package manager. The script is self-contained: it declares its own dependencies (Pillow, rembg) via inline script metadata, so `uv run` installs them automatically into an ephemeral environment.
+- **`uv`** — the Python package manager. The script is self-contained: it declares its own dependencies (Pillow, rembg, numpy) via inline script metadata, so `uv run` installs them automatically into an ephemeral environment.
 
 Verify `uv` is installed:
 ```bash
@@ -59,14 +59,13 @@ uv run ai/skills/atlasmd-icons/generate-icons.py \
   --no-bg-removal
 ```
 
-### Custom logo size and dark background color
+### Custom logo size
 
 ```bash
 uv run ai/skills/atlasmd-icons/generate-icons.py \
   --source icon.png \
   --public atlasmd-scaffold/public \
-  --logo-size 256 \
-  --dark-bg "#0d1117"
+  --logo-size 256
 ```
 
 ### All options
@@ -78,7 +77,6 @@ uv run ai/skills/atlasmd-icons/generate-icons.py \
 | `--logo-size PX` | `512` | Output size for logo PNGs |
 | `--no-bg-removal` | off | Skip background removal; use source as-is |
 | `--bg-model MODEL` | `isnet-general-use` | rembg model (ignored with `--no-bg-removal`) |
-| `--dark-bg COLOR` | `#1a1a1a` | Background color for `logo-dark-mode-bg.png` |
 
 ## What AtlasMD Expects
 
