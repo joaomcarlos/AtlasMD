@@ -67,16 +67,3 @@ Logos are convention-based fixed filenames in `public/` — no config needed: `l
 - `nuxt.config.ts` has `buildContentRoutes()` that reads `./content` at startup; safe if content is missing (try/catch)
 - `support/patch-pinceau.mjs` patches pinceau 0.18.10 at Docker build time: replaces `nanoid(6)` variant class names with a deterministic hash of `cacheId`, fixing SSR hydration class mismatches; idempotent and auto-skips if already patched
 
-## Verification
-
-```bash
-just build    # build Docker image
-just watch    # run with docker watch
-```
-
-## Child DOX Index
-
-- `config.ts` — TOML config loader; reads `/app/config.toml` at startup, exports `atlasConfig`
-- `components/` — Vue components (Logo, content components for MDC)
-- `plugins/` — Client plugins (scroll-behavior, sidebar-follow)
-- `assets/css/` — Base styles and image CSS
