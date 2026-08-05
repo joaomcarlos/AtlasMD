@@ -14,31 +14,40 @@ via Docker image with volume-mounted content.
 
 ### Runtime mounts
 
-| Mount      | Container path | Required                             |
-| ---------- | -------------- | ------------------------------------ |
-| `content/` | `/app/content` | Yes — markdown files and `_dir.yml`  |
-| `public/`  | `/app/public`  | Yes — favicons, logos, static images |
+| Mount         | Container path     | Required                             |
+| ------------- | ------------------ | ------------------------------------ |
+| `content/`    | `/app/content`     | Yes — markdown files and `_dir.yml`  |
+| `public/`     | `/app/public`      | Yes — favicons, logos, static images |
+| `config.toml` | `/app/config.toml` | Yes — consumer configuration         |
 
-### Environment variables
+### Configuration
 
-| Variable                    | Default                      | Purpose                                                                |
-| --------------------------- | ---------------------------- | ---------------------------------------------------------------------- |
-| `ATLAS_TITLE`               | `Atlas`                      | Project name in header and browser title                               |
-| `ATLAS_GITLAB_URL`          | —                            | Gitlab repository URL for header social link; omit to hide gitlab link |
-| `ATLAS_GITLAB_LABEL`        | `View the Gitlab repository` | Label for the gitlab social link                                       |
-| `ATLAS_SLACK_URL`           | —                            | Slack channel URL for header social link; omit to hide slack link      |
-| `ATLAS_SLACK_LABEL`         | `Message us on Slack`        | Label for the slack social link                                        |
-| `ATLAS_FOOTER_CREDITS_TEXT` | —                            | Footer credits text; omit to hide credits                              |
-| `ATLAS_FOOTER_CREDITS_URL`  | —                            | Footer credits link URL                                                |
-| `ATLAS_FOOTER_CREDITS_ICON` | `heroicons-outline:cloud`    | Footer credits icon                                                    |
-| `ATLAS_FOOTER_TEXT`         | —                            | Footer text link label; omit to hide text link                         |
-| `ATLAS_FOOTER_TEXT_URL`     | —                            | Footer text link URL                                                   |
-| `ATLAS_LOGO_LIGHT`          | `/logo-light.png`            | Light mode logo path (from public/)                                    |
-| `ATLAS_LOGO_DARK`           | `/logo-dark.png`             | Dark mode logo path                                                    |
-| `ATLAS_LOGO_DARK_BG`        | `/logo-dark-bg.png`          | Dark mode logo with background                                         |
-| `ATLAS_BASE_URL`            | `/`                          | Base URL path                                                          |
-| `APP_VERSION`               | —                            | Version chip next to title                                             |
-| `CI_PAGES_URL`              | —                            | GitLab Pages URL; overrides ATLAS_BASE_URL                             |
+Consumer configuration is read from a TOML file at `/app/config.toml`, loaded by `config.ts` at startup. Only CI/build-driven values stay as environment variables.
+
+#### Config file fields
+
+| Field                 | Default                   | Purpose                                                              |
+| --------------------- | ------------------------- | -------------------------------------------------------------------- |
+| `title`               | `Atlas`                   | Project name in header and browser title                             |
+| `base-url`            | `/`                       | Base URL path; `CI_PAGES_URL` overrides at deploy time               |
+| `socials[].url`       | —                         | Social link URL; one `[[socials]]` block per link                    |
+| `socials[].label`     | —                         | Label for the social link                                            |
+| `socials[].icon`      | —                         | Iconify icon name (e.g. `simple-icons:gitlab`, `simple-icons:slack`) |
+| `footer.credits.text` | —                         | Footer credits text; omit to hide credits                            |
+| `footer.credits.url`  | —                         | Footer credits link URL                                              |
+| `footer.credits.icon` | `heroicons-outline:cloud` | Footer credits icon                                                  |
+| `footer.text.label`   | —                         | Footer text link label; omit to hide text link                       |
+| `footer.text.url`     | —                         | Footer text link URL                                                 |
+
+Logos are convention-based fixed filenames in `public/` — no config needed: `logo-light-mode.png`, `logo-dark-mode.png`, `logo-dark-mode-bg.png`.
+
+#### Environment variables (CI/build-driven only)
+
+| Variable       | Default | Purpose                                                |
+| -------------- | ------- | ------------------------------------------------------ |
+| `APP_VERSION`  | —       | Version chip next to title (build arg)                 |
+| `CI_PAGES_URL` | —       | GitLab Pages URL; set by GitLab CI; overrides base-url |
+| `PORT`         | `3003`  | Port the dev server listens on                         |
 
 ### Content conventions
 
@@ -51,9 +60,10 @@ via Docker image with volume-mounted content.
 ## Work Guidance
 
 - Theme tokens, components, plugins, and CSS live here — not in consumer repos
-- Social links and footer are env-var driven; each consumer passes its own URLs
-- Gitlab social link is env-var driven (`ATLAS_GITLAB_URL`); each consumer passes its own repo URL
-- Logo paths are env-var driven; Logo.vue reads from `runtimeConfig.public`
+- Social links and footer are config-driven; each consumer sets its own `[[socials]]` and `[footer]` in `config.toml`
+- Social links are generic — consumer picks url, label, and Iconify icon per link
+- Logos are convention-based fixed filenames in `public/`; Logo.vue reads from `runtimeConfig.public`
+- `config.ts` loads `/app/config.toml` (or `./config.toml` locally) at startup and exports `atlasConfig`
 - `nuxt.config.ts` has `buildContentRoutes()` that reads `./content` at startup; safe if content is missing (try/catch)
 
 ## Verification
@@ -65,7 +75,7 @@ just watch    # run with docker watch
 
 ## Child DOX Index
 
+- `config.ts` — TOML config loader; reads `/app/config.toml` at startup, exports `atlasConfig`
 - `components/` — Vue components (Logo, content components for MDC)
 - `plugins/` — Client plugins (scroll-behavior, sidebar-follow)
 - `assets/css/` — Base styles and image CSS
-- `support/` — Link checker and fixer Python scripts

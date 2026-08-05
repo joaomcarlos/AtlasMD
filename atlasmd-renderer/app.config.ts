@@ -1,37 +1,32 @@
+import { atlasConfig } from './config'
+
 // https://github.com/nuxt-themes/docus/blob/main/nuxt.schema.ts
 const socials: Record<string, { label: string; icon: string; href: string }> = {}
-// Slack social link — only include when ATLAS_SLACK_URL is provided
-if (process.env.ATLAS_SLACK_URL) {
-  socials.slack = {
-    label: process.env.ATLAS_SLACK_LABEL || 'Message us on Slack',
-    icon: 'simple-icons:slack',
-    href: process.env.ATLAS_SLACK_URL,
-  }
-}
-// Git repo URL is project-specific — only include when provided
-if (process.env.ATLAS_GITLAB_URL) {
-  socials.gitlab = {
-    label: process.env.ATLAS_GITLAB_LABEL || 'View the Gitlab repository',
-    icon: 'simple-icons:gitlab',
-    href: process.env.ATLAS_GITLAB_URL,
+for (const social of atlasConfig.socials ?? []) {
+  // Key by icon name (e.g. "simple-icons:gitlab" → "gitlab"); falls back to index
+  const key = social.icon.split(':').pop() || String(Object.keys(socials).length)
+  socials[key] = {
+    label: social.label,
+    icon: social.icon,
+    href: social.url,
   }
 }
 
 const footer: Record<string, unknown> = {}
-// Footer credits — only include when ATLAS_FOOTER_CREDITS_TEXT is provided
-if (process.env.ATLAS_FOOTER_CREDITS_TEXT) {
+// Footer credits — only include when configured
+if (atlasConfig.footer?.credits?.text) {
   footer.credits = {
-    icon: process.env.ATLAS_FOOTER_CREDITS_ICON || 'heroicons-outline:cloud',
-    text: process.env.ATLAS_FOOTER_CREDITS_TEXT,
-    href: process.env.ATLAS_FOOTER_CREDITS_URL,
+    icon: atlasConfig.footer.credits.icon || 'heroicons-outline:cloud',
+    text: atlasConfig.footer.credits.text,
+    href: atlasConfig.footer.credits.url,
   }
 }
-// Footer text link — only include when ATLAS_FOOTER_TEXT is provided
-if (process.env.ATLAS_FOOTER_TEXT) {
+// Footer text link — only include when configured
+if (atlasConfig.footer?.text?.label) {
   footer.textLinks = [
     {
-      text: process.env.ATLAS_FOOTER_TEXT,
-      href: process.env.ATLAS_FOOTER_TEXT_URL,
+      text: atlasConfig.footer.text.label,
+      href: atlasConfig.footer.text.url,
       target: '_blank',
       rel: 'noopener'
     }
@@ -40,7 +35,7 @@ if (process.env.ATLAS_FOOTER_TEXT) {
 
 export default defineAppConfig({
   docus: {
-    title: process.env.ATLAS_TITLE || 'Atlas',
+    title: atlasConfig.title,
     description: 'Technical documentation.',
     socials,
     aside: {

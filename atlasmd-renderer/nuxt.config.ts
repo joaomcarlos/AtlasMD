@@ -1,9 +1,11 @@
 import { readdirSync, statSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { atlasConfig } from './config'
 
-const { CI_PAGES_URL, ATLAS_BASE_URL } = process.env
-// Derive base path for GitLab Pages (e.g. /group/project/) – fallback to ATLAS_BASE_URL or /
-const base = (CI_PAGES_URL) ? new URL(CI_PAGES_URL).pathname : (ATLAS_BASE_URL || '/')
+const { CI_PAGES_URL } = process.env
+// Derive base path for GitLab Pages (e.g. /group/project/) – fallback to config baseUrl or /
+// CI_PAGES_URL stays an env var because GitLab CI sets it automatically at deploy time.
+const base = (CI_PAGES_URL) ? new URL(CI_PAGES_URL).pathname : (atlasConfig.baseUrl || '/')
 // When baseURL is a subpath (e.g. /my-project/), routes starting with that prefix
 // fail crawl validation (Nuxt 3 limitation). Build an ignore pattern from the base path.
 const baseSegment = base.replace(/^\/+|\/+$/g, '')
@@ -59,11 +61,13 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
+      // APP_VERSION is a build arg / CI value, not consumer config.
       atlasAppVersion: process.env.APP_VERSION,
-      atlasTitle: process.env.ATLAS_TITLE || 'Atlas',
-      atlasLogoLight: process.env.ATLAS_LOGO_LIGHT || '/logo-light.png',
-      atlasLogoDark: process.env.ATLAS_LOGO_DARK || '/logo-dark.png',
-      atlasLogoDarkBg: process.env.ATLAS_LOGO_DARK_BG || '/logo-dark-bg.png',
+      atlasTitle: atlasConfig.title,
+      // Logos are convention-based fixed filenames in public/. No configuration needed.
+      atlasLogoLight: '/logo-light-mode.png',
+      atlasLogoDark: '/logo-dark-mode.png',
+      atlasLogoDarkBg: '/logo-dark-mode-bg.png',
     }
   },
   compatibilityDate: '2024-10-24',
@@ -153,7 +157,7 @@ export default defineNuxtConfig({
   },
   mdc: {
     highlight: {
-      langs: ['python', 'mermaid', 'jsonc']
+      langs: ['python', 'mermaid', 'jsonc', 'toml']
     }
   },
   vite: {

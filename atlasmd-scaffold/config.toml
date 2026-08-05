@@ -1,0 +1,29 @@
+# AtlasMD configuration.
+# Mount this file into the container at /app/config.toml.
+# Every consumer-configurable setting lives here — no ATLAS_* env vars needed.
+# Only CI/build-driven values stay as env vars: CI_PAGES_URL (GitLab CI),
+# APP_VERSION (build arg), PORT.
+
+title = "AtlasMD"
+
+[[socials]]
+url = "https://github.com/joaomcarlos/AtlasMD"
+label = "View the AtlasMD repository"
+icon = "simple-icons:github"
+
+# [[socials]]
+# url = "https://example.slack.com/archives/C123"
+# label = "Message us on Slack"
+# icon = "simple-icons:slack"
+
+# [footer.credits]
+# text = "MyCompany"
+# url = "https://example.com"
+# icon = "heroicons-outline:cloud"
+
+# [footer.text]
+# label = "Built by MyCompany"
+# url = "https://example.com"
+
+# Base URL path (for GitLab Pages subpaths). CI_PAGES_URL overrides this at deploy time.
+# base-url = "/"
