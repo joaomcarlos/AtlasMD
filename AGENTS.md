@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Docus/Nuxt documentation rendering engine. Consumer projects mount their markdown content into the AtlasMD Docker image to get a documentation site without any JavaScript tooling.
+Documentation standard plus documentation rendering engine based on Docus/Nuxt. Consumer projects mount their markdown content into the AtlasMD Docker image to get a documentation site without any JavaScript tooling.
 
 ## Ownership
 
@@ -58,6 +58,8 @@ Logos are convention-based fixed filenames in `public/` — no config needed: `l
 - Social links and footer are config-driven; each consumer sets its own `[[socials]]` and `[footer]` in `config.toml`
 - Social links are generic — consumer picks url, label, and Iconify icon per link
 - Logos are convention-based fixed filenames in `public/`; Logo.vue reads from `runtimeConfig.public`
+- Changes to the `DOCUMENTATION-STANDARD.md` and/or to the skill files require executing `sync-to-scaffold.sh`
+- `sync-to-scaffold.sh` will make the skills and related files it copies read-only to prevent accidental edits. If you reach an error, find the original
 
 ## Verification
 
@@ -69,17 +71,3 @@ cd atlasmd-renderer && docker build -t ghcr.io/joaomcarlos/atlasmd:latest .
 docker compose up
 # Open http://localhost:47145
 ```
-
-## Child DOX Index
-
-- `atlasmd-renderer/` — Rendering engine (Nuxt + Docus); builds `ghcr.io/joaomcarlos/atlasmd:latest` image
-  - `config.ts` — TOML config loader; reads `/app/config.toml` at startup, exports `atlasConfig`
-  - `components/` — Vue components (Logo, content components for MDC)
-  - `plugins/` — Client plugins (scroll-behavior, sidebar-follow)
-  - `assets/css/` — Base styles and image CSS
-- `atlasmd-scaffold/` — Template for consumer projects (content + public + config.toml + compose.yml)
-  - `content/` — AtlasMD self-documentation (5 sections: getting-started, building-blocks, configuration, development, release-notes)
-    - `2.building-blocks/` — Live-rendered component reference (note, side-note, fig, field, simple-card, example-component, mermaid, docus-builtins, footnotes)
-    - `5.release-notes/` — Published image versions (hidden from navigation)
-  - `public/` — Favicons, logos, static images
-  - `config.toml` — Consumer configuration (title, social links, footer)
