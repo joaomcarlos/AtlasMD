@@ -1,59 +1,11 @@
-# atlasmd-scaffold
+# AtlasMD AI
 
-## Purpose
+## Documentation
 
-Template for consumer projects. Contains content structure, public assets, and a compose.yml that mounts into the `ghcr.io/joaomcarlos/atlasmd:latest` image. Also serves as AtlasMD's own self-documentation.
+When working on documentation (writing, editing, reviewing, structuring, or fixing links), force-load the `atlasmd-docs` skill from `ai/skills/atlasmd-docs/SKILL.md`. It indexes the AtlasMD Documentation Standard so you read only the relevant sections for the task type.
 
-## Ownership
+For interactive review sessions, also load `atlasmd-docs-analyzer-mode`. For link checking, also load `atlasmd-docs-link-checker`. For scoring and benchmarking documentation against the standard, also load `atlasmd-docs-conformance-score`.
 
-Content-only subproject of AtlasMD. No JavaScript project — rendering is handled by the AtlasMD Docker image built from `atlasmd-renderer/`.
+## Branding Assets
 
-## Local Contracts
-
-### Structure
-
-```
-content/             Markdown files and _dir.yml navigation configs
-public/              Favicons, logos, static images (served at root URL)
-config.toml          Consumer configuration (title, social links, footer)
-compose.yml          Service definition for the ghcr.io/joaomcarlos/atlasmd:latest image
-```
-
-### Docker Service
-
-- Image: `ghcr.io/joaomcarlos/atlasmd:latest` (pull from GHCR)
-- Port 47145 → container 47145 (web)
-- Port 47146 → container 4000 (HMR websocket)
-- Mounts `content/` → `/app/content`, `public/` → `/app/public`, `config.toml` → `/app/config.toml`
-
-### Content Conventions
-
-- `1.Title.md` filename format (numeric prefix + dot + title)
-- `_dir.yml` in each directory for navigation metadata
-- Icons only in top-level `_dir.yml` files
-- MDC syntax for rich content (`::note`, `::side-note`, `::fig`, `::field`, `::simple-card`, `::example-component`, mermaid diagrams, Docus built-ins)
-
-## Work Guidance
-
-- Edit only markdown files and `_dir.yml` files here
-- Rendering, theme, components, and CSS are in `atlasmd-renderer/` — not here
-- To change appearance, modify the renderer and rebuild the image
-- Consumer projects copy this folder and adjust `config.toml` and paths
-
-## Verification
-
-```bash
-docker compose up
-# Open http://localhost:47145
-```
-
-## Child DOX Index
-
-- `content/` — AtlasMD self-documentation (5 sections: getting-started, building-blocks, configuration, development, release-notes)
-  - `1.getting-started/` — Overview and integration guide
-  - `2.building-blocks/` — Live-rendered component reference (note, side-note, fig, field, simple-card, example-component, mermaid, docus-builtins, footnotes)
-  - `3.configuration/` — Configuration file, content conventions, customization
-  - `4.development/` — Building the image, running locally, project structure
-  - `5.release-notes/` — Published image versions (hidden from navigation)
-- `public/` — Favicons, logos, static images
-- `config.toml` — Consumer configuration (title, social links, footer)
+When generating logos or favicons for a consumer project (or fixing missing favicons), force-load the `atlasmd-icons` skill from `ai/skills/atlasmd-icons/SKILL.md`. It bundles a Python script that takes any source app icon and produces all the correctly-sized logos and favicons AtlasMD expects in `public/`.
