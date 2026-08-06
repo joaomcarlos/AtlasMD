@@ -280,7 +280,7 @@ Rules:
 - Release notes pages have none of these closing sections. They are a flat list of version entries (see 4.8).
 - When both Additional Resources and References exist on the same page, Additional Resources comes first, References comes last. References is the final numbered section because it is the least important to the reader's next action — it is the list of source citations at the end.
 - The References section is numbered like any other section. It is the last numbered section on the page. The landing page is the single exception: its References section is unnumbered.
-- Footnotes are the default. Every page that references source code, external systems, or external documentation has a References section. Omit References only when the user asks for no footnotes, or when the documentation is already mature and uses an established alternative. If the existing documentation uses direct links in prose, switch them to footnotes — direct links in body text are not acceptable.
+- Use footnotes by default. See §5.7 for the footnote rules and the policy on direct links in body text.
 
 ## 4. Page Types
 
@@ -694,7 +694,7 @@ Rules:
 - Group all footnote definitions under the numbered `## N. References` heading at the bottom of the page.
 - Use footnotes for source code files, external system repos, configuration references, and investigation documents.
 - Keep external links in footnotes, not in body text. This keeps the body readable and concentrates all external references in one place. The only exception is when the body text explains a concept about the URL itself (e.g. discussing how a URL routing scheme works) — in that case the URL is part of the explanation, not a reference.
-- Footnotes are the default. If existing documentation uses direct links in prose, switch them to footnotes. Omit footnotes only when the user asks for no footnotes, or when the documentation is already mature and uses an established alternative.
+- Use footnotes by default. If existing documentation uses direct links in prose, switch them to footnotes. Omit footnotes only when the user asks for no footnotes, or when the documentation is already mature and uses an established alternative.
 
 ### 5.8. Landing Page Cards
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Syncs AI skill assets into the atlasmd-scaffold consumer template.
-# Run from the repo root: ./sync-skills.sh
+# Run from the repo root: ./sync-to-scaffold.sh
 
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"

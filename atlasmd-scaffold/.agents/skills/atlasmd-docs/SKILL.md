@@ -25,7 +25,7 @@ Look up the task you are performing. Read the listed sections from the standard 
 | 2. Directory Structure (all) | 43–155 | Where the page goes, file naming, section metadata |
 | 3. Page Anatomy (all) | 157–282 | Frontmatter, H1, opening paragraph, numbered sections, closing sections |
 | 4. Page Types (match your page type) | 284–452 | Required structure for the specific page type you are writing |
-| 5.11. AtlasMD Framework Components | 740–920 | MDC component syntax for notes, side notes, figures, fields, cards, snippets, AI prompts |
+| 5.11. AtlasMD Framework Components | 742–922 | MDC component syntax for notes, side notes, figures, fields, cards, snippets, AI prompts |
 | 6. Writing Style (all) | 922–989 | Voice, tone, human voice, no emojis, concrete before abstract |
 | 13. Quick Reference Checklist | 1290–1332 | Final verification before publishing |
 
@@ -54,7 +54,7 @@ Look up the task you are performing. Read the listed sections from the standard 
 | 5.1. Tables | 458–498 | Field definition tables, endpoint tables |
 | 5.2. Diagrams | 500–581 | Architecture, sequence, state machine diagrams |
 | 5.5. Side Notes | 616–644 | Process Flow, Step-by-Step labels |
-| 5.11. AtlasMD Framework Components | 740–920 | `::field` for individual field definitions, `::side-note` for process flows |
+| 5.11. AtlasMD Framework Components | 742–922 | `::field` for individual field definitions, `::side-note` for process flows |
 | 5.9. Numbered Lists for Processes | 710–723 | How to write process flows |
 | 3.6. Closing Sections | 245–282 | Next Steps, Additional Resources, References order |
 
@@ -64,7 +64,7 @@ Look up the task you are performing. Read the listed sections from the standard 
 | ---- | ----- | -------------- |
 | 4.4. API Endpoint Page | 337–357 | Template with resource groups, schemas, endpoint tables |
 | 5.1. Tables | 458–498 | Endpoint table format, field definition tables |
-| 5.11.4. `::field` | 812–856 | Inline field definitions for request/response schemas |
+| 5.11.4. `::field` | 814–857 | Inline field definitions for request/response schemas |
 | 3.6. Closing Sections | 245–282 | Reference pages have References only (no Next Steps) |
 
 ### Writing a data model page
@@ -73,7 +73,7 @@ Look up the task you are performing. Read the listed sections from the standard 
 | ---- | ----- | -------------- |
 | 4.5. Data Model Page | 359–380 | Template with base model, tables, constraints, enums, properties |
 | 5.1. Tables | 458–498 | Field definition tables with constraints column |
-| 5.11.4. `::field` | 812–856 | Inline field definitions for individual columns with subfields |
+| 5.11.4. `::field` | 814–857 | Inline field definitions for individual columns with subfields |
 | 3.6. Closing Sections | 245–282 | Reference pages have References only (no Next Steps) |
 
 ### Writing an integration page
@@ -84,7 +84,7 @@ Look up the task you are performing. Read the listed sections from the standard 
 | 5.1. Tables | 458–498 | Connection method table, systems table |
 | 5.2. Diagrams | 500–581 | System bridge diagrams, sequence diagrams |
 | 5.5. Side Notes | 616–644 | Process Flow for operation steps |
-| 5.11. AtlasMD Framework Components | 740–920 | `::side-note` for operation flows, `::fig` for sequence diagrams |
+| 5.11. AtlasMD Framework Components | 742–922 | `::side-note` for operation flows, `::fig` for sequence diagrams |
 | 3.6. Closing Sections | 245–282 | Next Steps, Additional Resources, References order |
 
 ### Writing a configuration page
@@ -122,14 +122,14 @@ Look up the task you are performing. Read the listed sections from the standard 
 | Read | Lines | What it covers |
 | ---- | ----- | -------------- |
 | 5.6. Figures | 646–670 | Captions, numbering, light/dark variants, alt text, format, file size |
-| 5.11.3. `::fig` | 783–811 | AtlasMD figure component: props, theme switching, zoom modal |
+| 5.11.3. `::fig` | 785–812 | AtlasMD figure component: props, theme switching, zoom modal |
 | 7.3. Images and Diagrams | 1016–1025 | Accessibility for images |
 
 ### Using AtlasMD framework components
 
 | Read | Lines | What it covers |
 | ---- | ----- | -------------- |
-| 5.11. AtlasMD Framework Components (all) | 740–920 | All MDC components: `::note`, `::side-note`, `::fig`, `::field`, `::simple-card`, `::snippet`, `::ai-prompt` |
+| 5.11. AtlasMD Framework Components (all) | 742–922 | All MDC components: `::note`, `::side-note`, `::fig`, `::field`, `::simple-card`, `::snippet`, `::ai-prompt` |
 | 5.4. Notes | 599–614 | Abstract rules for notes (links to `::note`) |
 | 5.5. Side Notes | 616–644 | Abstract rules for side notes (links to `::side-note`) |
 | 5.6. Figures | 646–670 | Abstract rules for figures (links to `::fig`) |
@@ -154,7 +154,7 @@ Look up the task you are performing. Read the listed sections from the standard 
 | 12. Maintenance (all) | 1218–1288 | Sync, ownership, review cycles, stale content, automated checks, quality criteria |
 | 6. Writing Style (all) | 922–989 | Voice, tone, human voice, no AI-sounding phrases |
 | 7. Accessibility (all) | 991–1057 | Semantic structure, tables, images, contrast, keyboard, code blocks |
-| 5.11. AtlasMD Framework Components | 740–920 | Verify correct MDC component usage and prop values |
+| 5.11. AtlasMD Framework Components | 742–922 | Verify correct MDC component usage and prop values |
 
 ### Scoring / benchmarking documentation
 
