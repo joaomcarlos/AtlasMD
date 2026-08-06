@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-06T12:54:00Z",
+  "title": "Design System: AtlasMD",
+  "extensions": {
+    "colorMeta": {
+      "slate-ink-900": {
+        "role": "primary",
+        "displayName": "Slate Ink 900",
+        "canonical": "#0f1320",
+        "tonalRamp": ["#0f1320", "#141a2a", "#1a2237", "#212b42", "#36496e", "#3b475e", "#bac9d7", "#d1dbe4", "#e6ebf0", "#f0f8fc"]
+      },
+      "slate-ink-600": {
+        "role": "primary",
+        "displayName": "Slate Ink 600",
+        "canonical": "#212b42",
+        "tonalRamp": ["#0f1320", "#141a2a", "#1a2237", "#212b42", "#36496e", "#3b475e", "#bac9d7", "#d1dbe4", "#e6ebf0", "#f0f8fc"]
+      },
+      "blueprint-blue-light": {
+        "role": "primary",
+        "displayName": "Blueprint Blue (Light)",
+        "canonical": "#3182ce",
+        "tonalRamp": ["#014267", "#024757", "#0069A6", "#1AADFF", "#3182ce", "#4dabf7", "#64C7FF", "#A1DDFF", "#C6EAFF", "#DFF3FF"]
+      },
+      "blueprint-blue-dark": {
+        "role": "primary",
+        "displayName": "Blueprint Blue (Dark)",
+        "canonical": "#4dabf7",
+        "tonalRamp": ["#014267", "#024757", "#0069A6", "#1AADFF", "#3182ce", "#4dabf7", "#64C7FF", "#A1DDFF", "#C6EAFF", "#DFF3FF"]
+      },
+      "margin-gray-600": {
+        "role": "neutral",
+        "displayName": "Margin Gray 600",
+        "canonical": "#626262",
+        "tonalRamp": ["#111111", "#1d1d1d", "#323232", "#626262", "#939393", "#bfbfbf", "#d7d7d7", "#eaeaea", "#f5f5f5", "#fbfbfb"]
+      },
+      "margin-gray-200": {
+        "role": "neutral",
+        "displayName": "Margin Gray 200",
+        "canonical": "#eaeaea",
+        "tonalRamp": ["#111111", "#1d1d1d", "#323232", "#626262", "#939393", "#bfbfbf", "#d7d7d7", "#eaeaea", "#f5f5f5", "#fbfbfb"]
+      },
+      "dark-slate-900": {
+        "role": "neutral",
+        "displayName": "Dark Slate 900",
+        "canonical": "#0f172a",
+        "tonalRamp": ["#0f172a", "#1e293b", "#334155", "#3b4252", "#475569", "#64748b", "#94a3b8", "#cbd5e1", "#e2e8f0", "#f1f5f9"]
+      },
+      "warning-vermilion-500": {
+        "role": "semantic",
+        "displayName": "Warning Vermilion",
+        "canonical": "#FF3B10",
+        "tonalRamp": ["#1C0301", "#340A01", "#701704", "#BB2402", "#FF3B10", "#FF7353", "#FFA692", "#FFDED7", "#FFF3F0", "#FFF9F8"]
+      },
+      "code-bg-light": {
+        "role": "neutral",
+        "displayName": "Code Background (Light)",
+        "canonical": "#f7fafc",
+        "tonalRamp": ["#0f172a", "#1e293b", "#334155", "#64748b", "#94a3b8", "#cbd5e1", "#e2e8f0", "#f1f5f9", "#f7fafc", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "body": {
+        "displayName": "Body Sans",
+        "purpose": "Default reading surface — all body text, headings, and UI labels."
+      },
+      "callout-serif": {
+        "displayName": "Callout Serif",
+        "purpose": "Notes, marginalia, and asides — the serif break signals an annotation."
+      },
+      "code-mono": {
+        "displayName": "Code Mono",
+        "purpose": "Code blocks, inline code, and mermaid diagrams. Fira Code with ligatures."
+      },
+      "heading-h1": {
+        "displayName": "H1 Document Title",
+        "purpose": "Document title — uppercase, centered, 2px bottom border. One per page."
+      },
+      "heading-h2": {
+        "displayName": "H2 Ruled Section",
+        "purpose": "Major section headings with top + bottom 1px border rules."
+      },
+      "label-uppercase": {
+        "displayName": "Label Uppercase",
+        "purpose": "AI prompt header label — monospace, uppercase, 0.05em letter-spacing."
+      }
+    },
+    "shadows": [
+      {
+        "name": "figure-ambient",
+        "value": "0 2px 4px rgba(0, 0, 0, 0.1)",
+        "purpose": "Light ambient shadow on figure images — lifts them slightly off the page."
+      },
+      {
+        "name": "card-ambient",
+        "value": "0 1px 2px 0 rgba(0,0,0,0.03)",
+        "purpose": "Barely-perceptible shadow on simple cards — tonal separation, not spatial."
+      },
+      {
+        "name": "modal-scrim",
+        "value": "rgba(0, 0, 0, 0.6) inset 0",
+        "purpose": "Full-screen overlay scrim behind modals (figure zoom, mermaid zoom)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "figure-hover",
+        "value": "transform 0.2s ease",
+        "purpose": "Figure hover scale(1.02) — subtle zoom-in affordance."
+      },
+      {
+        "name": "mermaid-hover",
+        "value": "transform 0.2s ease",
+        "purpose": "Mermaid diagram hover scale(1.01) — subtle zoom-in affordance."
+      },
+      {
+        "name": "ai-prompt-border",
+        "value": "border-color 0.2s",
+        "purpose": "AI prompt hover — border shifts to slate-ink-400."
+      },
+      {
+        "name": "copy-hint-fade",
+        "value": "opacity 0.2s",
+        "purpose": "AI prompt copy hint — opacity 0 to 1 on hover."
+      },
+      {
+        "name": "footnote-highlight",
+        "value": "background-color 0.4s ease",
+        "purpose": "Footnote target highlight — smooth transition when navigated to via superscript."
+      },
+      {
+        "name": "smooth-scroll",
+        "value": "behavior: smooth",
+        "purpose": "Hash navigation and sidebar active-link scroll — smooth scroll with header offset."
+      }
+    ],
+    "breakpoints": [
+      { "name": "xs", "value": "475px" },
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "xxl", "value": "1536px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Note Callout",
+      "kind": "custom",
+      "refersTo": "note-callout",
+      "description": "Inline annotation with accent left-rule and serif text. Used via ::note MDC component.",
+      "html": "<div class=\"ds-note\"><span class=\"ds-note-prefix\">Note:</span> This is a technical note with an accent left-rule and serif typography.</div>",
+      "css": ".ds-note { position: relative; padding: 0.5em 1em 0.5em 4em; margin: 1em 0; background-color: #f7fafc; color: #1d1d1d; border-left: 3px solid #3182ce; border-radius: 0 3px 3px 0; font-family: 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif; } .ds-note-prefix { position: absolute; left: 0.5em; font-weight: bold; color: #3182ce; } @media (prefers-color-scheme: dark) { .ds-note { background-color: var(--elements-backdrop-background); color: oklch(70.7% 0.022 261.325); border-left-color: #4dabf7; } .ds-note-prefix { color: #4dabf7; } }"
+    },
+    {
+      "name": "Side Note (Marginalia)",
+      "kind": "custom",
+      "refersTo": "side-note",
+      "description": "Right-aligned annotation in the margin column. Used via ::side-note MDC component.",
+      "html": "<div class=\"ds-side-note\">This is a marginal note in the left margin column.</div>",
+      "css": ".ds-side-note { font-size: 0.8em; color: #626262; text-align: right; font-family: 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif; } @media (prefers-color-scheme: dark) { .ds-side-note { position: relative; border: 1px solid #3b4252; border-radius: 1rem; padding: 0.15rem 0.6rem; margin-top: -7px; margin-bottom: 7px; color: #ddd; } }"
+    },
+    {
+      "name": "Simple Card",
+      "kind": "card",
+      "refersTo": "simple-card",
+      "description": "Bordered container with barely-perceptible shadow. Used via ::simple-card MDC component.",
+      "html": "<div class=\"ds-card\">Card content goes here. This is a simple bordered container with a muted background.</div>",
+      "css": ".ds-card { font-size: 0.875rem; padding: 0.75rem 0.75rem 0.25rem 0.75rem; margin: 0.75rem 0.75rem 0.75rem 0; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.03); border: 1px solid #eaeaea; border-radius: 10px; border-color: #eaeaea; background: #fbfbfb; } @media (prefers-color-scheme: dark) { .ds-card { border-color: #1a2237; background: #141a2a; } }"
+    },
+    {
+      "name": "AI Prompt",
+      "kind": "custom",
+      "refersTo": "ai-prompt",
+      "description": "Click-to-copy prompt container with header bar and monospace label. Used via ::ai-prompt MDC component.",
+      "html": "<div class=\"ds-ai-prompt\"><div class=\"ds-ai-prompt-header\"><span class=\"ds-ai-prompt-label\">AI Prompt</span><span class=\"ds-ai-prompt-hint\">Click to copy</span></div><div class=\"ds-ai-prompt-content\">You are a technical writer. Generate documentation following the AtlasMD standard.</div></div>",
+      "css": ".ds-ai-prompt { position: relative; border: 1px solid #eaeaea; border-radius: 10px; background: #fbfbfb; margin-bottom: 10px; cursor: pointer; overflow: hidden; transition: border-color 0.2s; } .ds-ai-prompt:hover { border-color: #3b475e; } .ds-ai-prompt-header { position: relative; display: flex; align-items: center; padding: 6px 12px; border-bottom: 1px solid #eaeaea; background: #f5f5f5; font-size: 0.75rem; font-weight: 600; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; } .ds-ai-prompt-label { flex: 1; text-align: center; color: #212b42; text-transform: uppercase; letter-spacing: 0.05em; } .ds-ai-prompt-hint { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #bfbfbf; opacity: 0; transition: opacity 0.2s; } .ds-ai-prompt:hover .ds-ai-prompt-hint { opacity: 1; } .ds-ai-prompt-content { padding: 12px; font-size: 0.875rem; line-height: 1.5; } @media (prefers-color-scheme: dark) { .ds-ai-prompt { border-color: #1a2237; background: #141a2a; } .ds-ai-prompt-header { border-color: #1a2237; background: #0f1320; } .ds-ai-prompt-label { color: #bac9d7; } .ds-ai-prompt-hint { color: #939393; } }"
+    },
+    {
+      "name": "Field Definition",
+      "kind": "custom",
+      "refersTo": "field-definition",
+      "description": "Inline field definition with name, type, required marker, and italic description. Used via ::field MDC component.",
+      "html": "<div class=\"ds-field\"><div class=\"ds-field-meta\"><span class=\"ds-field-name\">userId</span><span class=\"ds-field-type\">(string)</span><span class=\"ds-field-required\">*</span><span>:</span></div><div class=\"ds-field-desc\">The unique identifier for the user.</div></div>",
+      "css": ".ds-field { display: flex; align-items: baseline; gap: 0.25rem; margin-bottom: 0.75rem; } .ds-field-meta { display: flex; align-items: center; gap: 0.25rem; } .ds-field-name { font-weight: 600; font-size: 0.875rem; color: #111111; } .ds-field-type { font-size: 0.75rem; color: #939393; } .ds-field-required { font-weight: bold; color: #BB2402; } .ds-field-desc { font-style: italic; color: #212b42; font-size: 0.875rem; } @media (prefers-color-scheme: dark) { .ds-field-name { color: #f5f5f5; } .ds-field-type { color: #bfbfbf; } .ds-field-required { color: #FF7353; } .ds-field-desc { color: #bac9d7; } }"
+    },
+    {
+      "name": "Figure (Inline)",
+      "kind": "custom",
+      "refersTo": "figure-inline",
+      "description": "Inline figure with caption, hover zoom, and click-to-open modal. Used via ::fig MDC component.",
+      "html": "<div class=\"ds-fig\"><figure><img class=\"ds-fig-img\" src=\"https://placehold.co/600x400\" alt=\"Architecture diagram\" /><figcaption class=\"ds-fig-caption\">Figure 1: System architecture overview</figcaption></figure></div>",
+      "css": ".ds-fig { position: relative; display: block; width: 100%; } .ds-fig-img { transition: transform 0.2s ease; border-radius: 8px; width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto; cursor: zoom-in; } .ds-fig-img:hover { transform: scale(1.02); } .ds-fig-caption { margin-top: 0.5em; font-style: italic; color: #626262; text-align: center; font-size: 0.9em; } @media (prefers-color-scheme: dark) { .ds-fig-caption { color: #ddd; } }"
+    },
+    {
+      "name": "Code Block",
+      "kind": "custom",
+      "refersTo": "code-block",
+      "description": "Syntax-highlighted code block with accent left-rule and hover copy button.",
+      "html": "<pre class=\"ds-code-block\"><code>function hello() {\n  console.log('Hello, AtlasMD!');\n}</code></pre>",
+      "css": ".ds-code-block { font-family: 'Fira Code', 'Roboto Mono', 'Consolas', 'Monaco', 'Andale Mono', monospace; font-size: 0.9em; line-height: 1.5; border-radius: 3px; padding: 1em; margin: 0 0 1.5em 0; border-left: 3px solid #3182ce; background-color: #f7fafc; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; } @media (prefers-color-scheme: dark) { .ds-code-block { border-left-color: #4dabf7; background-color: #2d2d2d; color: #f5f5f5; } }"
+    },
+    {
+      "name": "Version Chip",
+      "kind": "chip",
+      "refersTo": "version-chip",
+      "description": "Pill-shaped version label next to the header title. Shows APP_VERSION build arg.",
+      "html": "<span class=\"ds-version-chip\">v0.1.0</span>",
+      "css": ".ds-version-chip { padding: 2px 7px; font-size: 12px; border-radius: 25px; color: #ffffff; background-color: #1d1d1d; } @media (prefers-color-scheme: dark) { .ds-version-chip { color: #ffffff; background-color: #939393; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Technical Manual",
+    "overview": "AtlasMD renders technical documentation as a typeset manual translated to screen. The page is a grid with a marginalia column, justified body text with first-line indents, ruled section headings with top and bottom borders, and serif callouts that break from the sans-serif body to mark notes and asides. The aesthetic is technical and dense — information density is high but legible, and the reader is here to work, not to browse.\n\nThe dark mode does not abandon the manual metaphor; it deepens it. Light mode uses warm neutrals (paper-white backgrounds, gray-200 heading bands, blueprint-blue accents). Dark mode shifts to a slate palette — the primary navy ramp becomes the surface, the accent shifts to a brighter blueprint blue, and the marginalia and callouts inherit the same structural rules in inverted tones.\n\nComponents are tactile and responsive. They are quiet at rest — thin borders, muted backgrounds, no heavy affordances — and responsive when touched: figures zoom to a modal on click, AI prompts copy to clipboard with feedback, code blocks reveal a copy button on hover, mermaid diagrams scale on hover and open in a modal.",
+    "keyCharacteristics": [
+      "Print-derived grid: margin column (1.5in), content column (5.5in), 1fr remainder, 0.5in gutter",
+      "Justified body text with automatic hyphenation and 1.5em first-line indent",
+      "Ruled H2 headings (top + bottom 1px borders) and accent left-rules on callouts and code blocks",
+      "Serif callouts (Computer Modern Serif / Charter / Georgia) breaking from sans-serif body",
+      "Dual-mode palette: warm neutrals + blueprint blue (light), slate navy + brighter blue (dark)",
+      "Small radii (3-8px) — the form language is architectural, not soft",
+      "Functional shadows only: figures, cards, and modals; content surfaces are flat with tonal layering"
+    ],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Blueprint Blue is the only chromatic accent in the system. It appears as left-rules, bullet markers, link colors, and diagram strokes — never as a fill on large surfaces. Its rarity is the point; it functions as a margin annotation, not a brand color.", "section": "colors" },
+      { "name": "The Mode-Shift Rule", "body": "Dark mode is not an inverted light mode. It shifts to a cooler, bluer palette: the primary navy ramp becomes the surface family, the accent brightens, and the dark-slate table colors replace the warm neutral table colors. The grid, rules, and typography persist unchanged.", "section": "colors" },
+      { "name": "The Serif Break Rule", "body": "Notes, marginalia, and asides use the callout serif (Computer Modern Serif / Charter / Georgia). Body text, headings, and code use sans-serif or monospace. The serif is the signal that the reader has left the main argument and entered an annotation.", "section": "typography" },
+      { "name": "The Justified Text Rule", "body": "Body paragraphs are justified with inter-word spacing and automatic hyphenation. This is a deliberate print-craft choice — it creates the even right margin of a typeset manual. The first-line indent of 1.5em reinforces the print metaphor. Do not switch to left-aligned without an explicit product decision.", "section": "typography" },
+      { "name": "The Grid Persistence Rule", "body": "The three-column grid is the structural identity of the page. It does not collapse to a single column on smaller screens — the marginalia column narrows but persists. If a future responsive redesign collapses the grid, it is replacing the manual metaphor, not refining it.", "section": "layout" },
+      { "name": "The Functional Shadow Rule", "body": "Shadows appear only on elements that lift or overlay: figures, cards, and modals. Content surfaces (body text, headings, tables, code blocks, notes) are flat — depth is conveyed through tonal layering and border rules. A shadow on a content surface is a bug.", "section": "elevation" },
+      { "name": "The Rule-Not-Shadow Rule", "body": "Structural separation is achieved with border rules, not shadows. A section break is a 1px line, not a drop shadow. An accent is a 3px left-rule, not a glow. The system prefers drawn lines over cast shadows.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do use the callout serif (Computer Modern Serif / Charter / Georgia) for notes, marginalia, and asides — the serif break is the signal that the reader has entered an annotation.",
+      "Do justify body text with inter-word spacing and automatic hyphenation — the even right margin is the print-craft signature.",
+      "Do use the 3px accent left-rule (blueprint blue) on notes, code blocks, and blockquotes — it is the primary structural accent device.",
+      "Do keep radii small (3-8px for content, 10px for cards) — the form language is architectural, not soft.",
+      "Do use tonal layering (slate surfaces, border rules) for depth on content surfaces — reserve shadows for figures, cards, and modals.",
+      "Do span mermaid diagrams across the full grid (1 / -1) — they must not be squeezed into the margin column.",
+      "Do support separate light/dark image sources in ::fig — the manual metaphor persists in both modes.",
+      "Do keep the version chip as the only fully-rounded element — it is a small, deliberate exception to the architectural form language."
+    ],
+    "donts": [
+      "Don't use blueprint blue as a fill on large surfaces — it is an accent, not a brand color. Its rarity is the point.",
+      "Don't add shadows to content surfaces (body text, headings, tables, code blocks, notes) — depth is conveyed through tonal layering and border rules.",
+      "Don't collapse the three-column grid (margin / content / 1fr) into a single column without an explicit product decision — the grid is the structural identity of the manual.",
+      "Don't switch body text from justified to left-aligned without an explicit product decision — the even right margin is a deliberate print-craft choice.",
+      "Don't use red outside of the required-field asterisk — warning vermilion is reserved for that single purpose.",
+      "Don't use rounded corners larger than 10px on content components — the system's maximum content radius is 10px (cards). Larger radii break the architectural form language.",
+      "Don't treat dark mode as an inverted light mode — it shifts to a cooler, bluer palette with distinct surface colors (dark-slate family) for tables and diagrams."
+    ]
+  }
+}
