@@ -6,6 +6,7 @@ services:
     restart: on-failure
     ports:
       - "47145:47145"
+      - "4000:4000"
     environment:
       - PORT=47145
     volumes:

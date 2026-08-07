@@ -1,8 +1,8 @@
 up:
-    docker compose -f docker-compose.dev.yml up --build -d
+    docker compose up --build -d
 
 down:
-    docker compose -f docker-compose.dev.yml down
+    docker compose down
 
 logs:
-    docker compose -f docker-compose.dev.yml logs -f
+    docker compose logs -f
