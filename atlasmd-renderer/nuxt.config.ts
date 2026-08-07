@@ -85,6 +85,7 @@ export default defineNuxtConfig({
   css: [
     '~/assets/css/images.css',
     '~/assets/css/base.scss',
+    '~/assets/css/sidebar.scss',
   ],
   components: [
     {
