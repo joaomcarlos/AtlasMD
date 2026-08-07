@@ -490,7 +490,7 @@
   }
 
   /* Links */
-  a {
+  a:not(.button-link) {
     color: inherit !important;
     text-decoration: none !important;
     font-weight: normal !important;
