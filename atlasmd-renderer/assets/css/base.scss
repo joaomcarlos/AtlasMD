@@ -60,9 +60,9 @@
 }
 
 :root[data-theme="dark"] {
-  --docus-body-color: oklch(70.7% .022 261.325);
-  --heading-color: #eaeaea;
-  --border-color: #eaeaea;
+  --docus-body-color: var(--color-white);
+  --heading-color: #f2f2f2;
+  --border-color: #4a5568;
 
   --background-color: transparent;
   --text-color: var(--docus-body-color);
@@ -73,7 +73,7 @@
   --accent-color: #4dabf7;
 
   --primary-color: #ddd;
-  --secondary-color: #9ca3af;
+  --secondary-color: #b0b8c4;
 
   /* Dark mode table variables */
   --table-text: #e5e7eb;
@@ -127,6 +127,13 @@
     ol,
     figure {
       font-family: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
+    }
+
+    /* Dark mode serif compensation: thin strokes need more weight, leading, and tracking */
+    p, li, td, blockquote {
+      font-weight: 500 !important;
+      line-height: 1.6 !important;
+      letter-spacing: 0.01em !important;
     }
   }
 
