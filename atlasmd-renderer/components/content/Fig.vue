@@ -9,9 +9,9 @@
         </figure>
 
         <!-- modal image -->
-        <div v-if="props.allowZoom && modalIsOpen" class="modal-image-overlay" role="dialog" aria-modal="true"
-            @click.stop="closeModal">
-            <div class="modal-image-bg" :style="{
+        <div v-if="props.allowZoom && modalIsOpen" class="modal-image-overlay" :class="{ 'is-closing': isClosing }"
+            role="dialog" aria-modal="true" @click.stop="closeModal">
+            <div class="modal-image-bg" :class="{ 'is-closing': isClosing }" :style="{
                 background: props.keepTransparentBg ? 'transparent' : colorMode.preference === 'dark' ? 'rgba(15, 19, 32, 0.95)' : 'rgba(255, 255, 255, 1)'
             }">
                 <img class="modal-image" :src="refinedModalSrc" :alt="props.caption" @click.stop="closeModal" />
@@ -92,8 +92,16 @@ console.debug('keepTransparentBg', props.keepTransparentBg)
 
 // handle modal
 const modalIsOpen = ref(false)
+const isClosing = ref(false)
 const openModal = () => modalIsOpen.value = true
-const closeModal = () => modalIsOpen.value = false
+const closeModal = () => {
+    if (!modalIsOpen.value) return
+    isClosing.value = true
+    setTimeout(() => {
+        modalIsOpen.value = false
+        isClosing.value = false
+    }, 250)
+}
 
 const onKeydown = (e: KeyboardEvent) => {
     if (e.key === 'Escape' && modalIsOpen.value) { closeModal() }
@@ -129,7 +137,6 @@ onBeforeUnmount(() => {
 /* modal */
 .modal-image {
     cursor: zoom-out;
-    width: 100%;
     max-width: 95vw;
     max-height: 95vh;
     object-fit: contain;
@@ -144,6 +151,7 @@ onBeforeUnmount(() => {
     justify-content: center;
     z-index: 1000;
     padding: 2rem;
+    animation: fig-modal-fade-in 0.2s ease-out;
 }
 
 .modal-image-bg {
@@ -151,10 +159,71 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    max-width: 100%;
-
+    width: fit-content;
+    max-width: 95vw;
     border-radius: 8px;
+    animation: fig-modal-zoom-in 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transform-origin: center;
+}
+
+@keyframes fig-modal-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fig-modal-zoom-in {
+    from {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .modal-image-overlay,
+    .modal-image-bg {
+        animation: none;
+    }
+}
+
+.modal-image-overlay.is-closing {
+    animation: fig-modal-fade-out 0.25s ease-in forwards;
+}
+
+.modal-image-bg.is-closing {
+    animation: fig-modal-zoom-out 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes fig-modal-fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fig-modal-zoom-out {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(0.85);
+        opacity: 0;
+    }
 }
 </style>
 

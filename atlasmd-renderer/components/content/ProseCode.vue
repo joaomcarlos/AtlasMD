@@ -19,6 +19,7 @@ const props = defineProps({
 const hovered = ref(false)
 const mermaidSvg = ref<string | null>(null)
 const modalIsOpen = ref(false)
+const isClosing = ref(false)
 
 const isDarkMode = () => document.documentElement.getAttribute('data-theme') === 'dark'
 
@@ -63,7 +64,14 @@ const renderMermaid = async () => {
 }
 
 const openModal = () => { modalIsOpen.value = true }
-const closeModal = () => { modalIsOpen.value = false }
+const closeModal = () => {
+  if (!modalIsOpen.value) return
+  isClosing.value = true
+  setTimeout(() => {
+    modalIsOpen.value = false
+    isClosing.value = false
+  }, 250)
+}
 
 const onKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Escape' && modalIsOpen.value) { closeModal() }
@@ -100,9 +108,9 @@ onBeforeUnmount(() => {
   </div>
 
   <Teleport to="body">
-    <div v-if="language === 'mermaid' && modalIsOpen" class="mermaid-modal-overlay" role="dialog" aria-modal="true"
-      @click.stop="closeModal">
-      <div class="mermaid-modal-bg" :style="{
+    <div v-if="language === 'mermaid' && modalIsOpen" class="mermaid-modal-overlay" :class="{ 'is-closing': isClosing }"
+      role="dialog" aria-modal="true" @click.stop="closeModal">
+      <div class="mermaid-modal-bg" :class="{ 'is-closing': isClosing }" :style="{
         background: isDarkMode() ? 'rgba(15, 19, 32, 0.98)' : 'rgba(255, 255, 255, 0.98)'
       }" @click.stop="closeModal">
         <div v-if="mermaidSvg" class="mermaid-modal-svg" v-html="mermaidSvg" />
@@ -163,6 +171,7 @@ onBeforeUnmount(() => {
   justify-content: center;
   z-index: 1000;
   padding: 2rem;
+  animation: mermaid-modal-fade-in 0.2s ease-out;
 }
 
 .mermaid-modal-bg {
@@ -175,6 +184,68 @@ onBeforeUnmount(() => {
   border-radius: 8px;
   cursor: zoom-out;
   overflow: auto;
+  animation: mermaid-modal-zoom-in 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center;
+}
+
+@keyframes mermaid-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mermaid-modal-zoom-in {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .mermaid-modal-overlay,
+  .mermaid-modal-bg {
+    animation: none;
+  }
+}
+
+.mermaid-modal-overlay.is-closing {
+  animation: mermaid-modal-fade-out 0.25s ease-in forwards;
+}
+
+.mermaid-modal-bg.is-closing {
+  animation: mermaid-modal-zoom-out 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes mermaid-modal-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes mermaid-modal-zoom-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(0.85);
+    opacity: 0;
+  }
 }
 
 .mermaid-modal-svg {
@@ -184,11 +255,10 @@ onBeforeUnmount(() => {
 .mermaid-modal-svg :deep(svg) {
   display: block;
   margin: 0 auto;
-  /* Let the SVG expand to fill the modal viewport */
-  max-width: 95vw;
-  max-height: 90vh;
-  width: 100%;
-  height: auto;
+  max-width: 95vw !important;
+  max-height: 90vh !important;
+  width: 100% !important;
+  height: auto !important;
 }
 
 /* Isolate Mermaid SVG internals from inherited .page-body styles
