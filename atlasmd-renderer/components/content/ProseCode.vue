@@ -171,6 +171,7 @@ onBeforeUnmount(() => {
       <div class="mermaid-modal-bg" :class="{ 'is-closing': isClosing }" :style="{
         background: isDarkMode() ? 'rgba(15, 19, 32, 0.98)' : 'rgba(255, 255, 255, 0.98)'
       }" @click.stop="closeModal">
+        <div class="mermaid-label">Diagram</div>
         <div v-if="mermaidSvg" class="mermaid-modal-svg" v-html="mermaidSvg" />
       </div>
     </div>
@@ -376,6 +377,17 @@ onBeforeUnmount(() => {
   border-bottom-color: #334155;
 }
 
+/* Inside the modal the label should blend with the modal background
+   rather than the opaque --code-bg used by the inline container. */
+.mermaid-modal-bg .mermaid-label {
+  background: transparent;
+  border-bottom-color: var(--border-color, #ddd);
+}
+
+:root[data-theme="dark"] .mermaid-modal-bg .mermaid-label {
+  border-bottom-color: #334155;
+}
+
 .mermaid-loading {
   display: block;
   text-align: center;
@@ -407,6 +419,7 @@ onBeforeUnmount(() => {
 .mermaid-modal-bg {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -476,6 +489,11 @@ onBeforeUnmount(() => {
     transform: scale(0.85);
     opacity: 0;
   }
+}
+
+.mermaid-modal-bg .mermaid-label {
+  width: 100%;
+  flex-shrink: 0;
 }
 
 .mermaid-modal-svg {
