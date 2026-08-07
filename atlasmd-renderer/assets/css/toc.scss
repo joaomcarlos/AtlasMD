@@ -1,0 +1,183 @@
+/* Right-side Table of Contents — Page-level Heading Index
+ *
+ * Mirrors the left sidebar's manual metaphor: a monospace ruled title
+ * that reads like a chapter divider, quiet gray links with 1px tree guide
+ * lines, and the blueprint-blue 3px accent left-rule on the active heading —
+ * the same structural accent device used on notes, code blocks, and blockquotes.
+ */
+
+/* ─── Container ─────────────────────────────────────────────────── */
+
+.toc {
+  /* Override Docus border to match the palette */
+  border-left: 1px solid #eaeaea !important;
+  border-bottom: 1px solid #eaeaea !important;
+
+  /* Themed scrollbar — thin, from the palette */
+  scrollbar-width: thin;
+  scrollbar-color: #d7d7d7 transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #d7d7d7;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #bfbfbf;
+  }
+}
+
+[data-theme="dark"] .toc {
+  border-left: 1px solid #1a2237 !important;
+  border-bottom: 1px solid #1a2237 !important;
+
+  scrollbar-color: #3b475e transparent;
+
+  &::-webkit-scrollbar-thumb {
+    background: #3b475e;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #36496e;
+  }
+}
+
+/* ─── Mobile Collapsible Button ─────────────────────────────────── */
+/* On mobile (<lg), the TOC is a collapsible button with a chevron.
+ * Style it as a ruled chapter heading — monospace, uppercase. */
+
+.toc .toc-wrapper button {
+  font-family: 'Fira Code', 'Roboto Mono', 'Consolas', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #323232 !important;
+
+  .title {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    text-transform: inherit !important;
+    letter-spacing: inherit !important;
+    color: inherit !important;
+  }
+
+  .icon {
+    color: #939393 !important;
+  }
+}
+
+[data-theme="dark"] .toc .toc-wrapper button {
+  color: #bac9d7 !important;
+
+  .icon {
+    color: #626262 !important;
+  }
+}
+
+/* ─── Title — Ruled Chapter Heading ─────────────────────────────── */
+/* Matches the left sidebar's section headers: monospace, uppercase,
+ * letter-spaced, with a bottom border rule like the H2 heading. */
+
+.docs-toc .docs-toc-title {
+  font-family: 'Fira Code', 'Roboto Mono', 'Consolas', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #323232 !important;
+  padding: 0 0 0.375rem 0 !important;
+  border-bottom: 1px solid #eaeaea !important;
+  margin-bottom: 0.5rem !important;
+}
+
+[data-theme="dark"] .docs-toc .docs-toc-title {
+  color: #bac9d7 !important;
+  border-bottom: 1px solid #1a2237 !important;
+}
+
+/* ─── Depth Indentation ─────────────────────────────────────────── */
+/* Nested headings indent under their parent — the li padding creates
+ * the visual hierarchy, while the a border-left creates the guide line. */
+
+.docs-toc-links li.depth-3 {
+  padding-left: 0.75rem !important;
+}
+
+.docs-toc-links li.depth-4 {
+  padding-left: 1.5rem !important;
+}
+
+/* ─── Links — Quiet Entries with Guide Lines ────────────────────── */
+/* Gray at rest, darkening on hover. The active heading gets blueprint-blue
+ * text, medium weight, and the 3px accent left-rule. Padding compensates
+ * for the active border thickness change so text stays optically aligned. */
+
+.docs-toc-links a {
+  font-size: 0.8125rem !important;
+  font-weight: 400 !important;
+  color: #939393 !important;
+  padding: 5px 0 5px 14px !important;
+  border-left: 1px solid #eaeaea !important;
+  transition: color 0.15s ease, border-left-color 0.15s ease !important;
+
+  &:not(.active):hover {
+    color: #1d1d1d !important;
+    border-left-color: #d7d7d7 !important;
+  }
+
+  &.active {
+    color: #36496e !important;
+    font-weight: 500 !important;
+    border-left: 3px solid #3182ce !important;
+    padding-left: 12px !important;
+  }
+}
+
+[data-theme="dark"] .docs-toc-links a {
+  color: #939393 !important;
+  border-left: 1px solid #1a2237 !important;
+
+  &:not(.active):hover {
+    color: #eaeaea !important;
+    border-left-color: #3b475e !important;
+  }
+
+  &.active {
+    color: #4dabf7 !important;
+    border-left: 3px solid #4dabf7 !important;
+  }
+}
+
+/* ─── Focus Ring ────────────────────────────────────────────────── */
+/* Visible keyboard focus from the palette, not the browser default. */
+
+.docs-toc-links a:focus-visible {
+  outline: 2px solid #3182ce !important;
+  outline-offset: -2px !important;
+  border-radius: 2px !important;
+}
+
+[data-theme="dark"] .docs-toc-links a:focus-visible {
+  outline: 2px solid #4dabf7 !important;
+}
+
+/* ─── Selection ─────────────────────────────────────────────────── */
+/* Text selection in the TOC uses a muted highlight from the palette. */
+
+.docs-toc-links::selection {
+  background: rgba(49, 130, 206, 0.15) !important;
+}
+
+[data-theme="dark"] .docs-toc-links::selection {
+  background: rgba(77, 171, 247, 0.15) !important;
+}

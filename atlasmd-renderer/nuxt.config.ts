@@ -86,6 +86,7 @@ export default defineNuxtConfig({
     '~/assets/css/images.css',
     '~/assets/css/base.scss',
     '~/assets/css/sidebar.scss',
+    '~/assets/css/toc.scss',
   ],
   components: [
     {
