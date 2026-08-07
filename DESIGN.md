@@ -41,12 +41,13 @@ colors:
   highlight-target: "rgba(255, 235, 59, 0.35)"
 typography:
   body:
-    fontFamily: "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif"
+    fontFamily: "'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif"
     fontSize: "11pt"
     fontWeight: 400
-    lineHeight: "1.4"
+    lineHeight: "1.5"
+    fontFeatures: "liga 1, oldstyle-nums"
   callout-serif:
-    fontFamily: "'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif"
+    fontFamily: "'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif"
     fontSize: "0.8em"
     fontWeight: 400
   code-mono:
@@ -55,32 +56,43 @@ typography:
     fontWeight: 400
     lineHeight: "1.5"
   heading-h1:
-    fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif"
-    fontSize: "16pt"
+    fontFamily: "'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif"
+    fontSize: "17pt"
     fontWeight: 700
     lineHeight: "1.5em"
-    letterSpacing: "normal"
+    letterSpacing: "0.08em"
+    textWrap: "balance"
   heading-h2:
-    fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif"
-    fontSize: "14pt"
+    fontFamily: "'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif"
+    fontSize: "15pt"
     fontWeight: 700
     lineHeight: "1.5em"
+    letterSpacing: "0.02em"
+    textWrap: "balance"
   heading-h3:
-    fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif"
-    fontSize: "14pt"
+    fontFamily: "'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif"
+    fontSize: "13.5pt"
     fontWeight: 700
+    letterSpacing: "0.02em"
+    textWrap: "balance"
   heading-h4:
-    fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif"
-    fontSize: "11pt"
+    fontFamily: "'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif"
+    fontSize: "12.5pt"
     fontWeight: 700
+    letterSpacing: "0.02em"
+    textWrap: "balance"
   heading-h5:
-    fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif"
-    fontSize: "10pt"
+    fontFamily: "'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif"
+    fontSize: "12pt"
     fontWeight: 700
+    letterSpacing: "0.02em"
+    textWrap: "balance"
   heading-h6:
-    fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif"
-    fontSize: "9pt"
+    fontFamily: "'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif"
+    fontSize: "11.5pt"
     fontWeight: 700
+    letterSpacing: "0.02em"
+    textWrap: "balance"
   field-name:
     fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif"
     fontSize: "0.875rem"
@@ -90,7 +102,7 @@ typography:
     fontSize: "0.75rem"
     fontWeight: 400
   caption:
-    fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif"
+    fontFamily: "'EB Garamond', 'Computer Modern Serif', 'Charter', 'Georgia', serif"
     fontSize: "0.9em"
     fontWeight: 400
     fontStyle: "italic"
@@ -184,7 +196,7 @@ components:
 
 ### Creative North Star — "The Technical Manual"
 
-AtlasMD renders technical documentation as a typeset manual translated to screen. The page is a grid with a marginalia column, justified body text with first-line indents, ruled section headings with top and bottom borders, and serif callouts that break from the sans-serif body to mark notes and asides. The aesthetic is technical and dense — information density is high but legible, and the reader is here to work, not to browse.
+AtlasMD renders technical documentation as a typeset manual translated to screen — an old flight manual rendered for the browser. The page is a grid with a marginalia column, justified EB Garamond serif body text with first-line indents, ruled section headings with top and bottom borders, and callout notes marked by accent left-rules and background shifts rather than font-family changes. The aesthetic is technical and dense — information density is high but legible, and the reader is here to work, not to browse.
 
 The dark mode does not abandon the manual metaphor; it deepens it. Light mode uses warm neutrals (paper-white backgrounds, gray-200 heading bands, blueprint-blue accents). Dark mode shifts to a slate palette — the primary navy ramp becomes the surface, the accent shifts to a brighter blueprint blue, and the marginalia and callouts inherit the same structural rules in inverted tones. The grid, the rules, the justified text, and the accent left-rules persist across both modes.
 
@@ -195,7 +207,7 @@ Components are tactile and responsive. They are quiet at rest — thin borders, 
 - Print-derived grid: margin column (1.5in), content column (4.5in), 1fr remainder, 0.5in gutter
 - Justified body text with automatic hyphenation and 1.5em first-line indent
 - Ruled H2 headings (top + bottom 1px borders) and accent left-rules on callouts and code blocks
-- Serif callouts (Computer Modern Serif / Charter / Georgia) breaking from sans-serif body
+- EB Garamond serif throughout (body, headings, callouts) — authentic old flight manual aesthetic
 - Dual-mode palette: warm neutrals + blueprint blue (light), slate navy + brighter blue (dark)
 - Small radii (3-8px) — the form language is architectural, not soft
 - Functional shadows only: figures, cards, and modals; content surfaces are flat with tonal layering
@@ -227,22 +239,22 @@ The palette is a dual-mode system: warm neutrals with a blueprint-blue accent in
 
 ## Typography
 
-**Body Font:** ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif (Pinceau `font.sans`)
-**Callout Font:** Computer Modern Serif, Charter, Bitstream Charter, Sitka Text, Georgia, serif
-**Code Font:** Fira Code, Roboto Mono, Consolas, Monaco, Andale Mono, monospace
+**Body Font:** EB Garamond (self-hosted), Computer Modern Serif, Charter, Bitstream Charter, Sitka Text, Georgia, serif
+**Callout Font:** EB Garamond (self-hosted), Computer Modern Serif, Charter, Bitstream Charter, Sitka Text, Georgia, serif — same family as body; annotations are signaled by accent left-rule and background, not font change
+**Code Font:** Fira Code (self-hosted), Roboto Mono, Consolas, Monaco, Andale Mono, monospace
 **Label Font:** ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas (Pinceau `font.mono`)
 
-**Character:** The body is a clean system sans-serif — neutral, legible, engineered for screen reading at 11pt with 1.4 line-height. The callout serif (Computer Modern Serif with Charter/Georgia fallback) is the personality voice: it marks notes, marginalia, and asides as something other than body text — a typographic shift that signals "stop reading forward, read this instead." The code font is Fira Code with ligatures enabled, sized at 0.9em with 1.5 line-height for dense but readable code blocks.
+**Character:** The body is EB Garamond (self-hosted, with Computer Modern Serif / Charter / Georgia fallback) — a transitional serif authentic to old flight manuals, set at 11pt with 1.5 line-height, justified with inter-word spacing and automatic hyphenation. Standard ligatures (`font-feature-settings: "liga" 1`) and old-style figures (`font-variant-numeric: oldstyle-nums`) are enabled for running text; tabular figures remain on tables. Headings share the same EB Garamond family at bold weight, with letter-spacing (0.08em on uppercase H1, 0.02em on H2–H6) and `text-wrap: balance` for clean line breaks. Section numbers come from the content markdown itself (e.g. `## 2.2 Ports`), not CSS-generated counters. Annotations (notes, marginalia, asides) are signaled by the 3px accent left-rule and background shift, not by a font-family change. The code font is Fira Code (self-hosted) with programming ligatures enabled via `font-feature-settings: "calt" 1, "liga" 1`, sized at 0.9em with 1.5 line-height for dense but readable code blocks.
 
 ### Hierarchy
 
-- **H1** (700, 16pt, 1.5em, uppercase, centered, 2px bottom border): Document title. The only uppercase, centered heading. Appears once per page.
-- **H2** (700, 14pt, 1.5em, ruled top + bottom 1px border): Major section headings. The rules create a horizontal band that separates sections the way a printed manual does. Padding: 0.5em 0 0.5em 1em.
-- **H3** (700, 14pt): Subsection headings. Same size as H2 but without the rules — distinguished by position and indentation (1em left padding).
-- **H4** (700, 11pt): Sub-subsection headings. Same weight as H3, smaller size.
-- **H5** (700, 10pt): Minor headings.
-- **H6** (700, 9pt): The smallest heading — used for fine-grained structural labels.
-- **Body** (400, 11pt, 1.4 line-height, justified, 1.5em first-line indent): The reading surface. Justified with `text-justify: inter-word` and `hyphens: auto`. First-line indent of 1.5em on paragraphs (suppressed after headings in the commented-out rule).
+- **H1** (700, 17pt, 1.5em, uppercase, centered, 0.08em letter-spacing, 2px bottom border): Document title. The only uppercase, centered heading. Appears once per page.
+- **H2** (700, 15pt, 1.5em, 0.02em letter-spacing, ruled top + bottom 1px border): Major section headings. The rules create a horizontal band that separates sections the way a printed manual does. Section numbers come from the content markdown (e.g. `## 2.2 Ports`). Padding: 0.5em 0 0.5em 1em.
+- **H3** (700, 13.5pt, 0.02em letter-spacing): Subsection headings. Smaller than H2 with no rules — distinguished by size and indentation (1em left padding).
+- **H4** (700, 12.5pt, 0.02em letter-spacing): Sub-subsection headings. One step above body size.
+- **H5** (700, 12pt, 0.02em letter-spacing): Minor headings. Body size, bold weight distinguishes.
+- **H6** (700, 11.5pt, 0.02em letter-spacing): The smallest heading — used for fine-grained structural labels.
+- **Body** (400, 11pt, 1.5 line-height, justified, 1.5em first-line indent): The reading surface. Justified with `text-justify: inter-word` and `hyphens: auto`. First-line indent of 1.5em on paragraphs, suppressed after headings.
 - **Caption** (400, 0.9em, italic): Figure and table captions. Centered, muted color.
 - **Field Name** (600, 0.875rem): The name of a field in `::field` components. Bold, gray-900/100.
 - **Field Type** (400, 0.75rem, gray-500/400): The type annotation in parentheses after a field name. Muted, smaller.
@@ -250,9 +262,11 @@ The palette is a dual-mode system: warm neutrals with a blueprint-blue accent in
 
 ### Typography Rules
 
-**The Serif Break Rule.** Notes, marginalia, and asides use the callout serif (Computer Modern Serif / Charter / Georgia). Body text, headings, and code use sans-serif or monospace. The serif is the signal that the reader has left the main argument and entered an annotation.
+**The Unified Serif Rule.** Body text, headings, and callouts all use EB Garamond — one family throughout, authentic to old flight manuals. Annotations (notes, marginalia, asides) are signaled by the 3px accent left-rule (blueprint blue) and background shift, not by a font-family change. Code blocks and inline code use Fira Code (monospace) — the only family break in the system, reserved for code and data. The serif applies consistently in both light and dark mode.
 
-**The Justified Text Rule.** Body paragraphs are justified with inter-word spacing and automatic hyphenation. This is a deliberate print-craft choice — it creates the even right margin of a typeset manual. The first-line indent of 1.5em reinforces the print metaphor. Do not switch to left-aligned without an explicit product decision.
+**The Justified Text Rule.** Body paragraphs are justified with inter-word spacing and automatic hyphenation. This is a deliberate print-craft choice — it creates the even right margin of a typeset manual. The first-line indent of 1.5em reinforces the print metaphor. The indent is suppressed on the first paragraph after any heading — the heading itself signals the paragraph break. Do not switch to left-aligned without an explicit product decision.
+
+**The Font Delivery Rule.** EB Garamond and Fira Code are self-hosted via `@fontsource` and bundled into the Docker image. They load with `font-display: swap` to avoid invisible text. System fallbacks (Computer Modern Serif if locally installed, Charter, Georgia for serif; Roboto Mono, Consolas, Monaco for mono) serve only as failure fallbacks, not as the rendered face.
 
 ## Layout
 
@@ -305,13 +319,13 @@ The form language is architectural — small radii, thin borders, ruled headings
 - **Background:** Code background (#f7fafc light / dark-slate in dark mode)
 - **Padding:** 0.5em 1em 0.5em 4em (extra left padding for the "Note:" prefix)
 - **Prefix:** "Note:" in bold, accent color, positioned absolute at left 0.5em
-- **Font:** Callout serif (Computer Modern Serif / Charter / Georgia)
+- **Font:** EB Garamond (same as body — the accent left-rule and background signal the annotation, not a font change)
 - **Behavior:** Static — no hover or interaction states
 
 ### Side Notes (::side-note)
 
 - **Placement:** Grid column 1 (margin column), right-aligned
-- **Font:** Callout serif, 0.8em, secondary color (margin-gray-600)
+- **Font:** EB Garamond (body serif), 0.8em, secondary color (margin-gray-600)
 - **Behavior:** In dark mode, gets a 1px border, 1rem radius, and tight padding (0.15rem 0.6rem) — becomes a small bordered pill in the margin
 
 ### Figures (::fig)
@@ -354,7 +368,7 @@ The form language is architectural — small radii, thin borders, ruled headings
 
 ### Code Blocks (ProseCode)
 
-- **Font:** Fira Code / Roboto Mono / Consolas, 0.9em, 1.5 line-height
+- **Font:** Fira Code (self-hosted) / Roboto Mono / Consolas, 0.9em, 1.5 line-height, programming ligatures via `font-feature-settings: "calt" 1, "liga" 1`
 - **Shape:** 3px radius, 3px accent left-rule (blueprint blue), overflow hidden
 - **Container:** code-bg background, 3px accent left-rule spans full height (header + body)
 - **Header bar:** Ruled bar above the code — 1px border-bottom (table-border), code-bg background, 0.4em 0.75em padding
@@ -403,7 +417,7 @@ The form language is architectural — small radii, thin borders, ruled headings
 
 ### Do
 
-- **Do** use the callout serif (Computer Modern Serif / Charter / Georgia) for notes, marginalia, and asides — the serif break is the signal that the reader has entered an annotation.
+- **Do** use EB Garamond serif throughout — body, headings, and callouts share one family, authentic to old flight manuals. Annotations are signaled by the accent left-rule and background shift, not by a font-family change.
 - **Do** justify body text with inter-word spacing and automatic hyphenation — the even right margin is the print-craft signature.
 - **Do** use the 3px accent left-rule (blueprint blue) on notes, code blocks, and blockquotes — it is the primary structural accent device.
 - **Do** keep radii small (3-8px for content, 10px for cards) — the form language is architectural, not soft.
