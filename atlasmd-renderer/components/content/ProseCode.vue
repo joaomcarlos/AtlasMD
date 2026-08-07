@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Lang } from 'shiki-es'
 import type { PropType } from 'vue'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useClipboard } from '@vueuse/core'
 
 // Fragment component (multiple root nodes: v-if/v-else div + <Teleport>).
 // Disable attribute inheritance — Vue can't auto-attach fallthrough attrs
@@ -16,6 +17,46 @@ const props = defineProps({
   highlights: { type: Array as () => number[], default: () => [] }
 })
 
+// --- Language display names ---
+const languageLabels: Record<string, string> = {
+  ts: 'TypeScript', tsx: 'TypeScript', typescript: 'TypeScript',
+  js: 'JavaScript', jsx: 'JavaScript', javascript: 'JavaScript',
+  py: 'Python', python: 'Python',
+  json: 'JSON', jsonc: 'JSON',
+  toml: 'TOML', yaml: 'YAML', yml: 'YAML',
+  bash: 'Bash', sh: 'Shell', shell: 'Shell', shellscript: 'Shell', zsh: 'Zsh',
+  html: 'HTML', css: 'CSS', scss: 'SCSS',
+  vue: 'Vue', sql: 'SQL',
+  md: 'Markdown', markdown: 'Markdown',
+  dockerfile: 'Dockerfile',
+  diff: 'Diff',
+  xml: 'XML',
+  ini: 'INI',
+  text: 'Text',
+}
+
+const languageLabel = computed(() => {
+  if (!props.language) return ''
+  const key = props.language.toLowerCase()
+  return languageLabels[key] ?? props.language.toUpperCase()
+})
+
+// --- Copy functionality ---
+const { copy: copyToClipboard } = useClipboard()
+const copied = ref(false)
+let copyTimer: ReturnType<typeof setTimeout> | null = null
+
+const copyCode = () => {
+  copyToClipboard(props.code)
+    .then(() => {
+      copied.value = true
+      if (copyTimer) clearTimeout(copyTimer)
+      copyTimer = setTimeout(() => { copied.value = false }, 1500)
+    })
+    .catch((err) => console.warn("Couldn't copy to clipboard!", err))
+}
+
+// --- Mermaid ---
 const hovered = ref(false)
 const mermaidSvg = ref<string | null>(null)
 const modalIsOpen = ref(false)
@@ -92,21 +133,38 @@ onMounted(() => {
 })
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKeydown)
+  if (copyTimer) clearTimeout(copyTimer)
 })
 </script>
 
 <template>
+  <!-- Mermaid diagram -->
   <div v-if="language === 'mermaid'" class="mermaid-diagram" @click.stop="openModal">
+    <div class="mermaid-label">Diagram</div>
     <div v-if="mermaidSvg" class="mermaid-inline" v-html="mermaidSvg" />
-    <span v-else style="opacity: 0.5; font-style: italic;">Loading diagram…</span>
-  </div>
-  <div v-else :class="[`highlight-${language}`]" class="prose-code" @mouseenter="hovered = true"
-    @mouseleave="hovered = false">
-    <span v-if="filename" class="filename">{{ filename }}</span>
-    <slot />
-    <ProseCodeCopyButton :show="hovered" :content="code" class="copy-button" />
+    <span v-else class="mermaid-loading">Loading diagram…</span>
   </div>
 
+  <!-- Code block -->
+  <div v-else :class="[`highlight-${language}`]" class="prose-code" @mouseenter="hovered = true"
+    @mouseleave="hovered = false">
+    <div class="code-header">
+      <div class="code-header-info">
+        <span v-if="languageLabel" class="code-lang">{{ languageLabel }}</span>
+        <span v-if="filename" class="code-filename">{{ filename }}</span>
+      </div>
+      <button class="copy-btn" :class="{ 'is-copied': copied }" @click="copyCode"
+        :aria-label="copied ? 'Copied to clipboard' : 'Copy code to clipboard'">
+        <Icon :name="copied ? 'ph:check' : 'ph:copy'" size="14" class="copy-icon" />
+        <span class="copy-text">{{ copied ? 'Copied' : 'Copy' }}</span>
+      </button>
+    </div>
+    <div class="code-body">
+      <slot />
+    </div>
+  </div>
+
+  <!-- Mermaid modal -->
   <Teleport to="body">
     <div v-if="language === 'mermaid' && modalIsOpen" class="mermaid-modal-overlay" :class="{ 'is-closing': isClosing }"
       role="dialog" aria-modal="true" @click.stop="closeModal">
@@ -120,6 +178,167 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+/* ===== Container ===== */
+.prose-code {
+  grid-column: 2 / -2;
+  position: relative;
+  width: 100%;
+  margin: 0 0 var(--baseline, 1.5em) 0;
+  border-left: 3px solid var(--accent-color, #3182ce);
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--code-bg, #f7fafc);
+}
+
+/* ===== Header bar ===== */
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4em 0.75em;
+  border-bottom: 1px solid var(--table-border, #ddd);
+  background: var(--code-bg, #f7fafc);
+}
+
+.code-header-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75em;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.code-lang {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-color, #3182ce);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.code-filename {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  color: var(--secondary-color, #4a5568);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== Copy button ===== */
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.2em 0.5em;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--secondary-color, #4a5568);
+  opacity: 0.45;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.prose-code:hover .copy-btn {
+  opacity: 1;
+}
+
+.copy-btn:hover {
+  color: var(--accent-color, #3182ce);
+  opacity: 1;
+}
+
+.copy-btn.is-copied {
+  color: var(--accent-color, #3182ce);
+  opacity: 1;
+}
+
+.copy-btn:focus-visible {
+  outline: 2px solid var(--accent-color, #3182ce);
+  outline-offset: 1px;
+  opacity: 1;
+}
+
+.copy-icon {
+  flex-shrink: 0;
+}
+
+.copy-text {
+  line-height: 1;
+}
+
+/* ===== Code body — override base.scss pre styles ===== */
+.code-body :deep(pre) {
+  border-left: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+
+.code-body :deep(code) {
+  display: block;
+}
+
+.code-body :deep(.line) {
+  display: block;
+  min-height: 1rem;
+}
+
+/* Shell prompt prefix */
+.prose-code.highlight-zsh .code-body :deep(code .line),
+.prose-code.highlight-sh .code-body :deep(code .line),
+.prose-code.highlight-bash .code-body :deep(code .line),
+.prose-code.highlight-shell .code-body :deep(code .line),
+.prose-code.highlight-shellscript .code-body :deep(code .line) {
+  position: relative;
+  padding-inline-start: 1rem;
+}
+
+.prose-code.highlight-zsh .code-body :deep(code .line::before),
+.prose-code.highlight-sh .code-body :deep(code .line::before),
+.prose-code.highlight-bash .code-body :deep(code .line::before),
+.prose-code.highlight-shell .code-body :deep(code .line::before),
+.prose-code.highlight-shellscript .code-body :deep(code .line::before) {
+  content: '>';
+  position: absolute;
+  top: 0;
+  inset-inline-start: -0.1rem;
+  display: block;
+  user-select: none;
+  font-weight: 700;
+  color: var(--accent-color, #3182ce);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Line highlighting — full-width tinted bar */
+.code-body :deep(.line.highlight) {
+  background: var(--highlight-target, rgba(255, 235, 59, 0.35));
+  margin: 0 -1em;
+  padding: 0 1em;
+}
+
+/* ===== Dark mode ===== */
+:root[data-theme="dark"] .code-header {
+  border-bottom-color: var(--table-border, #3b4252);
+}
+
+:root[data-theme="dark"] .code-filename {
+  color: #9ca3af;
+}
+
+:root[data-theme="dark"] .copy-btn {
+  color: #9ca3af;
+}
+
+/* ===== Mermaid diagram ===== */
 .mermaid-diagram {
   width: 100%;
   overflow-x: auto;
@@ -132,9 +351,7 @@ onBeforeUnmount(() => {
   margin: 0 0 var(--baseline, 1.5em) 0;
 }
 
-.mermaid-diagram::before {
-  content: "Diagram";
-  display: block;
+.mermaid-label {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.7rem;
   font-weight: 600;
@@ -154,6 +371,19 @@ onBeforeUnmount(() => {
   border-color: #334155;
 }
 
+:root[data-theme="dark"] .mermaid-label {
+  background: #0f172a;
+  border-bottom-color: #334155;
+}
+
+.mermaid-loading {
+  display: block;
+  text-align: center;
+  padding: 1.5em;
+  opacity: 0.5;
+  font-style: italic;
+}
+
 .mermaid-inline :deep(svg) {
   display: block;
   margin: 0 auto;
@@ -161,7 +391,7 @@ onBeforeUnmount(() => {
   height: auto;
 }
 
-/* modal — mirrors Fig.vue */
+/* ===== Mermaid modal — mirrors Fig.vue ===== */
 .mermaid-modal-overlay {
   position: fixed;
   inset: 0;

@@ -355,10 +355,16 @@ The form language is architectural — small radii, thin borders, ruled headings
 ### Code Blocks (ProseCode)
 
 - **Font:** Fira Code / Roboto Mono / Consolas, 0.9em, 1.5 line-height
-- **Shape:** 3px radius, 3px accent left-rule
+- **Shape:** 3px radius, 3px accent left-rule (blueprint blue), overflow hidden
+- **Container:** code-bg background, 3px accent left-rule spans full height (header + body)
+- **Header bar:** Ruled bar above the code — 1px border-bottom (table-border), code-bg background, 0.4em 0.75em padding
+- **Language badge:** Monospace, 0.7rem, 600 weight, 0.08em letter-spacing, uppercase, accent color (blueprint blue). Maps common language codes to display names (ts → TypeScript, py → Python, etc.); falls back to uppercasing
+- **Filename:** Monospace, 0.72rem, secondary color, ellipsis on overflow. Shown alongside the language badge when provided
+- **Copy button:** Integrated in header bar, right-aligned. Monospace, 0.7rem, "Copy" text + ph:copy icon. Opacity 0.45 at rest → 1 on container hover. On click: "Copied" text + ph:check icon, accent color, reverts after 1.5s. Focus-visible outline for keyboard access
+- **Line highlighting:** `.line.highlight` gets a full-width tinted bar (highlight-target: rgba(255, 235, 59, 0.35)), extending via negative margin to cover the pre's 1em padding
+- **Shell prompt:** Bash/sh/zsh lines get a `>` prefix in accent color, monospace, user-select none
 - **Padding:** 1em for pre blocks, 0.2em 0.4em for inline code
-- **Copy button:** Appears on hover (ProseCodeCopyButton)
-- **Mermaid:** Full-width grid span (1 / -1), 3px radius, 1px border, hover scale(1.01), click opens modal
+- **Mermaid:** Full-width grid span (1 / -1), 4px radius, 1px border, "Diagram" label bar (centered, uppercase monospace, accent color), click opens modal
 - **Mermaid modal:** Same overlay pattern as Fig — rgba(0,0,0,0.6) scrim, white/slate background, 8px radius
 - **Mermaid theme:** Custom light/dark variables — slate node colors, blueprint-blue borders and lines
 - **Highlighting:** github-light (default) / github-dark (dark) / monokai (sepia)
