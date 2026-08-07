@@ -382,6 +382,16 @@ The form language is architectural — small radii, thin borders, ruled headings
 
 - **Behavior:** `sidebar-follow` plugin auto-expands the navigation tree to the current page and collapses siblings. Active link scrolls into view smoothly.
 - **Scroll:** `scroll-behavior` plugin handles hash navigation with sticky-header offset (estimates header height, falls back to 80px). Retries for up to 1s to find the target element after navigation.
+- **Section headers:** Docus default — sans-serif, 14px, 600 weight, no text-transform or letter-spacing. Collapsible with chevron icon.
+- **Leaf links:** Sans-serif, 14px, 400 weight, gray-500 (#939393) at rest. Active page gets primary-500 (#36496e) text and 500 weight. No accent left-rule or tree guide lines.
+- **Container:** 1px border-right (gray-100 / #f5f5f5). Default browser scrollbar.
+
+### Right-side Table of Contents (page-level)
+
+- **Title:** Docus default — sans-serif, 14px, 600 weight, "Table of Contents". Hidden on mobile (<lg); the mobile collapsible button shows the same title with a chevron.
+- **Links:** Sans-serif, 14px, 400 weight, gray-500 (#939393) at rest, darkening on hover. The active heading gets primary-500 (#36496e) text. No accent left-rule or tree guide lines.
+- **Depth indentation:** depth-3 headings indent 12px (Pinceau `space.3`); deeper levels indent further via the Docus default ramp.
+- **Container:** 1px border-left (gray-100 / #f5f5f5). Sticky, full viewport height minus header.
 
 ## Do's and Don'ts
 
