@@ -383,22 +383,13 @@ The form language is architectural — small radii, thin borders, ruled headings
 - **Behavior:** `sidebar-follow` plugin auto-expands the navigation tree to the current page and collapses siblings. Active link scrolls into view smoothly.
 - **Scroll:** `scroll-behavior` plugin handles hash navigation with sticky-header offset (estimates header height, falls back to 80px). Retries for up to 1s to find the target element after navigation.
 
-### Right-side Table of Contents (page-level)
-
-- **Title:** Monospace, uppercase, letter-spaced (0.05em), 0.75rem, 600 weight — the label-uppercase voice, with a bottom border rule like the H2 heading. Hidden on mobile (<lg); the mobile collapsible button inherits the same monospace uppercase styling.
-- **Links:** 0.8125rem, gray-500 (#939393) at rest, darkening to gray-800 (#1d1d1d) on hover. The active heading gets primary-500 (#36496e) text, 500 weight, and the 3px blueprint-blue accent left-rule — the same structural accent device used on the left sidebar, notes, code blocks, and blockquotes.
-- **Tree guide lines:** 1px border-left on each link (gray-200 light / primary-700 dark), lightening on hover. The active link's border becomes the 3px blueprint-blue accent.
-- **Depth indentation:** depth-3 headings indent 0.75rem, depth-4 indent 1.5rem — the li padding creates the hierarchy, the a border-left creates the guide line.
-- **Container:** 1px border-left (gray-200 light / primary-700 dark), themed thin scrollbar matching the left sidebar.
-- **Focus ring:** 2px solid blueprint-blue, -2px offset — matching the left sidebar.
-
 ## Do's and Don'ts
 
 ### Do
 
 - **Do** use the callout serif (Computer Modern Serif / Charter / Georgia) for notes, marginalia, and asides — the serif break is the signal that the reader has entered an annotation.
 - **Do** justify body text with inter-word spacing and automatic hyphenation — the even right margin is the print-craft signature.
-- **Do** use the 3px accent left-rule (blueprint blue) on notes, code blocks, blockquotes, and the active item in both the left sidebar and right-side TOC — it is the primary structural accent device.
+- **Do** use the 3px accent left-rule (blueprint blue) on notes, code blocks, and blockquotes — it is the primary structural accent device.
 - **Do** keep radii small (3-8px for content, 10px for cards) — the form language is architectural, not soft.
 - **Do** use tonal layering (slate surfaces, border rules) for depth on content surfaces — reserve shadows for figures, cards, and modals.
 - **Do** span mermaid diagrams across the full grid (1 / -1) — they must not be squeezed into the margin column.
