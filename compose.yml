@@ -1,0 +1,23 @@
+services:
+  atlasmd-docs:
+    build:
+      context: ./atlasmd-renderer
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "47145:47145"
+      - "4000:4000"
+    environment:
+      - PORT=47145
+    volumes:
+      # Mount entire renderer source for HMR
+      - ./atlasmd-renderer:/app
+      # Preserve node_modules from the image build
+      - node_modules:/app/node_modules
+      # Content from scaffold
+      - ./atlasmd-scaffold/content:/app/content
+      - ./atlasmd-scaffold/public:/app/public
+      - ./atlasmd-scaffold/config.toml:/app/config.toml
+
+volumes:
+  node_modules:

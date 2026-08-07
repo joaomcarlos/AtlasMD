@@ -34,16 +34,17 @@
 /* Technical Manual Layout with Marginal Notes */
 
 :root {
-  --page-width: 8.5in;
-  --content-width: 5.5in;
-  --margin-width: 1.5in;
-  --gutter: 0.5in;
-  --marginalia-width: 1.25in;
+  --page-width: 56em;
+  --content-width: 36em;
+  --margin-width: 10em;
+  --gutter: 3.3em;
+  --marginalia-width: 8.2em;
   --baseline: 1.5em;
   --font-size-base: 11pt;
-  --line-height: 1.4;
+  --line-height: 1.5;
 
   --text-color: var(--docus-body-color);
+  --heading-color: #111111;
   --primary-color: #1a365d;
   --secondary-color: #4a5568;
   --accent-color: #3182ce;
@@ -66,13 +67,13 @@
   --background-color: transparent;
   --text-color: var(--docus-body-color);
   --note-bg: var(--elements-backdrop-background);
-  --code-bg: #2d2d2d;
-  --code-color: #f5f5f5;
+  --code-bg: #1a2237;
+  --code-color: #eaeaea;
 
   --accent-color: #4dabf7;
 
   --primary-color: #ddd;
-  --secondary-color: #ddd;
+  --secondary-color: #9ca3af;
 
   /* Dark mode table variables */
   --table-text: #e5e7eb;
@@ -119,8 +120,13 @@
 
   /* Typography */
   .page-body {
-    .note {
-      font-family: 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
+    .marginalia,
+    .note,
+    .docs-prev-next,
+    ul,
+    ol,
+    figure {
+      font-family: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
     }
   }
 
@@ -133,19 +139,25 @@
   .note,
   .docs-prev-next,
   ul,
-  ol figure {
-    font-family: 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
+  ol,
+  figure {
+    font-family: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
   }
 }
 
 .page-body {
-  // font-family: 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
+  font-family: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
   font-size: var(--font-size-base) !important;
   line-height: var(--line-height) !important;
   text-rendering: optimizeLegibility;
   font-kerning: normal;
+  font-feature-settings: "liga" 1;
+  font-variant-numeric: oldstyle-nums;
 
-  font-variant-ligatures: common-ligatures;
+  /* Override Docus typography font variables so prose components inherit serif */
+  --typography-font-body: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif;
+  --typography-font-display: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif;
+  --docus-body-fontFamily: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif;
 
   /* Layout */
   max-width: var(--page-width) !important;
@@ -155,7 +167,7 @@
   /* Grid with marginalia */
   display: grid;
   grid-template-columns: var(--margin-width) var(--content-width) 1fr;
-  grid-column-gap: 0.5in;
+  grid-column-gap: var(--gutter);
   position: relative;
 
   /* Vertical Rhythm */
@@ -170,14 +182,18 @@
   h5,
   h6 {
     color: var(--heading-color);
+    font-family: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
+    overflow-wrap: break-word;
+    text-wrap: balance;
   }
 
   /* Document Title */
   h1 {
-    font-size: 16pt !important;
+    font-size: 1.55em !important;
     font-weight: bold !important;
     text-align: center !important;
     text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
     margin: 1.5em 0 1em 0 !important;
     padding-bottom: 0.5em !important;
     border-bottom: 2px solid var(--border-color) !important;
@@ -212,8 +228,9 @@
     padding: 0.5em 0 0.5em 1em;
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color) !important;
-    font-size: 14pt !important;
+    font-size: 1.36em !important;
     font-weight: bold !important;
+    letter-spacing: 0.02em !important;
     page-break-after: avoid !important;
   }
 
@@ -226,35 +243,32 @@
     position: relative;
     padding-left: 1em;
     font-weight: bold !important;
+    letter-spacing: 0.02em !important;
     margin: 1.25em 0 0.5em 0 !important;
     page-break-after: avoid !important;
   }
 
   h3 {
-    font-size: 14pt !important;
-  }
-
-  h4 {
-    font-size: 11pt !important;
-  }
-
-  h5 {
-    font-size: 10pt !important;
-  }
-
-  h6 {
-    font-size: 9pt !important;
+    font-size: 1.23em !important;
   }
 
   h4 {
     grid-column: 2 / -2;
     position: relative;
     padding-left: 1em;
-    font-size: 12pt !important;
-
+    font-size: 1.14em !important;
     font-weight: bold !important;
+    letter-spacing: 0.02em !important;
     margin: 1.25em 0 0.5em 0 !important;
     page-break-after: avoid !important;
+  }
+
+  h5 {
+    font-size: 1.09em !important;
+  }
+
+  h6 {
+    font-size: 1.05em !important;
   }
 
   /* Paragraphs and Text */
@@ -281,6 +295,7 @@
     hyphens: auto !important;
     position: relative;
     text-indent: 1.5em;
+    text-wrap: pretty;
   }
 
   /* Remove indent after headings */
@@ -290,7 +305,7 @@
   h4+p,
   h5+p,
   h6+p {
-    // text-indent: 0;
+    text-indent: 0;
   }
 
   /* Notes and callouts */
@@ -310,6 +325,12 @@
     left: 0.5em;
     font-weight: bold;
     color: var(--accent-color);
+  }
+
+  /* Remove paragraph bottom margin when followed by a list */
+  p:has(+ ul),
+  p:has(+ ol) {
+    margin-bottom: 5px !important;
   }
 
   /* Lists */
@@ -347,23 +368,27 @@
 
   /* Figures and Images */
   figure {
-    margin: 1.5em 0;
+    margin: var(--baseline) 0 !important;
     text-align: center;
+    page-break-inside: avoid !important;
   }
 
   figure img {
-    width: 100%;
-    max-width: 800px;
-    height: auto;
-    border-radius: 4px;
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+    border-radius: 0.25em !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
-  figure .caption {
-    margin-top: 0.5em;
-    font-style: italic;
-    color: var(--text-muted);
-    text-align: center;
+  figure .caption,
+  figcaption {
+    font-size: 0.9em !important;
+    color: var(--secondary-color) !important;
+    text-align: center !important;
+    margin-top: 0.5em !important;
+    font-style: italic !important;
   }
 
   /* Code and Preformatted Text */
@@ -372,27 +397,25 @@
     font-family: 'Fira Code', 'Roboto Mono', 'Consolas', 'Monaco', 'Andale Mono', monospace !important;
     font-size: 0.9em !important;
     line-height: 1.5 !important;
-    /* background-color: var(--code-bg, #f5f5f5) !important; */
-    /* color: var(--code-color, #333) !important; */
+    font-variant-ligatures: common-ligatures;
+    font-feature-settings: "calt" 1, "liga" 1;
     border-radius: 3px !important;
-    padding: 0.2em 0.4em !important;
+  }
+
+  code {
+    padding: 0.15em 0.3em !important;
     margin: 0 0.2em !important;
     white-space: pre-wrap !important;
-    word-wrap: break-word !important;
-    overflow-x: auto !important;
-    word-wrap: normal !important;
+    word-break: break-word !important;
   }
 
   pre {
     padding: 1em !important;
     overflow-x: auto !important;
+    white-space: pre !important;
     margin: 0 0 var(--baseline) 0 !important;
     border-left: 3px solid var(--accent-color) !important;
     page-break-inside: avoid !important;
-  }
-
-  code {
-    padding: 0.15em 0.3em !important;
   }
 
   /* Tables */
@@ -403,6 +426,7 @@
     margin: 0 0 var(--baseline) 0 !important;
     page-break-inside: avoid !important;
     font-size: 0.95em;
+    font-variant-numeric: tabular-nums;
     border: 1px solid var(--table-border) !important;
   }
 
@@ -435,43 +459,9 @@
     background-color: var(--table-hover-bg);
   }
 
-  /* Captions and Figures */
-  .caption {
-    font-size: 0.9em;
-    color: var(--secondary-color);
-    margin-top: 0.5em;
-    text-align: center;
-  }
-
-  /* Images and Figures */
-  figure {
-    margin: var(--baseline) 0 !important;
-    page-break-inside: avoid !important;
-  }
-
-  figure img {
-    max-width: 100% !important;
-    height: auto !important;
-    display: block !important;
-    margin: 0 auto !important;
-    // border: 1px solid var(--border-color) !important;
-    border-radius: 0.25em !important;
-  }
-
-  figcaption {
-    font-size: 0.9em !important;
-    color: var(--secondary-color) !important;
-    text-align: center !important;
-    margin-top: 0.5em !important;
-    font-style: italic !important;
-  }
-
   /* Blockquotes */
   blockquote {
     margin-left: 0 !important;
-    padding-left: 1.5em !important;
-    border-left: 3px solid var(--border-color) !important;
-    margin: var(--baseline) 0 !important;
     padding: 1em 1.5em !important;
     border-left: 4px solid var(--accent-color) !important;
     background-color: var(--code-bg) !important;
@@ -479,18 +469,8 @@
     position: relative;
   }
 
-  blockquote:before {
-    content: "" "";
-    font-size: 3em;
-    line-height: 0.1em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
-    color: var(--accent-color);
-    opacity: 0.5;
-  }
-
   /* Links */
-  a {
+  a:not(.button-link) {
     color: inherit !important;
     text-decoration: none !important;
     font-weight: normal !important;
@@ -578,11 +558,6 @@
       content: counter(page) !important;
       font-size: 9pt !important;
     }
-  }
-
-  p {
-    margin-top: 0 !important;
-    margin-bottom: 1rem !important;
   }
 
 }
