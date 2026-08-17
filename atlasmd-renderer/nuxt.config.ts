@@ -65,9 +65,9 @@ export default defineNuxtConfig({
       atlasAppVersion: process.env.APP_VERSION,
       atlasTitle: atlasConfig.title,
       // Logos are convention-based fixed filenames in public/. No configuration needed.
-      atlasLogoLight: '/logo-light-mode.png',
-      atlasLogoDark: '/logo-dark-mode.png',
-      atlasLogoDarkBg: '/logo-dark-mode-bg.png',
+      atlasLogoLight: `${base}logo-light-mode.png`,
+      atlasLogoDark: `${base}logo-dark-mode.png`,
+      atlasLogoDarkBg: `${base}logo-dark-mode-bg.png`,
     }
   },
   compatibilityDate: '2024-10-24',
