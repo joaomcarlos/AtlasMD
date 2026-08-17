@@ -5,7 +5,7 @@ ARG APP_VERSION=
 WORKDIR /app
 COPY package.json yarn.lock ./
 
-RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn install
+RUN yarn install --frozen-lockfile
 
 # Patch pinceau: use deterministic variant class names (fixes SSR hydration mismatch)
 COPY support/patch-pinceau.mjs support/patch-pinceau.mjs
