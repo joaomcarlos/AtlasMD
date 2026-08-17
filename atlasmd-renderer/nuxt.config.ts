@@ -29,11 +29,6 @@ function buildContentRoutes() {
       const relPath = dirRel ? `${dirRel}/${entry}` : entry
       const absPath = join(contentRoot, relPath)
       if (statSync(absPath).isDirectory()) {
-        // Add the directory itself as a route so _payload.json gets generated for section index pages
-        const dirSegments = relPath.split('/').map(seg => seg.replace(orderPrefix, '')).filter(Boolean)
-        if (dirSegments.length > 0) {
-          routes.add('/' + dirSegments.join('/'))
-        }
         walk(relPath)
         continue
       }
