@@ -63,7 +63,8 @@ Logos are convention-based fixed filenames in `public/` — no config needed: `l
 - Social links and footer are config-driven; each consumer sets its own `[[socials]]` and `[footer]` in `config.toml`
 - Social links are generic — consumer picks url, label, and Iconify icon per link
 - Logos are convention-based fixed filenames in `public/`; Logo.vue reads from `runtimeConfig.public`
-- `config.ts` loads `/app/config.toml` (or `./config.toml` locally) at startup and exports `atlasConfig`
+- `config.ts` loads `/app/config.toml` (or `./config.toml` locally) at startup and exports `atlasConfig`; falls back to `DEFAULTS` if no file is found
 - `nuxt.config.ts` has `buildContentRoutes()` that reads `./content` at startup; safe if content is missing (try/catch)
 - `support/patch-pinceau.mjs` patches pinceau 0.18.10 at Docker build time: replaces `nanoid(6)` variant class names with a deterministic hash of `cacheId`, fixing SSR hydration class mismatches; idempotent and auto-skips if already patched
+- The image is a pure engine: `.dockerignore` excludes `config.toml`, `content/`, `public/`, and `config.value.json` so no scaffold/consumer content is baked in. The image ships no `content/`, `public/`, or `config.toml` — consumers mount (compose) or copy (CI) their own. `config.toml` in this dir is a local-dev symlink to `atlasmd-scaffold/config.toml` — never copied into the image.
 

@@ -1,6 +1,6 @@
-ARG APP_VERSION
-
 FROM node:lts-alpine
+
+ARG APP_VERSION=
 
 WORKDIR /app
 COPY package.json yarn.lock ./
@@ -12,9 +12,6 @@ COPY support/patch-pinceau.mjs support/patch-pinceau.mjs
 RUN node support/patch-pinceau.mjs
 
 COPY . .
-
-# content/ and public/ are expected to be volume-mounted at runtime
-RUN mkdir -p content public
 
 ENV APP_VERSION=${APP_VERSION}
 ENV PORT=3003
