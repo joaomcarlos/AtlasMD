@@ -42,6 +42,8 @@
   --baseline: 1.5em;
   --font-size-base: 11pt;
   --line-height: 1.5;
+  --atlas-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --atlas-font-heading: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif;
 
   --text-color: var(--docus-body-color);
   --heading-color: #111111;
@@ -126,7 +128,7 @@
     ul,
     ol,
     figure {
-      font-family: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
+      font-family: var(--atlas-font-family) !important;
     }
 
     /* Dark mode serif compensation: thin strokes need more weight, leading, and tracking */
@@ -148,12 +150,12 @@
   ul,
   ol,
   figure {
-    font-family: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
+    font-family: var(--atlas-font-family) !important;
   }
 }
 
 .page-body {
-  font-family: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
+  font-family: var(--atlas-font-family) !important;
   font-size: var(--font-size-base) !important;
   line-height: var(--line-height) !important;
   text-rendering: optimizeLegibility;
@@ -161,10 +163,10 @@
   font-feature-settings: "liga" 1;
   font-variant-numeric: oldstyle-nums;
 
-  /* Override Docus typography font variables so prose components inherit serif */
-  --typography-font-body: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif;
-  --typography-font-display: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif;
-  --docus-body-fontFamily: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif;
+  /* Override Docus typography font variables so prose components inherit the selected font */
+  --typography-font-body: var(--atlas-font-family);
+  --typography-font-display: var(--atlas-font-family);
+  --docus-body-fontFamily: var(--atlas-font-family);
 
   /* Layout */
   max-width: var(--page-width) !important;
@@ -183,13 +185,18 @@
   }
 
   h1,
-  h2,
+  h2 {
+    color: var(--heading-color);
+    font-family: var(--atlas-font-heading) !important;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
+
   h3,
   h4,
   h5,
   h6 {
     color: var(--heading-color);
-    font-family: 'EB Garamond', 'Computer Modern Serif', 'Charter', 'Bitstream Charter', 'Sitka Text', 'Georgia', serif !important;
     overflow-wrap: break-word;
     text-wrap: balance;
   }
@@ -411,9 +418,16 @@
 
   code {
     padding: 0.15em 0.3em !important;
-    margin: 0 0.2em !important;
+    margin: 0 !important;
     white-space: pre-wrap !important;
     word-break: break-word !important;
+    background-color: transparent !important;
+    transition: background-color 0.15s ease !important;
+    font-weight: 300 !important;
+
+    &:hover {
+      background-color: var(--code-bg) !important;
+    }
   }
 
   pre {
