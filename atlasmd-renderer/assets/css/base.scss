@@ -239,7 +239,7 @@
     grid-column: 2 / -2;
     position: relative;
     margin: 1.5em 0 0.75em 0 !important;
-    padding: 0.5em 0 0.5em 1em;
+    padding: 0.5em 0;
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color) !important;
     font-size: 1.36em !important;
@@ -255,7 +255,6 @@
   h6 {
     grid-column: 2 / -2;
     position: relative;
-    padding-left: 1em;
     font-weight: bold !important;
     letter-spacing: 0.02em !important;
     margin: 1.25em 0 0.5em 0 !important;
@@ -267,14 +266,7 @@
   }
 
   h4 {
-    grid-column: 2 / -2;
-    position: relative;
-    padding-left: 1em;
     font-size: 1.14em !important;
-    font-weight: bold !important;
-    letter-spacing: 0.02em !important;
-    margin: 1.25em 0 0.5em 0 !important;
-    page-break-after: avoid !important;
   }
 
   h5 {
@@ -308,18 +300,7 @@
     text-justify: inter-word !important;
     hyphens: auto !important;
     position: relative;
-    text-indent: 1.5em;
     text-wrap: pretty;
-  }
-
-  /* Remove indent after headings */
-  h1+p,
-  h2+p,
-  h3+p,
-  h4+p,
-  h5+p,
-  h6+p {
-    text-indent: 0;
   }
 
   /* Notes and callouts */
