@@ -5,7 +5,9 @@ import { atlasConfig } from './config'
 const { CI_PAGES_URL } = process.env
 // Derive base path for GitLab Pages (e.g. /group/project/) – fallback to config baseUrl or /
 // CI_PAGES_URL stays an env var because GitLab CI sets it automatically at deploy time.
-const base = (CI_PAGES_URL) ? new URL(CI_PAGES_URL).pathname : (atlasConfig.baseUrl || '/')
+const rawBase = (CI_PAGES_URL) ? new URL(CI_PAGES_URL).pathname : (atlasConfig.baseUrl || '/')
+// ensure exactly one trailing slash so `${base}file` resolves correctly
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`
 // When baseURL is a subpath (e.g. /my-project/), routes starting with that prefix
 // fail crawl validation (Nuxt 3 limitation). Build an ignore pattern from the base path.
 const baseSegment = base.replace(/^\/+|\/+$/g, '')
