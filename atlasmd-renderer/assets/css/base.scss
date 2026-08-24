@@ -460,6 +460,16 @@
     border-bottom: 2px solid var(--table-border) !important;
   }
 
+  /* Prevent code in table cells from breaking mid-word. The global inline code
+     style uses word-break: break-word; override it so code stays intact. Long
+     strings are handled at the content level, not via CSS. */
+  td code,
+  th code {
+    white-space: nowrap !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+  }
+
   tr:nth-child(even) {
     background-color: var(--table-row-even);
   }
