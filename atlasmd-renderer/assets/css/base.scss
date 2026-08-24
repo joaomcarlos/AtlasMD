@@ -70,7 +70,7 @@
   --text-color: var(--docus-body-color);
   --note-bg: var(--elements-backdrop-background);
   --code-bg: #1a2237;
-  --code-color: #eaeaea;
+  --code-color: #8b9bb0;
 
   --accent-color: #4dabf7;
 
@@ -136,6 +136,18 @@
       font-weight: 500 !important;
       line-height: 1.6 !important;
       letter-spacing: 0.01em !important;
+    }
+
+    /* Dark mode heading compensation: EB Garamond tops at 700; same-color 0-blur
+       text-shadow thickens strokes without fuzziness from blur. */
+    h1, h2, h3, h4, h5, h6 {
+      text-shadow: 0 0 0.04em var(--heading-color) !important;
+    }
+
+    /* Dark mode inline code compensation: Fira Code weight 300 strokes are thin
+       on dark backgrounds; same-color 0-blur text-shadow thickens them. */
+    code {
+      text-shadow: 0 0 0.04em var(--code-color) !important;
     }
   }
 
