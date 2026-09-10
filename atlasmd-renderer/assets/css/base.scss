@@ -138,6 +138,18 @@
       letter-spacing: 0.01em !important;
     }
 
+    /* Reset dark-mode p overrides inside Mermaid foreignObject */
+    .mermaid-diagram svg foreignObject p,
+    .mermaid-diagram svg foreignObject div,
+    .mermaid-diagram svg foreignObject span {
+      font-weight: inherit !important;
+      line-height: 1.5 !important;
+      letter-spacing: normal !important;
+      margin: 0 !important;
+      text-align: center !important;
+      hyphens: none !important;
+    }
+
     /* Dark mode heading compensation: EB Garamond tops at 700; same-color 0-blur
        text-shadow thickens strokes without fuzziness from blur. */
     h1, h2, h3, h4, h5, h6 {
@@ -304,6 +316,19 @@
   .mermaid-diagram {
     grid-column: 1 / -1;
     margin: 0 0 var(--baseline) 0 !important;
+  }
+
+  /* Reset dark-mode p overrides inside Mermaid foreignObject */
+  .mermaid-diagram svg foreignObject p,
+  .mermaid-diagram svg foreignObject div,
+  .mermaid-diagram svg foreignObject span {
+    font-weight: inherit !important;
+    line-height: 1.5 !important;
+    letter-spacing: normal !important;
+    margin: 0 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    hyphens: none !important;
   }
 
   p {

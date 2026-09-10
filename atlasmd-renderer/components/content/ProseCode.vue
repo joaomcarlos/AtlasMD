@@ -520,7 +520,7 @@ onBeforeUnmount(() => {
   text-indent: 0 !important;
   text-align: center !important;
   font-size: inherit !important;
-  line-height: normal !important;
+  line-height: 1.5 !important;
   hyphens: none !important;
   white-space: normal !important;
   overflow: visible !important;
