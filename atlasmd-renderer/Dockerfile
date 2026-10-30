@@ -5,7 +5,10 @@ ARG APP_VERSION=
 WORKDIR /app
 COPY package.json yarn.lock ./
 
-RUN npm install -g yarn && yarn install --frozen-lockfile
+RUN npm install -g yarn \
+    && yarn install --frozen-lockfile \
+    && yarn cache clean \
+    && npm cache clean --force
 
 # Patch pinceau: use deterministic variant class names (fixes SSR hydration mismatch)
 COPY support/patch-pinceau.mjs support/patch-pinceau.mjs
