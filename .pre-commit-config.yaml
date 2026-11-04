@@ -1,0 +1,23 @@
+# Install with: $ pre-commit install --hook-type pre-commit --hook-type pre-push
+
+default_install_hook_types: [pre-commit, pre-push]
+default_stages: [pre-commit, pre-push]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: [--maxkb=5000]
+      - id: check-merge-conflict
+
+  - repo: local
+    hooks:
+      - id: check-dotenv
+        name: Check that dotenv/secret files are not committed
+        files: (\.env(\..+)?|.*\.(pem|key|p12|pfx))$
+        language: system
+        pass_filenames: true
+        entry: |
+          bash -c 'echo "dotenv/secret files should not be committed: $@" >&2; exit 1' --
